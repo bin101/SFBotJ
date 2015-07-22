@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug">
+
+	<Appenders>
+		<Console name="consoleAppender" target="SYSTEM_OUT">
+			<!--SHORT PATTERN -->
+			<PatternLayout
+				pattern="%d{dd-MM-yyyy HH:mm:ss} %level{length=5} [%thread] %logger{1} - %msg%n" />
+			<!--ROBUST PATTERN <PatternLayout pattern="%d{ISO8601} %level{length=5} 
+				[%thread] %logger - %msg%n"/> -->
+		</Console>
+
+		<Routing name="RoutingAppender">
+			<Routes pattern="${ctx:logFileName}">
+				<Route>
+					<RollingFile name="RollingFile" fileName="logs/${ctx:logFileName}.log"
+						filePattern="logs/archive-${ctx:logFileName}/${ctx:logFileName}-%d{dd-MM-yyyy}-%i.log">
+
+						<PatternLayout
+							pattern="%d{dd-MM-yyyy HH:mm:ss} %level{length=5} [%thread] %logger{1} - %msg%n" />
+
+						<Policies>
+							<OnStartupTriggeringPolicy />
+							<TimeBasedTriggeringPolicy />
+						</Policies>
+
+						<DefaultRolloverStrategy max="20" />
+
+					</RollingFile>
+				</Route>
+			</Routes>
+		</Routing>
+	</Appenders>
+
+	<Loggers>
+		<Root level="debug" additivity="false">
+			<AppenderRef ref="RoutingAppender" />
+			<AppenderRef ref="consoleAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
