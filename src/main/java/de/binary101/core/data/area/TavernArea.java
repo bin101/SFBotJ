@@ -62,9 +62,9 @@ public class TavernArea extends BaseArea{
 				return;
 			}
 			
-			Quest quest_1 = account.getTavern().getAvailableQuests().get(0);
-			Quest quest_2 = account.getTavern().getAvailableQuests().get(1);
-			Quest quest_3 = account.getTavern().getAvailableQuests().get(2);
+			Quest quest_1 = account.getTavern().getAvailableQuests()[0];
+			Quest quest_2 = account.getTavern().getAvailableQuests()[1];
+			Quest quest_3 = account.getTavern().getAvailableQuests()[2];
 			
 			if (aluSeconds < quest_1.getDuration() && aluSeconds < quest_2.getDuration() && aluSeconds < quest_3.getDuration()) {
 				logger.info("ALU reicht fuer keine Quest mehr");

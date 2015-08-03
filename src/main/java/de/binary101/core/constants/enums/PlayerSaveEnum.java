@@ -3,9 +3,33 @@ package de.binary101.core.constants.enums;
 public enum PlayerSaveEnum {
 	
 	//Eigener Spieler
+	Level(7),
+	Armor(447),
+	MinDamageBase(448),
+	MaxDamageBase(449),
+	ExpForNextLevel(8),
+	Exp(9),
+	Honor(10),
+	Rank(11),
+	Silver(13),
+	Mushroom(14),
+	Mirror(28),
+	CharClass(29),
+	Mount(286), //Must be normalized
+	MountEndTime(451),
+	DonateableMushrooms(437),
+	NextArenaBattleTime(460),
+	Potion_1(493),
+	Potion_2(494),
+	Potion_3(495),
+	DungeonTimer(459),
+	ArenaTimer(460),
+	
 	ActionType(45),
 	ActionLength(46),
 	ActionEndTime(47),
+	BackpackDataStart(168),
+	EquipmentDataStart(48),
 	//Taverne
 	ALUinSeconds(456),
 	ActionUntil(47),
@@ -36,12 +60,7 @@ public enum PlayerSaveEnum {
 //	RegistrationIP(4),
 //	MessageCount(5),
 //	LockStatus(6),
-//	Level(7),
-//	PvPBattleWithExpCount(8),
-//	ExpForNextLevel(9),
-//	Exp(10),
-//	Honor(11),
-//	Rang(12),
+
 //	SilverGoldDungeonAdvance(13),
 //	Gold(14),
 //	Mushroom(15),

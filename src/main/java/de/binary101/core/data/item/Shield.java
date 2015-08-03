@@ -6,8 +6,8 @@ public class Shield extends Item {
 
 	@Getter int blockChance;
 	
-	public Shield(Integer[] itemData) {
-		super(itemData);
+	public Shield(Integer[] itemData, int backpackIndex) {
+		super(itemData, backpackIndex);
 		
 		this.blockChance = itemData[2];
 	}

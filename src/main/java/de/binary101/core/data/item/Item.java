@@ -24,14 +24,19 @@ public class Item {
 	@Getter private int mushroomPrice;	
 	@Getter private Boolean stinks;
 	@Getter private EnchantmentTypeEnum enchantment;
+	@Getter private int backpackIndex;
 
-	public Item(Integer[] itemData) {
+	public Item(Integer[] itemData, int backpackIndex) {
 		
 		int type = itemData[0];
 		int picNumber = itemData[1];
 		int mushroomPrice = itemData[11];
 		int helper1 = (int) ((double) type / Math.pow(2.0, 24.0));
 		int helper2 = (int) ((double) picNumber / Math.pow(2.0, 16.0));
+		
+		if(backpackIndex > -1) {
+			this.backpackIndex = backpackIndex;
+		}
 		
 		if (type > 99) {
 			type = (int) ((double) type - (double) helper1 * Math.pow(2.0, 24.0));
@@ -50,13 +55,15 @@ public class Item {
 			this.mushroomPrice = mushroomPrice;
 			this.enchantment = EnchantmentTypeEnum.fromInt(helper1);
 		
-			if (!(this instanceof Weapon)) {
+			if (!(this instanceof Weapon) && !(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
 				this.armor = itemData[2];
 			}
 			
-			appendAttribute(itemData[4], itemData[7]);
-			appendAttribute(itemData[5], itemData[8]);
-			appendAttribute(itemData[6], itemData[9]);
+			if (!(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
+				appendAttribute(itemData[4], itemData[7]);
+				appendAttribute(itemData[5], itemData[8]);
+				appendAttribute(itemData[6], itemData[9]);
+			}
 			
 			switch (this.type) {
 			case Amulet:
@@ -72,7 +79,7 @@ public class Item {
 		}
 	}
 	
-	public static Item createItem(Integer[] responseArray, int itemOffset) {
+	public static Item createItem(Integer[] responseArray, int itemOffset, int backpackIndex) {
 		Item resultingItem = null;
 		
 		Integer[] itemData = new Integer[12];
@@ -83,19 +90,19 @@ public class Item {
 		
 		switch (type) {
 		case Shield:
-			resultingItem = new Shield(itemData);
+			resultingItem = new Shield(itemData, backpackIndex);
 			break;
 		case Weapon:
-			resultingItem = new Weapon(itemData);
+			resultingItem = new Weapon(itemData, backpackIndex);
 			break;
 		case Potion:
-			resultingItem = new Potion(itemData);
+			resultingItem = new Potion(itemData, backpackIndex);
 			break;
 		case MirrorOrKey:
-			resultingItem = new MirrorpieceOrKey(itemData);
+			resultingItem = new MirrorpieceOrKey(itemData, backpackIndex);
 			break;
 		default:
-			resultingItem = new Item(itemData);
+			resultingItem = new Item(itemData, backpackIndex);
 			break;
 		}
 		

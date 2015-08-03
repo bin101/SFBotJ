@@ -1,7 +1,5 @@
 package de.binary101.core.data.area.tavern;
 
-import java.util.ArrayList;
-
 import lombok.Getter;
 import lombok.Setter;
 import de.binary101.core.constants.enums.PlayerSaveEnum;
@@ -16,7 +14,7 @@ public class Tavern {
 	@Getter @Setter
 	private int usedBeer;
 	@Getter
-	private ArrayList<Quest> availableQuests = new ArrayList<Quest>();
+	private Quest[] availableQuests = new Quest[3];
 
 	public void updateTavern(Account account, Integer[] ownplayersave) {
 		
@@ -25,29 +23,29 @@ public class Tavern {
 		account.setActionEndTime(TimeManager
 				.UTCunixTimestampToLocalDateTime(ownplayersave[PlayerSaveEnum.ActionUntil.getId()]));
 		
-		this.availableQuests.add(new Quest(
+		this.availableQuests[0] = new Quest(
 				1,
 				ownplayersave[PlayerSaveEnum.Quest_1_Duration.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_1_Silver.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_1_Exp.getId()],
-				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_1_ItemStart.getId()),
-				ownplayersave[PlayerSaveEnum.Quest_1_MonsterID.getId()]));
+				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_1_ItemStart.getId(), -1),
+				ownplayersave[PlayerSaveEnum.Quest_1_MonsterID.getId()]);
 		
-		this.availableQuests.add(new Quest(
+		this.availableQuests[1] = new Quest(
 				2,
 				ownplayersave[PlayerSaveEnum.Quest_2_Duration.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_2_Silver.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_2_Exp.getId()],
-				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_2_ItemStart.getId()),
-				ownplayersave[PlayerSaveEnum.Quest_2_MonsterID.getId()]));
+				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_2_ItemStart.getId(), -1),
+				ownplayersave[PlayerSaveEnum.Quest_2_MonsterID.getId()]);
 		
-		this.availableQuests.add(new Quest(
+		this.availableQuests[2] = new Quest(
 				3,
 				ownplayersave[PlayerSaveEnum.Quest_3_Duration.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_3_Silver.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_3_Exp.getId()],
-				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_3_ItemStart.getId()),
-				ownplayersave[PlayerSaveEnum.Quest_3_MonsterID.getId()]));
+				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_3_ItemStart.getId(), -1),
+				ownplayersave[PlayerSaveEnum.Quest_3_MonsterID.getId()]);
 		
 		this.usedBeer = ownplayersave[PlayerSaveEnum.UsedBeerToday.getId()];
 	}

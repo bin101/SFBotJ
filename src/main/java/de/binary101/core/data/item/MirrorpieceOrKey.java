@@ -13,8 +13,8 @@ public class MirrorpieceOrKey extends Item {
 	
 	@Getter	private int piece;
 
-	public MirrorpieceOrKey(Integer[] itemData) {
-		super(itemData);
+	public MirrorpieceOrKey(Integer[] itemData, int backpackIndex) {
+		super(itemData, backpackIndex);
 
 		if (this.getPicNumber() >= 1 && this.getPicNumber() <= 10) {
 			this.setType(ItemTypeEnum.DungeonKey);

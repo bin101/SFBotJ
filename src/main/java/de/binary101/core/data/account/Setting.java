@@ -40,17 +40,23 @@ public class Setting {
 	@Getter
 	@Setter
 	private Boolean performQuesten;
+	
+	@XStreamAlias("doShop")
+	@Getter
+	@Setter
+	private Boolean performShop;
 
 	public Setting() {
 
 	}
 	
-	public Setting(String username, String password, String serverURL, String questMode, int maxBeerPerDay, Boolean doQuests) {
+	public Setting(String username, String password, String serverURL, String questMode, int maxBeerPerDay, Boolean performQuesten, Boolean performShop) {
 		this.username = username;
 		this.password = password;
 		this.serverURL = serverURL;
 		this.questMode = questMode;
 		this.maxBeerToBuy = maxBeerPerDay;
-		this.performQuesten = doQuests;
+		this.performQuesten = performQuesten;
+		this.performShop = performShop;
 	}
 }

@@ -10,4 +10,8 @@ public class Character {
 	@Getter @Setter private long experience;
 	@Getter @Setter private long experienceForNextLevel;
 	@Getter @Setter private AttributeList attributeList;
+	
+	public Character() {
+		
+	}
 }
