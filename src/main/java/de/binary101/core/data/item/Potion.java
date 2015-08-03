@@ -1,10 +1,16 @@
 package de.binary101.core.data.item;
 
 import lombok.Getter;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.binary101.core.constants.enums.PotionEnum;
 import de.binary101.core.constants.enums.PotionSizeEnum;
 
 public class Potion extends Item {
+	
+	private final static Logger logger = LogManager.getLogger(Potion.class);
 	
 	@Getter PotionEnum potionType;
 	@Getter PotionSizeEnum potionSize;
@@ -53,6 +59,7 @@ public class Potion extends Item {
 		case 16:
 			potionType = PotionEnum.Eternal_Life;
 		default:
+			logger.error("Unbekannter Potion Typ");
 			break;
 		}
 		
@@ -84,6 +91,9 @@ public class Potion extends Item {
 		case 15:
 		case 16:
 			potionSize = PotionSizeEnum.Big;
+			break;
+		default:
+			logger.error("Unbekannte Potion Groesse");
 			break;
 		}
 

@@ -18,9 +18,9 @@ public enum ItemTypeEnum {
   Enchantment(14),
   
   //Werden nur intern benutzt, nicht serverseitig
-  DungeonKey(100),
-  Toiletkey(110),
-  MirrorPiece(120);
+  DungeonKey(200),
+  Toiletkey(210),
+  MirrorPiece(220);
   
   private final Integer id;
 

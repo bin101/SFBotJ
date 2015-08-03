@@ -1,10 +1,17 @@
 package de.binary101.core.data.area.tavern;
 
-import de.binary101.core.constants.enums.ItemTypeEnum;
-import de.binary101.core.data.item.Item;
 import lombok.Getter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import de.binary101.core.constants.enums.ItemTypeEnum;
+import de.binary101.core.constants.enums.SpecialQuestTypeEnum;
+import de.binary101.core.data.item.Item;
+
 public class Quest {
+	
+	private final static Logger logger = LogManager.getLogger(Quest.class);
 	
 	@Getter private int index;
 	@Getter private int duration;
@@ -12,14 +19,24 @@ public class Quest {
 	@Getter private int exp;
 	@Getter private Item item;
 	@Getter private int monsterId;
-	@Getter private Boolean isRedQuest;
+	
+	//Special Check
+	@Getter private Boolean isSpecial;
+	private Boolean isRedQuest;
+	@Getter private SpecialQuestTypeEnum specialQuestType;
 	
 	public double getExpPerSecond() {
 		return this.exp / this.duration;
 	}
 	
 	public double getSilverPerSecond() {
-		return this.silver / this.duration;
+		double itemSilver = 0;
+		
+		if (this.item.getType().getId() >= 1 && this.item.getType().getId() <= 10) {
+			itemSilver = this.item.getSilverPrice();
+		}
+		
+		return (this.silver + itemSilver) / this.duration;
 	}
 	
 	public Quest(int index, int duration, long silver, int exp, Item item, int monsterId) {
@@ -30,6 +47,38 @@ public class Quest {
 		this.item = item;
 		this.monsterId = monsterId;
 		this.isRedQuest = checkForRedQuest(monsterId);
+		this.isSpecial = false;
+		this.specialQuestType = SpecialQuestTypeEnum.None;
+		
+		if (isRedQuest) {
+			this.isSpecial = true;
+			this.specialQuestType = SpecialQuestTypeEnum.RedQuest;
+		}
+		
+		if (item.getType() != ItemTypeEnum.None && item.getIsEpic()) {
+			this.isSpecial = true;
+			this.specialQuestType = SpecialQuestTypeEnum.hasEpicItem;
+		}
+		
+		if (item.getType() != ItemTypeEnum.None && item.getType().getId() > 100) {
+			this.isSpecial = true;
+			
+			switch (item.getType()) {
+			case MirrorPiece:
+				this.specialQuestType = SpecialQuestTypeEnum.hasMirrorpiece;
+				break;
+			case Toiletkey:
+				this.specialQuestType = SpecialQuestTypeEnum.hasToiletKey;
+				break;
+			case DungeonKey:
+				this.specialQuestType = SpecialQuestTypeEnum.hasDungeonKey;
+				break;
+			default:
+				this.specialQuestType = SpecialQuestTypeEnum.None;
+				logger.error("Dieser Fall sollte nicht eintreten");
+				break;
+			}
+		}
 	}
 	
 	private Boolean checkForRedQuest(int monsterId) {

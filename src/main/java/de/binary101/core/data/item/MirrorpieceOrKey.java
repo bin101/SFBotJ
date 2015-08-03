@@ -1,10 +1,16 @@
 package de.binary101.core.data.item;
 
-import de.binary101.core.constants.enums.ItemTypeEnum;
 import lombok.Getter;
 
-public class MirrorpieceOrKey extends Item {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import de.binary101.core.constants.enums.ItemTypeEnum;
+
+public class MirrorpieceOrKey extends Item {
+	
+	private final static Logger logger = LogManager.getLogger(MirrorpieceOrKey.class);
+	
 	@Getter	private int piece;
 
 	public MirrorpieceOrKey(Integer[] itemData) {
@@ -20,7 +26,6 @@ public class MirrorpieceOrKey extends Item {
 		}
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -33,6 +38,12 @@ public class MirrorpieceOrKey extends Item {
 			break;
 		case MirrorPiece:
 			builder.append(" PieceNr:" + this.piece);
+			break;
+		case Toiletkey:
+			//nichts zu appenden
+			break;
+		default:
+			logger.error("Unbekanntes Special Item");
 			break;
 		}
 

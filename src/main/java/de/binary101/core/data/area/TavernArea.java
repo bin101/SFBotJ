@@ -95,31 +95,48 @@ public class TavernArea extends BaseArea{
 		
 		Boolean overwriteFullInventory = true; //TODO Sollte eigentlich aus den Settings gelesen werden.
 		
+		Boolean oneQuestIsSpecial = false;
+		
 		Quest chosenQuest = null;
 		String responseString = null;
 		
-		switch (account.getSetting().getQuestMode()) {
-		case "exp":
-			if (quest_1.getExpPerSecond() >= quest_2.getExpPerSecond() && quest_1.getExpPerSecond() >= quest_3.getExpPerSecond()) {
-				chosenQuest = quest_1;
-			} else if (quest_2.getExpPerSecond() >= quest_1.getExpPerSecond() && quest_2.getExpPerSecond() >= quest_3.getExpPerSecond() ) {
-				chosenQuest = quest_2;
-			} else {
-				chosenQuest = quest_3;
-			}			
-			break;
-		case "gold":
-			if (quest_1.getSilverPerSecond() >= quest_2.getSilverPerSecond() && quest_1.getSilverPerSecond() >= quest_3.getSilverPerSecond()) {
-				chosenQuest = quest_1;
-			} else if (quest_2.getSilverPerSecond() >= quest_1.getSilverPerSecond() && quest_2.getSilverPerSecond() >= quest_3.getSilverPerSecond() ) {
-				chosenQuest = quest_2;
-			} else {
-				chosenQuest = quest_3;
-			}			
-			break;
-		default:
-			logger.error("Kein oder falscher Questmode gesetzt, entscheide dich fuer den Mode gold oder exp");
-			break;
+		if (quest_1.getIsSpecial()) {
+			oneQuestIsSpecial = true;
+			chosenQuest = quest_1;
+		} else if (quest_2.getIsSpecial()) {
+			oneQuestIsSpecial = true;
+			chosenQuest = quest_2;
+		} else if (quest_3.getIsSpecial()) {
+			oneQuestIsSpecial = true;
+			chosenQuest = quest_3;
+		}
+		
+		if (!oneQuestIsSpecial){
+			switch (account.getSetting().getQuestMode()) {
+			case "exp":
+				if (quest_1.getExpPerSecond() >= quest_2.getExpPerSecond() && quest_1.getExpPerSecond() >= quest_3.getExpPerSecond()) {
+					chosenQuest = quest_1;
+				} else if (quest_2.getExpPerSecond() >= quest_1.getExpPerSecond() && quest_2.getExpPerSecond() >= quest_3.getExpPerSecond() ) {
+					chosenQuest = quest_2;
+				} else {
+					chosenQuest = quest_3;
+				}			
+				break;
+			case "gold":
+				if (quest_1.getSilverPerSecond() >= quest_2.getSilverPerSecond() && quest_1.getSilverPerSecond() >= quest_3.getSilverPerSecond()) {
+					chosenQuest = quest_1;
+				} else if (quest_2.getSilverPerSecond() >= quest_1.getSilverPerSecond() && quest_2.getSilverPerSecond() >= quest_3.getSilverPerSecond() ) {
+					chosenQuest = quest_2;
+				} else {
+					chosenQuest = quest_3;
+				}			
+				break;
+			default:
+				logger.error("Kein oder falscher Questmode gesetzt, entscheide dich fuer den Mode gold oder exp");
+				break;
+			}
+		} else {
+			logger.info(String.format("Habe den Questmode ignoriert, da Quest %s %s"), chosenQuest.getIndex(), chosenQuest.getSpecialQuestType().toString());
 		}
 		
 		if (chosenQuest != null) {
