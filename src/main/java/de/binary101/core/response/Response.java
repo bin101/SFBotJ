@@ -10,7 +10,6 @@ import com.google.common.collect.ArrayListMultimap;
 import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.constants.enums.ResponseEnum;
 import de.binary101.core.data.account.Account;
-import de.binary101.core.data.character.OwnCharacter;
 import de.binary101.core.utils.CryptManager;
 import de.binary101.core.utils.TimeManager;
 

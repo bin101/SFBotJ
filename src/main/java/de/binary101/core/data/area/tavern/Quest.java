@@ -1,5 +1,7 @@
 package de.binary101.core.data.area.tavern;
 
+import de.binary101.core.constants.enums.ItemTypeEnum;
+import de.binary101.core.data.item.Item;
 import lombok.Getter;
 
 public class Quest {
@@ -8,7 +10,7 @@ public class Quest {
 	@Getter private int duration;
 	@Getter private long silver;
 	@Getter private int exp;
-	//TODO @Getter private Item item			Item auch mit in die Gold Berechnung
+	@Getter private Item item;
 	@Getter private int monsterId;
 	@Getter private Boolean isRedQuest;
 	
@@ -20,11 +22,12 @@ public class Quest {
 		return this.silver / this.duration;
 	}
 	
-	public Quest(int index, int duration, long silver, int exp/*TODO, Item item*/, int monsterId) {
+	public Quest(int index, int duration, long silver, int exp, Item item, int monsterId) {
 		this.index = index;
 		this.duration = duration;
 		this.silver = silver;
 		this.exp = exp;
+		this.item = item;
 		this.monsterId = monsterId;
 		this.isRedQuest = checkForRedQuest(monsterId);
 	}
@@ -47,5 +50,20 @@ public class Quest {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Quest " + this.index + ":\n");
+		builder.append("	Dauer: " + this.duration + "\n");
+		builder.append("	Silber: " + this.silver + "\n");
+		builder.append("	Exp: " + this.exp + "\n");
+		if (this.item.getType() != ItemTypeEnum.None) {
+			builder.append("	Item: " + this.item.toString() + "\n");
+		}
+		builder.append("	MonsterId: " + this.monsterId + "\n");
+		
+		return builder.toString();
 	}
 }

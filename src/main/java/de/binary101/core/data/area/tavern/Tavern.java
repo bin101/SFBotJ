@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import de.binary101.core.constants.enums.PlayerSaveEnum;
 import de.binary101.core.data.account.Account;
+import de.binary101.core.data.item.Item;
 import de.binary101.core.utils.TimeManager;
 
 public class Tavern {
@@ -29,6 +30,7 @@ public class Tavern {
 				ownplayersave[PlayerSaveEnum.Quest_1_Duration.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_1_Silver.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_1_Exp.getId()],
+				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_1_ItemStart.getId()),
 				ownplayersave[PlayerSaveEnum.Quest_1_MonsterID.getId()]));
 		
 		this.availableQuests.add(new Quest(
@@ -36,6 +38,7 @@ public class Tavern {
 				ownplayersave[PlayerSaveEnum.Quest_2_Duration.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_2_Silver.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_2_Exp.getId()],
+				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_2_ItemStart.getId()),
 				ownplayersave[PlayerSaveEnum.Quest_2_MonsterID.getId()]));
 		
 		this.availableQuests.add(new Quest(
@@ -43,6 +46,7 @@ public class Tavern {
 				ownplayersave[PlayerSaveEnum.Quest_3_Duration.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_3_Silver.getId()],
 				ownplayersave[PlayerSaveEnum.Quest_3_Exp.getId()],
+				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_3_ItemStart.getId()),
 				ownplayersave[PlayerSaveEnum.Quest_3_MonsterID.getId()]));
 		
 		this.usedBeer = ownplayersave[PlayerSaveEnum.UsedBeerToday.getId()];

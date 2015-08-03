@@ -129,6 +129,7 @@ public class TavernArea extends BaseArea{
 				result = true;
 				
 				logger.info(String.format("Habe mich fuer Quest Nummer %s entschieden, werde in %.2f Minute/n wieder da sein", chosenQuest.getIndex(), (double)chosenQuest.getDuration() / 60));
+				logger.info(chosenQuest.toString());
 				logger.info("Also so gegen: " + account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss")));
 			}
 			
@@ -137,6 +138,7 @@ public class TavernArea extends BaseArea{
 		return result;
 	}
 	
+	@SuppressWarnings("unused")
 	private void finishQuest() {
 		String responseString = sendRequest(new QuestFinishRequest(false));
 		Response response = new Response(responseString, account);

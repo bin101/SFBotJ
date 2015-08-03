@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import de.binary101.core.SFBotJCore;
 import de.binary101.core.data.account.Account;
-import de.binary101.core.data.account.Setting;
 import de.binary101.core.data.area.LoginArea;
 import de.binary101.core.data.area.TavernArea;
 import de.binary101.core.utils.SettingsManager;
