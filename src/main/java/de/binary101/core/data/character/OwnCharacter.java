@@ -46,9 +46,9 @@ public class OwnCharacter extends Character{
 		this.equipment = new Equipment();
 	}
 
-	public void updateOwnCharacter(Account account, Integer[] ownplayersave) {
+	public void updateOwnCharacter(Account account, Long[] ownplayersave) {
 		
-		int newLevel = Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.Level.getId()]);
+		int newLevel = Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.Level.getId()].intValue());
 		if (this.level != 0 && this.level < newLevel) {
 			logger.info(String.format("Yeah, Levelup. Ich bin jetzt Level %s", newLevel));
 		}
@@ -56,11 +56,11 @@ public class OwnCharacter extends Character{
 		
 		this.exp = ownplayersave[PlayerSaveEnum.Exp.getId()];
 		this.expForNextLevel = ownplayersave[PlayerSaveEnum.ExpForNextLevel.getId()];
-		this.honor = ownplayersave[PlayerSaveEnum.Honor.getId()];
-		this.rank = ownplayersave[PlayerSaveEnum.Rank.getId()];
+		this.honor = ownplayersave[PlayerSaveEnum.Honor.getId()].intValue();
+		this.rank = ownplayersave[PlayerSaveEnum.Rank.getId()].intValue();
 		this.silver = ownplayersave[PlayerSaveEnum.Silver.getId()];
-		this.mushrooms = ownplayersave[PlayerSaveEnum.Mushroom.getId()];
-		this.setAttributeList(new AttributeList(ownplayersave[30], ownplayersave[31], ownplayersave[32], ownplayersave[33], ownplayersave[34], ownplayersave[35], ownplayersave[36], ownplayersave[37], ownplayersave[38], ownplayersave[39], ownplayersave[40], ownplayersave[41], ownplayersave[42], ownplayersave[43], ownplayersave[44]));
+		this.mushrooms = ownplayersave[PlayerSaveEnum.Mushroom.getId()].intValue();
+		this.setAttributeList(new AttributeList(ownplayersave[30].intValue(), ownplayersave[31].intValue(), ownplayersave[32].intValue(), ownplayersave[33].intValue(), ownplayersave[34].intValue(), ownplayersave[35].intValue(), ownplayersave[36].intValue(), ownplayersave[37].intValue(), ownplayersave[38].intValue(), ownplayersave[39].intValue(), ownplayersave[40].intValue(), ownplayersave[41].intValue(), ownplayersave[42].intValue(), ownplayersave[43].intValue(), ownplayersave[44].intValue()));
 		
 		String mirrorHelper = ownplayersave[PlayerSaveEnum.Mirror.getId()].toString();
 		while(mirrorHelper.length() < 32) { 
@@ -72,7 +72,7 @@ public class OwnCharacter extends Character{
          *  for (int index = 0; index < 13; ++index)
          *  this.MirrorPieces.Add(Convert.ToInt32(str.Substring(index + 1, 1)));
 		*/
-		this.charClass = ClassEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.CharClass.getId()]));
+		this.charClass = ClassEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.CharClass.getId()].intValue()));
 		
 		/*TODO Mount
 		 * switch (Response.NormalizeItem(this.Data[286]))
@@ -98,7 +98,7 @@ public class OwnCharacter extends Character{
 		
 		
 		//Beschaeftigungszeiten unf Flags setzten
-		account.setActionType(ActionEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.ActionType.getId()])));
+		account.setActionType(ActionEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.ActionType.getId()].intValue())));
 		
 		if (account.getActionType() == ActionEnum.None) {
 			account.setHasRunningAction(false);
@@ -106,17 +106,17 @@ public class OwnCharacter extends Character{
 			account.setHasRunningAction(true);
 		}
 		
-		account.setActionLength(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.ActionLength.getId()]));
-		account.setActionEndTime(TimeManager.UTCunixTimestampToLocalDateTime(ownplayersave[PlayerSaveEnum.ActionEndTime.getId()]).plusSeconds(2));
+		account.setActionLength(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.ActionLength.getId()].intValue()));
+		account.setActionEndTime(TimeManager.UTCunixTimestampToLocalDateTime(ownplayersave[PlayerSaveEnum.ActionEndTime.getId()].intValue()).plusSeconds(2));
 		
 		
 		//Update Backpack
-		Integer[] backpackData = new Integer[12 * 5];
+		Long[] backpackData = new Long[12 * 5];
 		System.arraycopy(ownplayersave, PlayerSaveEnum.BackpackDataStart.getId(), backpackData, 0, 12 * 5);
 		this.backpack.updateBackpack(backpackData);
 		
 		//Update Equipment
-		Integer[] equipmentData = new Integer[12 * 10];
+		Long[] equipmentData = new Long[12 * 10];
 		System.arraycopy(ownplayersave, PlayerSaveEnum.EquipmentDataStart.getId(), equipmentData, 0, 12 * 10);
 		this.equipment.updateEquipment(equipmentData);
 	}

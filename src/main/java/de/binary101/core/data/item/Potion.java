@@ -15,11 +15,11 @@ public class Potion extends Item {
 	@Getter PotionEnum potionType;
 	@Getter PotionSizeEnum potionSize;
 
-	public Potion(Integer[] itemData, int backpackIndex) {
+	public Potion(Long[] itemData, int backpackIndex) {
 		super(itemData, backpackIndex);
 		
-		this.potionType = getPotionType(itemData[1]);
-		this.potionSize = getPotionSize(itemData[1]);
+		this.potionType = getPotionType(itemData[1].intValue());
+		this.potionSize = getPotionSize(itemData[1].intValue());
 	}
 	
 	@Override

@@ -13,7 +13,7 @@ public class MirrorpieceOrKey extends Item {
 	
 	@Getter	private int piece;
 
-	public MirrorpieceOrKey(Integer[] itemData, int backpackIndex) {
+	public MirrorpieceOrKey(Long[] itemData, int backpackIndex) {
 		super(itemData, backpackIndex);
 
 		if (this.getPicNumber() >= 1 && this.getPicNumber() <= 10) {

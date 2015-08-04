@@ -71,14 +71,14 @@ public class Response {
 		
 		if (parsedData.containsKey("ownplayersave")) {
 			String[] stringArray = parsedData.get("ownplayersave").get(0).split("/");
-			Integer[] intArray = new Integer[stringArray.length];
+			Long[] longArray = new Long[stringArray.length];
 			
 			for (int i = 0; i < stringArray.length; i++) {
-				intArray[i] = Integer.parseInt(stringArray[i]);
+				longArray[i] = Long.parseLong(stringArray[i]);
 			}
 			
-			account.getOwnCharacter().updateOwnCharacter(account, intArray);
-			account.getTavern().updateTavern(account, intArray);
+			account.getOwnCharacter().updateOwnCharacter(account, longArray);
+			account.getTavern().updateTavern(account, longArray);
 		}
 		
 		if (parsedData.containsKey("tavernspecial")) {

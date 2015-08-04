@@ -28,11 +28,11 @@ public class Item {
 	@Getter private EnchantmentTypeEnum enchantment;
 	@Getter private int backpackIndex;
 
-	public Item(Integer[] itemData, int backpackIndex) {
+	public Item(Long[] itemData, int backpackIndex) {
 		
-		int type = itemData[0];
-		int picNumber = itemData[1];
-		int mushroomPrice = itemData[11];
+		int type = itemData[0].intValue();
+		int picNumber = itemData[1].intValue();
+		int mushroomPrice = itemData[11].intValue();
 		int helper1 = (int) ((double) type / Math.pow(2.0, 24.0));
 		int helper2 = (int) ((double) picNumber / Math.pow(2.0, 16.0));
 		
@@ -58,13 +58,13 @@ public class Item {
 			this.enchantment = EnchantmentTypeEnum.fromInt(helper1);
 		
 			if (!(this instanceof Weapon) && !(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
-				this.armor = itemData[2];
+				this.armor = itemData[2].intValue();
 			}
 			
 			if (!(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
-				appendAttribute(itemData[4], itemData[7]);
-				appendAttribute(itemData[5], itemData[8]);
-				appendAttribute(itemData[6], itemData[9]);
+				appendAttribute(itemData[4].intValue(), itemData[7].intValue());
+				appendAttribute(itemData[5].intValue(), itemData[8].intValue());
+				appendAttribute(itemData[6].intValue(), itemData[9].intValue());
 			}
 			
 			switch (this.type) {
@@ -81,14 +81,14 @@ public class Item {
 		}
 	}
 	
-	public static Item createItem(Integer[] intArray, int itemOffset, int backpackIndex) {
+	public static Item createItem(Long[] longArray, int itemOffset, int backpackIndex) {
 		Item resultingItem = null;
 		
-		Integer[] itemData = new Integer[12];
-		System.arraycopy(intArray, itemOffset, itemData, 0, 12);
+		Long[] itemData = new Long[12];
+		System.arraycopy(longArray, itemOffset, itemData, 0, 12);
 		
 		int helper = (int)((double)itemData[0] / Math.pow(2, 24));
-		ItemTypeEnum type = ItemTypeEnum.fromInt(itemData[0] > 99 ? (int)((double)itemData[0] - (double)helper * Math.pow(2.0, 24.0)) : itemData[0]);
+		ItemTypeEnum type = ItemTypeEnum.fromInt(itemData[0].intValue() > 99 ? (int)((double)itemData[0].intValue() - (double)helper * Math.pow(2.0, 24.0)) : itemData[0].intValue());
 		
 		switch (type) {
 		case Shield:
@@ -114,7 +114,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return String.format("Type:%s Str:%s Dex:%s Int:%s Sta:%s Luc:%s Epic:%s Value:%s", this.type, this.strength, this.dexterity, this.intelligence, this.stamina, this.luck, this.epicValue, this.silverPrice);
+		return String.format("Type:%s Str:%s Dex:%s Int:%s Sta:%s Luc:%s Epic:%s isEpic:%s Value:%s", this.type, this.strength, this.dexterity, this.intelligence, this.stamina, this.luck, this.epicValue, this.isEpic, this.silverPrice);
 	}
 	
 	private ClassEnum calcItemClass(int picNumber) {

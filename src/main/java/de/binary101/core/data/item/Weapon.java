@@ -6,11 +6,11 @@ public class Weapon extends Item {
 	
 	@Getter int minDmg, maxDmg;
 
-	public Weapon(Integer[] itemData, int backpackIndex) {
+	public Weapon(Long[] itemData, int backpackIndex) {
 		super(itemData, backpackIndex);
 		
-		this.minDmg = itemData[2];
-		this.maxDmg = itemData[3];
+		this.minDmg = itemData[2].intValue();
+		this.maxDmg = itemData[3].intValue();
 	}
 
 	@Override

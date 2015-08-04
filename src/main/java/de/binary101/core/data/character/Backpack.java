@@ -46,7 +46,7 @@ public class Backpack {
 	
 	
 	
-	public void updateBackpack (Integer[] backpackData) {
+	public void updateBackpack (Long[] backpackData) {
 		StringBuilder builder = new StringBuilder();
 		
 		for (int i = 0; i < items.size(); i++) {

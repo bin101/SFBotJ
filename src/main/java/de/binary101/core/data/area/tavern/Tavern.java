@@ -25,37 +25,37 @@ public class Tavern {
 		this.usedBeer = 0;
 	}
 
-	public void updateTavern(Account account, Integer[] ownplayersave) {
+	public void updateTavern(Account account, Long[] ownplayersave) {
 		
-		this.remainingALUSeconds = ownplayersave[PlayerSaveEnum.ALUinSeconds.getId()];
-		this.usedBeer = ownplayersave[PlayerSaveEnum.UsedBeerToday.getId()];
+		this.remainingALUSeconds = ownplayersave[PlayerSaveEnum.ALUinSeconds.getId()].intValue();
+		this.usedBeer = ownplayersave[PlayerSaveEnum.UsedBeerToday.getId()].intValue();
 		
 		account.setActionEndTime(TimeManager
-				.UTCunixTimestampToLocalDateTime(ownplayersave[PlayerSaveEnum.ActionUntil.getId()]));
+				.UTCunixTimestampToLocalDateTime(ownplayersave[PlayerSaveEnum.ActionUntil.getId()].intValue()));
 		
 		this.availableQuests.set(0, new Quest(
 				1,
-				ownplayersave[PlayerSaveEnum.Quest_1_Duration.getId()],
-				ownplayersave[PlayerSaveEnum.Quest_1_Silver.getId()],
-				ownplayersave[PlayerSaveEnum.Quest_1_Exp.getId()],
+				ownplayersave[PlayerSaveEnum.Quest_1_Duration.getId()].intValue(),
+				ownplayersave[PlayerSaveEnum.Quest_1_Silver.getId()].intValue(),
+				ownplayersave[PlayerSaveEnum.Quest_1_Exp.getId()].intValue(),
 				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_1_ItemStart.getId(), -1),
-				ownplayersave[PlayerSaveEnum.Quest_1_MonsterID.getId()]));
+				ownplayersave[PlayerSaveEnum.Quest_1_MonsterID.getId()].intValue()));
 		
 		this.availableQuests.set(1, new Quest(
 				2,
-				ownplayersave[PlayerSaveEnum.Quest_2_Duration.getId()],
-				ownplayersave[PlayerSaveEnum.Quest_2_Silver.getId()],
-				ownplayersave[PlayerSaveEnum.Quest_2_Exp.getId()],
+				ownplayersave[PlayerSaveEnum.Quest_2_Duration.getId()].intValue(),
+				ownplayersave[PlayerSaveEnum.Quest_2_Silver.getId()].intValue(),
+				ownplayersave[PlayerSaveEnum.Quest_2_Exp.getId()].intValue(),
 				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_2_ItemStart.getId(), -1),
-				ownplayersave[PlayerSaveEnum.Quest_2_MonsterID.getId()]));
+				ownplayersave[PlayerSaveEnum.Quest_2_MonsterID.getId()].intValue()));
 		
 		this.availableQuests.set(2, new Quest(
 				3,
-				ownplayersave[PlayerSaveEnum.Quest_3_Duration.getId()],
-				ownplayersave[PlayerSaveEnum.Quest_3_Silver.getId()],
-				ownplayersave[PlayerSaveEnum.Quest_3_Exp.getId()],
+				ownplayersave[PlayerSaveEnum.Quest_3_Duration.getId()].intValue(),
+				ownplayersave[PlayerSaveEnum.Quest_3_Silver.getId()].intValue(),
+				ownplayersave[PlayerSaveEnum.Quest_3_Exp.getId()].intValue(),
 				Item.createItem(ownplayersave, PlayerSaveEnum.Quest_3_ItemStart.getId(), -1),
-				ownplayersave[PlayerSaveEnum.Quest_3_MonsterID.getId()]));
+				ownplayersave[PlayerSaveEnum.Quest_3_MonsterID.getId()].intValue()));
 	}
 
 }
