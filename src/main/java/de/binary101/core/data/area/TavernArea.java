@@ -1,6 +1,7 @@
 package de.binary101.core.data.area;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,9 +34,7 @@ public class TavernArea extends BaseArea{
 		
 		if (!account.getSetting().getPerformQuesten() 
 			|| account.getOwnCharacter().getBackpack().getIsFull() 
-			|| !account.getHasEnoughALUForOneQuest()
-			|| (!(DateTime.now().getHourOfDay() < account.getSetting().getMinHourOfDayFor10HourTownwatch()
-				&& DateTime.now().getHourOfDay() > account.getSetting().getMaxHourOfDayFor10HourTownwatch()))) {
+			|| !account.getHasEnoughALUForOneQuest()) {
 			return;
 		}
 		
@@ -65,9 +64,9 @@ public class TavernArea extends BaseArea{
 				}
 			}
 			
-			if (startBestQuest(account.getTavern().getAvailableQuests(), true)) {
-				logger.info("Gehe auf den Questgeber zu");
-			} else {
+			logger.info("Gehe auf den Questgeber zu");
+			
+			if (!startBestQuest(account.getTavern().getAvailableQuests(), true)) {
 				logger.error("Es gab einen Fehler beim Queststart.");
 			}
 			
@@ -100,13 +99,19 @@ public class TavernArea extends BaseArea{
 		int remainingAluSeconds = account.getTavern().getRemainingALUSeconds();
 		
 		if (account.getSetting().getPreferSpecialQuests()) {
-			chosenQuest = quests
-					.stream()
-					.filter(quest -> quest.getDuration() <= remainingAluSeconds
-							&& quest.getIsSpecial())
-					.min((quest1, quest2) -> Integer.compare(
-							quest1.getDuration(), quest2.getDuration())).get();
-			oneQuestIsSpecial = chosenQuest != null;
+			try {
+				chosenQuest = quests
+						.stream()
+						.filter(quest -> quest.getDuration() <= remainingAluSeconds
+								&& quest.getIsSpecial())
+						.min((quest1, quest2) -> Integer.compare(
+								quest1.getDuration(), quest2.getDuration())).get();
+				
+				oneQuestIsSpecial = true;
+				
+			} catch (NoSuchElementException e) {
+				oneQuestIsSpecial = false;
+			}
 		}
 		
 		if (!oneQuestIsSpecial){
