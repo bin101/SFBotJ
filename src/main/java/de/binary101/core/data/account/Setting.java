@@ -1,10 +1,10 @@
 package de.binary101.core.data.account;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 @XStreamAlias("setting")
 public class Setting {

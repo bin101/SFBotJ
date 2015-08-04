@@ -1,7 +1,8 @@
 package de.binary101.core.request;
 
-import de.binary101.core.constants.enums.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import de.binary101.core.constants.enums.RequestEnum;
 
 public class Request {
 	@Getter private RequestEnum type;

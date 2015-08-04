@@ -1,6 +1,7 @@
 package de.binary101.core.data.character;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import de.binary101.core.constants.enums.AttributeEnum;
 
 public class Attribute {
