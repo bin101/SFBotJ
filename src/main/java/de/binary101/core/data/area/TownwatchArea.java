@@ -28,12 +28,12 @@ public class TownwatchArea extends BaseArea {
 		
 		if (!account.getHasRunningAction()) {
 			logger.info("Mache mich auf den Weg zur Stadtwache");
-			Helper.ThreadSleep(1000, 2000);
+			Helper.threadSleep(1000, 2000);
 			startTownwatch();
 			
 		} else {
 			if ( account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Work) {
-				Helper.ThreadSleep(1000, 2000);
+				Helper.threadSleep(1000, 2000);
 				finishTownwatch();
 				logger.info("Habe meine Schicht beendet");
 			}
@@ -71,7 +71,7 @@ public class TownwatchArea extends BaseArea {
 		logger.info(String.format("Sollte gegen %s fertig sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
 		
 		account.logout();
-		Helper.ThreadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 * hoursToWork);
+		Helper.threadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 * hoursToWork);
 	}
 	
 	private void finishTownwatch() {

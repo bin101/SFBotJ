@@ -3,61 +3,79 @@ package de.binary101.core.data.character;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.*;
-import de.binary101.core.constants.enums.SkillEnum;
+import de.binary101.core.constants.enums.AttributeEnum;
 
 public class AttributeList {
-	@Getter
-	private Map<SkillEnum, Attribute> attributeList;
+	private Map<AttributeEnum, Attribute> attributeList;
+	
+	public Attribute getStrength() {
+		return this.attributeList.get(AttributeEnum.Strength);
+	}
+	
+	public Attribute getDexterity() {
+		return this.attributeList.get(AttributeEnum.Dexterity);
+	}
+	
+	public Attribute getIntelligence() {
+		return this.attributeList.get(AttributeEnum.Intelligence);
+	}
+	
+	public Attribute getStamina() {
+		return this.attributeList.get(AttributeEnum.Stamina);
+	}
+	
+	public Attribute getLuck() {
+		return this.attributeList.get(AttributeEnum.Luck);
+	}
 
 	public AttributeList(	final int strength,		final int dexterity,		final int intelligence,		final int stamina,		final int luck, 
 							final int strengthBonus, 	final int dexterityBonus,	final int intelligenceBonus, 	final int staminaBonus, 	final int luckBonus,
 							final int strengthPrice, 	final int dexterityPrice, final int intelligencePrice,	final int staminaPrice,	final int luckPrice) {
 
-		this.attributeList = new HashMap<SkillEnum, Attribute>();
+		this.attributeList = new HashMap<AttributeEnum, Attribute>();
 
-		this.attributeList.put(SkillEnum.Strength, new Attribute() {
+		this.attributeList.put(AttributeEnum.Strength, new Attribute() {
 			{
-				setType(SkillEnum.Strength);
+				setType(AttributeEnum.Strength);
 				setBaseValue(strength);
 				setBonusValue(strengthBonus);
-				setPriceForNextUpgrade(strengthPrice >= 10000000 ? 10000000 : strengthPrice);
+				setPriceForNextUpgrade(strengthPrice);
 			}
 		});
 
-		this.attributeList.put(SkillEnum.Dexterity, new Attribute() {
+		this.attributeList.put(AttributeEnum.Dexterity, new Attribute() {
 			{
-				setType(SkillEnum.Dexterity);
+				setType(AttributeEnum.Dexterity);
 				setBaseValue(dexterity);
 				setBonusValue(dexterityBonus);
-				setPriceForNextUpgrade(dexterityPrice >= 10000000 ? 10000000 : dexterityPrice);
+				setPriceForNextUpgrade(dexterityPrice);
 			}
 		});
 
-		this.attributeList.put(SkillEnum.Intelligence, new Attribute() {
+		this.attributeList.put(AttributeEnum.Intelligence, new Attribute() {
 			{
-				setType(SkillEnum.Intelligence);
+				setType(AttributeEnum.Intelligence);
 				setBaseValue(intelligence);
 				setBonusValue(intelligenceBonus);
-				setPriceForNextUpgrade(intelligencePrice >= 10000000 ? 10000000 : intelligencePrice);
+				setPriceForNextUpgrade(intelligencePrice);
 			}
 		});
 
-		this.attributeList.put(SkillEnum.Stamina, new Attribute() {
+		this.attributeList.put(AttributeEnum.Stamina, new Attribute() {
 			{
-				setType(SkillEnum.Stamina);
+				setType(AttributeEnum.Stamina);
 				setBaseValue(stamina);
 				setBonusValue(staminaBonus);
-				setPriceForNextUpgrade(staminaPrice >= 10000000 ? 10000000 : staminaPrice);
+				setPriceForNextUpgrade(staminaPrice);
 			}
 		});
 
-		this.attributeList.put(SkillEnum.Luck, new Attribute() {
+		this.attributeList.put(AttributeEnum.Luck, new Attribute() {
 			{
-				setType(SkillEnum.Luck);
+				setType(AttributeEnum.Luck);
 				setBaseValue(luck);
 				setBonusValue(luckBonus);
-				setPriceForNextUpgrade(luckPrice >= 10000000 ? 10000000 : luckPrice);
+				setPriceForNextUpgrade(luckPrice);
 			}
 		});
 	}

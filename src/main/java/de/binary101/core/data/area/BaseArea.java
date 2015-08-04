@@ -59,7 +59,7 @@ public class BaseArea {
 		request.setRequestCount(this.account.getRequestCount());
 		
 		
-		Helper.ThreadSleep(1000, 2000);
+		Helper.threadSleep(1000, 2000);
 		
 		if (checkServerConnection()) {
 			HttpGet req = new HttpGet(buildRequestString(request));

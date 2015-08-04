@@ -60,7 +60,7 @@ public class OwnCharacter extends Character{
 		this.rank = ownplayersave[PlayerSaveEnum.Rank.getId()].intValue();
 		this.silver = ownplayersave[PlayerSaveEnum.Silver.getId()];
 		this.mushrooms = ownplayersave[PlayerSaveEnum.Mushroom.getId()].intValue();
-		this.setAttributeList(new AttributeList(ownplayersave[30].intValue(), ownplayersave[31].intValue(), ownplayersave[32].intValue(), ownplayersave[33].intValue(), ownplayersave[34].intValue(), ownplayersave[35].intValue(), ownplayersave[36].intValue(), ownplayersave[37].intValue(), ownplayersave[38].intValue(), ownplayersave[39].intValue(), ownplayersave[40].intValue(), ownplayersave[41].intValue(), ownplayersave[42].intValue(), ownplayersave[43].intValue(), ownplayersave[44].intValue()));
+		this.setAttributeList(new AttributeList(ownplayersave[30].intValue(), ownplayersave[31].intValue(), ownplayersave[32].intValue(), ownplayersave[33].intValue(), ownplayersave[34].intValue(), ownplayersave[35].intValue(), ownplayersave[36].intValue(), ownplayersave[37].intValue(), ownplayersave[38].intValue(), ownplayersave[39].intValue(), Helper.getRealAttributePrice(ownplayersave[40].intValue()), Helper.getRealAttributePrice(ownplayersave[41].intValue()), Helper.getRealAttributePrice(ownplayersave[42].intValue()), Helper.getRealAttributePrice(ownplayersave[43].intValue()), Helper.getRealAttributePrice(ownplayersave[44].intValue())));
 		
 		String mirrorHelper = ownplayersave[PlayerSaveEnum.Mirror.getId()].toString();
 		while(mirrorHelper.length() < 32) { 
