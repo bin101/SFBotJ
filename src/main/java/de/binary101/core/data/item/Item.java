@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.sun.javafx.image.impl.IntArgb;
-
 import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.EnchantmentTypeEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;

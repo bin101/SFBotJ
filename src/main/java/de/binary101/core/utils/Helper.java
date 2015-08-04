@@ -1,7 +1,5 @@
 package de.binary101.core.utils;
 
-import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

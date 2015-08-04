@@ -50,7 +50,7 @@ public class Main {
 //				core.getAreas().add(new ArenaArea(account));
 //				core.getAreas().add(new GuildArea(account));
 //				core.getAreas().add(new DungeonArea(account));
-//				core.getAreas().add(new TownwatchArea(account));
+				core.getAreas().add(new TownwatchArea(account));
 				
 				//Erzeuge den Thread
 				Thread thread = new Thread(botThreads, core, (core.getAccount().toString()));
