@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import de.binary101.core.constants.enums.ActionEnum;
+import de.binary101.core.constants.enums.ItemTypeEnum;
 import de.binary101.core.constants.enums.RequestEnum;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.data.area.tavern.Quest;
@@ -19,6 +21,8 @@ import de.binary101.core.utils.Helper;
 public class TavernArea extends BaseArea{
 	
 	private final static Logger logger = LogManager.getLogger(TavernArea.class);
+	
+	private Boolean gotNewItem;
 
 	public TavernArea(Account account) {
 		super(account);
@@ -27,13 +31,17 @@ public class TavernArea extends BaseArea{
 	@Override
 	public void performArea() {
 		
-		if (!account.getSetting().getPerformQuesten() || account.getOwnCharacter().getBackpack().getIsFull() || !account.getHasEnoughALUForOneQuest()) {
+		if (!account.getSetting().getPerformQuesten() 
+			|| account.getOwnCharacter().getBackpack().getIsFull() 
+			|| !account.getHasEnoughALUForOneQuest()
+			|| (!(DateTime.now().getHourOfDay() < account.getSetting().getMinHourOfDayFor10HourTownwatch()
+				&& DateTime.now().getHourOfDay() > account.getSetting().getMaxHourOfDayFor10HourTownwatch()))) {
 			return;
 		}
 		
 		if (!account.getHasRunningAction()) {
 			logger.info("Betrete Taverne");
-			Helper.ThreadSleep(600, 1200);
+			Helper.ThreadSleep(1000, 2000);
 			
 			int aluSeconds = account.getTavern().getRemainingALUSeconds();
 			
@@ -58,7 +66,7 @@ public class TavernArea extends BaseArea{
 			}
 			
 			if (startBestQuest(account.getTavern().getAvailableQuests(), true)) {
-				logger.info("Mach mich auf die Reise");
+				logger.info("Gehe auf den Questgeber zu");
 			} else {
 				logger.error("Es gab einen Fehler beim Queststart.");
 			}
@@ -70,6 +78,11 @@ public class TavernArea extends BaseArea{
 				Helper.ThreadSleep(600, 1200);
 				finishQuest();
 				logger.info("Habe die Quest beendet.");
+				
+				if (gotNewItem) {
+					account.setGotNewItem(true);
+					gotNewItem = false;
+				}
 			}
 		}
 	}
@@ -129,6 +142,10 @@ public class TavernArea extends BaseArea{
 				logger.info(String.format("Habe mich fuer Quest Nummer %s entschieden, werde in %.2f Minute/n wieder da sein", chosenQuest.getIndex(), (double)chosenQuest.getDuration() / 60));
 				logger.info(chosenQuest.toString());
 				logger.info("Also so gegen: " + account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss")));
+				
+				if (chosenQuest.getItem().getType() != ItemTypeEnum.None) {
+					this.gotNewItem = true;
+				}
 			}
 		}
 		return result;

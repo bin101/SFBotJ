@@ -34,9 +34,9 @@ public enum RequestEnum
 	EnchantItem("playerwitchenchantitem"),
 	GuildPortalBattle("groupportalbattle"),
 	PlayerPortalBattle("playerportalbattle"),
-	SendToCityGuard("playerworkstart"),
+	StartTownwatch("playerworkstart"),
 	ACT_INVENTORY_CHANGE("playerItemMove"),
-	StopWork("playerworkstop"),
+	StopTownwatch("playerworkstop"),
 	BrowseShop("playernewwares"),
 	ViewMail("playermessageview"),
 	DeleteMail("playermessagedelete"),
@@ -52,7 +52,7 @@ public enum RequestEnum
 	SendWhisperMessage("playermessagewhisper"),
 	Poll("poll"),
 	FinishQuest("playeradventurefinished"),
-	FinishCityGuard("playerworkfinished"),
+	FinishTownwatch("playerworkfinished"),
 	ReliveFight("playercombatlogview");
   
 	private final String name;

@@ -24,23 +24,30 @@ public class CharacterScreenArea extends BaseArea {
 	}
 	
 	@Override
-	public void performArea() {
-		
-		if((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction()) {
+	public void performArea() {		
+		if(account.getGotNewItem() || ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction())) {
 			logger.info("Betrete die Charakteruebersicht");
 			Helper.ThreadSleep(600, 1200);
 			
 			logger.info("Gucke, ob Items ausgeruestet werden koennen");
+			tryToEquipItems();
+			
+			if (!account.getGotNewItem() && account.getSetting().getPerformAttributeBuy()) {
+				//TODO Kaufe Attribute
+			}
+			
+			account.setGotNewItem(false);
 		}
 
 	}
 	
 	
-	private void equipItems() {
+	public void tryToEquipItems() {
 		Boolean hasSthEquipped = false;
 		String equipRespString = null;
 		
 		for (Item backpackItem : account.getOwnCharacter().getBackpack().getItems()) {
+			Helper.ThreadSleep(1000, 2000);
 			if (backpackItem.getType().getId() >= ItemTypeEnum.Weapon.getId() && backpackItem.getType().getId() <= ItemTypeEnum.Talisman.getId()) {
 				
 				Optional<Item> equippedItem = account
@@ -51,8 +58,14 @@ public class CharacterScreenArea extends BaseArea {
 						.filter(item -> item.getType().name()
 								.equals(backpackItem.getType().name()))
 						.findFirst();
+				Boolean backpackItemIsBetter = false;
 				
-				Boolean backpackItemIsBetter = Helper.isBackpackItemBetter(backpackItem, equippedItem, account);
+				if (equippedItem.isPresent()) {
+					backpackItemIsBetter = Helper.isBackpackItemBetter(backpackItem, equippedItem.get(), account);
+				} else {
+					backpackItemIsBetter = true;
+				}
+				
 				
 				if (backpackItemIsBetter) {
 					logger.info(String.format("Lege folgendes Item an: %s", backpackItem.toString()));

@@ -47,6 +47,8 @@ public class Account implements Runnable {
 	@Getter @Setter private int actionLength;
 	@Getter @Setter private DateTime actionEndTime;
 	
+	@Getter @Setter private Boolean gotNewItem;
+	
 	public Boolean getHasEnoughALUForOneQuest () {
 		Boolean result = false;
 		
@@ -78,6 +80,8 @@ public class Account implements Runnable {
 		this.actionType = ActionEnum.None;
 		this.actionLength = 0;
 		this.actionEndTime = new DateTime();
+		
+		this.gotNewItem = false;
 		
 		this.hasCompletedMirror = false;
 		
