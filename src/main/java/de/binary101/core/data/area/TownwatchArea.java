@@ -22,6 +22,14 @@ public class TownwatchArea extends BaseArea {
 	
 	@Override
 	public void performArea() {
+		if (account.getHasRunningAction() && account.getActionType() == ActionEnum.Townwatch) {
+			account.logout();
+			
+			Long sleepTime = account.getActionEndTime().getMillis() - DateTime.now().getMillis();
+			logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
+			Helper.threadSleep(sleepTime.intValue(), (int)(sleepTime.intValue() * 1.15));
+		}
+		
 		if (!account.getSetting().getPerformTownwatch() || account.getHasEnoughALUForOneQuest()) {
 			return;
 		}
@@ -32,7 +40,7 @@ public class TownwatchArea extends BaseArea {
 			startTownwatch();
 			
 		} else {
-			if ( account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Work) {
+			if ( account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Townwatch) {
 				Helper.threadSleep(1000, 2000);
 				finishTownwatch();
 				logger.info("Habe meine Schicht beendet");
@@ -71,6 +79,7 @@ public class TownwatchArea extends BaseArea {
 		logger.info(String.format("Sollte gegen %s fertig sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
 		
 		account.logout();
+		logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
 		Helper.threadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 * hoursToWork);
 	}
 	
