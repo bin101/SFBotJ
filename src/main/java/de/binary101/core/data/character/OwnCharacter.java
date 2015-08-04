@@ -48,7 +48,12 @@ public class OwnCharacter extends Character{
 
 	public void updateOwnCharacter(Account account, Integer[] ownplayersave) {
 		
-		this.level = Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.Level.getId()]);
+		int newLevel = Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.Level.getId()]);
+		if (this.level != 0 && this.level < newLevel) {
+			logger.info(String.format("Yeah, Levelup. Ich bin jetzt Level %s", newLevel));
+		}
+		this.level = newLevel;
+		
 		this.exp = ownplayersave[PlayerSaveEnum.Exp.getId()];
 		this.expForNextLevel = ownplayersave[PlayerSaveEnum.ExpForNextLevel.getId()];
 		this.honor = ownplayersave[PlayerSaveEnum.Honor.getId()];

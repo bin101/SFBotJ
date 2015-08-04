@@ -9,8 +9,8 @@ public final class TimeManager {
 	
 	
 	
-	public static DateTime UTCunixTimestampToLocalDateTime(int unixTime) {
-		return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeZone.UTC).plusSeconds(unixTime).toLocalDateTime().toDateTime();
+	public static DateTime UTCunixTimestampToLocalDateTime(Integer utcUnixTime) {
+		return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeZone.UTC).plusSeconds(utcUnixTime).toLocalDateTime().toDateTime();
 	}
 	
 	public static int DateUTCToUnix(DateTime datetime) {

@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.sun.javafx.image.impl.IntArgb;
+
 import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.EnchantmentTypeEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;
@@ -79,11 +81,11 @@ public class Item {
 		}
 	}
 	
-	public static Item createItem(Integer[] responseArray, int itemOffset, int backpackIndex) {
+	public static Item createItem(Integer[] intArray, int itemOffset, int backpackIndex) {
 		Item resultingItem = null;
 		
 		Integer[] itemData = new Integer[12];
-		System.arraycopy(responseArray, itemOffset, itemData, 0, 12);
+		System.arraycopy(intArray, itemOffset, itemData, 0, 12);
 		
 		int helper = (int)((double)itemData[0] / Math.pow(2, 24));
 		ItemTypeEnum type = ItemTypeEnum.fromInt(itemData[0] > 99 ? (int)((double)itemData[0] - (double)helper * Math.pow(2.0, 24.0)) : itemData[0]);

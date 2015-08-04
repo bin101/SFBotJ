@@ -17,13 +17,18 @@ public class Backpack {
 
 	@Getter private List<Item> items;
 	
-	@Getter private Boolean isFull;
-	@Getter private Boolean isEmpty;
+	public Boolean getIsFull() {
+		Boolean result = false;
+		
+		if (this.items.stream().filter(item -> item.getType() == ItemTypeEnum.None).count() == 0) {
+			result = true;
+		}
+		
+		return result;
+	}
 	
 	public Backpack() {
 		this.items = Arrays.asList(new Item[5]);
-		this.isEmpty = false;
-		this.isFull = false;
 	}
 	
 	public int getIndexForLeastValueableItem() {
@@ -42,16 +47,13 @@ public class Backpack {
 	
 	
 	public void updateBackpack (Integer[] backpackData) {
+		StringBuilder builder = new StringBuilder();
+		
 		for (int i = 0; i < items.size(); i++) {
-			items.set(i, Item.createItem(backpackData, i * 12, i));
+			items.set(i, Item.createItem(backpackData, i * 12, i + 1));
+			builder.append("\n" + items.get(i).toString());
 		}
 		
-		if (items.stream().filter(item -> item.getType() == ItemTypeEnum.None).count() == 0) {
-			isFull = true;
-		}
-		
-		if (items.stream().filter(item -> item.getType() == ItemTypeEnum.None).count() == 5) {
-			isEmpty = true;
-		}
+		logger.debug(builder.toString());
 	}
 }

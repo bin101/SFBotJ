@@ -54,8 +54,8 @@ public class Response {
 		if (this.hasError) {
 			if (this.errorCode == ResponseEnum.ERR_SERVER_DOWN) {
 				try {
-					logger.error("Server scheint down zu sein, warte 30 Sekunden");
-					Thread.sleep(30000);
+					logger.error("Server scheint down zu sein, warte 10 Minuten");
+					Thread.sleep(60 * 10 * 1000);
 				} catch (InterruptedException e) {
 					logger.error(e);
 					e.printStackTrace();

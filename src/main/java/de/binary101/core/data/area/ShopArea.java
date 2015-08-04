@@ -28,6 +28,8 @@ public class ShopArea extends BaseArea {
 		}
 		
 		if (account.getOwnCharacter().getBackpack().getIsFull()) {
+			logger.info("Betrete einen der beiden Shops");
+			
 			logger.info("Rucksack ist voll, verkaufe das billigste Item");
 			
 			Helper.ThreadSleep(600, 1200);
@@ -37,7 +39,7 @@ public class ShopArea extends BaseArea {
 			
 			logger.info("Verkaufe folgendes Item: " + itemToSell.toString());
 			
-			String sellResponseString = sendRequest(new SellRequest(backIndexForItemToSell + 1));
+			String sellResponseString = sendRequest(new SellRequest(backIndexForItemToSell));
 			this.sellResponse = new Response(sellResponseString, account);
 			
 			Helper.ThreadSleep(600, 1200);

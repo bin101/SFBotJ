@@ -73,7 +73,7 @@ public class BaseArea {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("Server ist nicht erreichbar");
+			logger.warn("Server ist nicht erreichbar");
 		}
 		
 		return result;

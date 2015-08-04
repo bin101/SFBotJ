@@ -1,5 +1,7 @@
 package de.binary101.core.data.account;
 
+import java.util.Optional;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +12,7 @@ import de.binary101.core.constants.StaticValues;
 import de.binary101.core.constants.enums.ActionEnum;
 import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.data.area.PollArea;
+import de.binary101.core.data.area.tavern.Quest;
 import de.binary101.core.data.area.tavern.Tavern;
 import de.binary101.core.data.character.OwnCharacter;
 
@@ -43,6 +46,17 @@ public class Account implements Runnable {
 	@Getter @Setter private ActionEnum actionType;
 	@Getter @Setter private int actionLength;
 	@Getter @Setter private DateTime actionEndTime;
+	
+	public Boolean getHasEnoughALUForOneQuest () {
+		Boolean result = false;
+		
+		int remainingALUSeconds = this.getTavern().getRemainingALUSeconds();
+		Optional<Quest> possibleQuest = this.getTavern().getAvailableQuests().stream().filter(quest -> quest.getDuration() <= remainingALUSeconds).findFirst();
+		
+		result = possibleQuest.isPresent();
+		
+		return result;
+	}
 	
 	@Getter @Setter private Boolean hasCompletedMirror;
 	

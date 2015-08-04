@@ -3,6 +3,8 @@ package de.binary101.core.data.character;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.Getter;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +13,7 @@ import de.binary101.core.data.item.Item;
 public class Equipment {
 	private final static Logger logger = LogManager.getLogger(Equipment.class);
 	
-	private List<Item> items;
+	@Getter private List<Item> items;
 	
 	public Equipment() {
 		this.items = Arrays.asList(new Item[10]);

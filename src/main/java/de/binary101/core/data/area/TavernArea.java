@@ -1,5 +1,7 @@
 package de.binary101.core.data.area;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.format.DateTimeFormat;
@@ -25,7 +27,7 @@ public class TavernArea extends BaseArea{
 	@Override
 	public void performArea() {
 		
-		if (!account.getSetting().getPerformQuesten()) {
+		if (!account.getSetting().getPerformQuesten() || account.getOwnCharacter().getBackpack().getIsFull() || !account.getHasEnoughALUForOneQuest()) {
 			return;
 		}
 		
@@ -55,23 +57,7 @@ public class TavernArea extends BaseArea{
 				}
 			}
 			
-			
-			//Haben wir heute noch Zeit fuer eine Quest?
-			if (aluSeconds == 0) {
-				logger.info("Habe keine ALU mehr");
-				return;
-			}
-			
-			Quest quest_1 = account.getTavern().getAvailableQuests()[0];
-			Quest quest_2 = account.getTavern().getAvailableQuests()[1];
-			Quest quest_3 = account.getTavern().getAvailableQuests()[2];
-			
-			if (aluSeconds < quest_1.getDuration() && aluSeconds < quest_2.getDuration() && aluSeconds < quest_3.getDuration()) {
-				logger.info("ALU reicht fuer keine Quest mehr");
-				return;
-			}
-			
-			if (startBestQuest(quest_1, quest_2, quest_3, true)) {
+			if (startBestQuest(account.getTavern().getAvailableQuests(), true)) {
 				logger.info("Mach mich auf die Reise");
 			} else {
 				logger.error("Es gab einen Fehler beim Queststart.");
@@ -88,10 +74,9 @@ public class TavernArea extends BaseArea{
 		}
 	}
 	
-	private Boolean startBestQuest(Quest quest_1, Quest quest_2, Quest quest_3, Boolean overwriteInventory) {
+	private Boolean startBestQuest(List<Quest> quests, Boolean overwriteInventory) {
 		Boolean result = false;
 		Helper.ThreadSleep(2100, 3500);
-		//TODO Nehme auf jeden Fall Spiegelstuecke, Schluessel oder rote Quests
 		
 		Boolean overwriteFullInventory = true; //TODO Sollte eigentlich aus den Settings gelesen werden.
 		
@@ -99,37 +84,33 @@ public class TavernArea extends BaseArea{
 		
 		Quest chosenQuest = null;
 		String responseString = null;
+		int remainingAluSeconds = account.getTavern().getRemainingALUSeconds();
 		
-		if (quest_1.getIsSpecial()) {
-			oneQuestIsSpecial = true;
-			chosenQuest = quest_1;
-		} else if (quest_2.getIsSpecial()) {
-			oneQuestIsSpecial = true;
-			chosenQuest = quest_2;
-		} else if (quest_3.getIsSpecial()) {
-			oneQuestIsSpecial = true;
-			chosenQuest = quest_3;
+		if (account.getSetting().getPreferSpecialQuests()) {
+			chosenQuest = quests
+					.stream()
+					.filter(quest -> quest.getDuration() <= remainingAluSeconds
+							&& quest.getIsSpecial())
+					.min((quest1, quest2) -> Integer.compare(
+							quest1.getDuration(), quest2.getDuration())).get();
+			oneQuestIsSpecial = chosenQuest != null;
 		}
 		
 		if (!oneQuestIsSpecial){
 			switch (account.getSetting().getQuestMode()) {
 			case "exp":
-				if (quest_1.getExpPerSecond() >= quest_2.getExpPerSecond() && quest_1.getExpPerSecond() >= quest_3.getExpPerSecond()) {
-					chosenQuest = quest_1;
-				} else if (quest_2.getExpPerSecond() >= quest_1.getExpPerSecond() && quest_2.getExpPerSecond() >= quest_3.getExpPerSecond() ) {
-					chosenQuest = quest_2;
-				} else {
-					chosenQuest = quest_3;
-				}			
+				chosenQuest = quests
+						.stream()
+						.filter(quest -> quest.getDuration() <= remainingAluSeconds)
+						.max((quest1, quest2) -> Integer.compare(
+								quest1.getExp(), quest2.getExp())).get();			
 				break;
 			case "gold":
-				if (quest_1.getSilverPerSecond() >= quest_2.getSilverPerSecond() && quest_1.getSilverPerSecond() >= quest_3.getSilverPerSecond()) {
-					chosenQuest = quest_1;
-				} else if (quest_2.getSilverPerSecond() >= quest_1.getSilverPerSecond() && quest_2.getSilverPerSecond() >= quest_3.getSilverPerSecond() ) {
-					chosenQuest = quest_2;
-				} else {
-					chosenQuest = quest_3;
-				}			
+				chosenQuest = quests
+						.stream()
+						.filter(quest -> quest.getDuration() <= remainingAluSeconds)
+						.max((quest1, quest2) -> Double.compare(
+								quest1.getSilverPerSecond(), quest2.getSilverPerSecond())).get();			
 				break;
 			default:
 				logger.error("Kein oder falscher Questmode gesetzt, entscheide dich fuer den Mode gold oder exp");
@@ -149,9 +130,7 @@ public class TavernArea extends BaseArea{
 				logger.info(chosenQuest.toString());
 				logger.info("Also so gegen: " + account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss")));
 			}
-			
 		}
-		
 		return result;
 	}
 	
