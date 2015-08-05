@@ -22,7 +22,7 @@ public class TavernArea extends BaseArea{
 	
 	private final static Logger logger = LogManager.getLogger(TavernArea.class);
 	
-	private Boolean gotNewItem;
+	private Boolean gotNewItem = false;
 
 	public TavernArea(Account account) {
 		super(account);
