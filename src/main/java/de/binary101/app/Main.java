@@ -73,10 +73,14 @@ public class Main {
 					try {
 						Thread.sleep(1000 * 60 * 10);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {
+					System.out.println("******************************");
+					System.out.println("******************************");
+					System.out.println("********Starte Update*********");
+					System.out.println("******************************");
+					System.out.println("******************************");
 					System.exit(0);
 				}
 			}

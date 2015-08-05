@@ -52,7 +52,7 @@ public class TavernArea extends BaseArea{
 				int maxBeer = 10; //TODO kann durch Enchantments auch 11 sein
 				
 				if (usedBeer < maxBeer && usedBeer < maxBeerToBuy && aluSeconds <= 20 * 60) {
-					while (aluSeconds + 20 * 60 < 100 * 60 && mushrooms > 1 && usedBeer < maxBeer) {
+					while (aluSeconds + 20 * 60 < 100 * 60 && mushrooms > 1 && usedBeer < maxBeer && usedBeer < maxBeerToBuy) {
 						Helper.threadSleep(600, 1200);
 						this.buyBeer();
 						aluSeconds += 20 * 60;
