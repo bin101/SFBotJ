@@ -1,5 +1,9 @@
 package de.binary101.app;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import de.binary101.core.SFBotJCore;
@@ -9,7 +13,9 @@ import de.binary101.core.data.area.LoginArea;
 import de.binary101.core.data.area.ShopArea;
 import de.binary101.core.data.area.TavernArea;
 import de.binary101.core.data.area.TownwatchArea;
+import de.binary101.core.utils.Helper;
 import de.binary101.core.utils.SettingsManager;
+import de.binary101.core.utils.UpdateChecker;
 
 public class Main {
 
@@ -56,6 +62,25 @@ public class Main {
 				Thread thread = new Thread(botThreads, core, (core.getAccount().toString()));
 				thread.start();
 			}
+			
+			UpdateChecker updateChecker = new UpdateChecker();
+			
+			Boolean isUpToDate = true;
+			while (isUpToDate) {
+				isUpToDate = updateChecker.checkCurrentVersionIsUptoDate();
+				
+				if (isUpToDate) {
+					try {
+						Thread.sleep(1000 * 60 * 10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					System.exit(0);
+				}
+			}
+			
 		}//else do nothing
 	}
 }
