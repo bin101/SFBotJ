@@ -14,7 +14,7 @@ public class EquipRequest extends Request {
 	public EquipRequest(Item backpackItem) {
 		super(RequestEnum.ACT_INVENTORY_CHANGE);
 		
-		this.backpackPosition = backpackItem.getBackpackIndex();
+		this.backpackPosition = backpackItem.getBackpackIndex() + 1;
 		this.characterSlotPosition = backpackItem.getType().getId() >= ItemTypeEnum.MirrorOrKey.getId() ? -1 : ItemTypeCharacterSlotEnum.fromItemTypeEnum(backpackItem.getType()).getId();
 	}
 

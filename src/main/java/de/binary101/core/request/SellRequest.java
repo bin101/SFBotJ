@@ -10,7 +10,7 @@ public class SellRequest extends Request {
 	public SellRequest(int backpackPosition) {
 		super(RequestEnum.ACT_INVENTORY_CHANGE);
 		
-		this.backpackPosition = backpackPosition;
+		this.backpackPosition = backpackPosition + 1;
 	}
 	
 	@Override

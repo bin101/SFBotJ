@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.binary101</groupId>
 	<artifactId>SFBotJ</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>SFBotJ</name>
 	<description>Shakes &amp; Fidget Bot written in Java</description>
 	<organization>
