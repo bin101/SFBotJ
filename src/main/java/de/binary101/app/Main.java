@@ -48,15 +48,16 @@ public class Main {
 				
 				//Initialisiere die Areas
 				core.getAreas().add(new LoginArea(account));
-				core.getAreas().add(new CharacterScreenArea(account));
 				core.getAreas().add(new ShopArea(account));
 //				core.getAreas().add(new MountArea(account));
 				core.getAreas().add(new TavernArea(account));
 //				core.getAreas().add(new ToiletArea(account));
 //				core.getAreas().add(new ArenaArea(account));
 //				core.getAreas().add(new GuildArea(account));
+				core.getAreas().add(new CharacterScreenArea(account));
 //				core.getAreas().add(new DungeonArea(account));
 				core.getAreas().add(new TownwatchArea(account));
+//				core.getAreas().add(new SinglePortalArea(account));
 				
 				//Erzeuge den Thread
 				Thread thread = new Thread(botThreads, core, (core.getAccount().toString()));
