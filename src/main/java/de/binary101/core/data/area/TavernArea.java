@@ -32,12 +32,11 @@ public class TavernArea extends BaseArea{
 	public void performArea() {
 		
 		if (!account.getSetting().getPerformQuesten() 
-			|| account.getOwnCharacter().getBackpack().getIsFull() 
-			|| !account.getHasEnoughALUForOneQuest()) {
+			|| account.getOwnCharacter().getBackpack().getIsFull()) {
 			return;
 		}
 		
-		if (!account.getHasRunningAction()) {
+		if (!account.getHasRunningAction() && account.getHasEnoughALUForOneQuest()) {
 			logger.info("Betrete Taverne");
 			Helper.threadSleep(1000, 2000);
 			
