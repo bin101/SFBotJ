@@ -22,7 +22,7 @@ public class TownwatchArea extends BaseArea {
 	
 	@Override
 	public void performArea() {
-		if (account.getHasRunningAction() && account.getActionType() == ActionEnum.Townwatch) {
+		if (account.getHasRunningAction() && account.getActionType() == ActionEnum.Townwatch && account.getActionEndTime().isAfterNow()) {
 			account.logout();
 			
 			Long sleepTime = account.getActionEndTime().getMillis() - DateTime.now().getMillis();
