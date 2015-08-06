@@ -133,7 +133,7 @@ public class TavernArea extends BaseArea{
 				break;
 			}
 		} else {
-			logger.info(String.format("Habe den Questmode ignoriert, da Quest %s %s"), chosenQuest.getIndex(), chosenQuest.getSpecialQuestType().toString());
+			logger.info(String.format("Habe den Questmode ignoriert, da Quest %s %s", chosenQuest.getIndex(), chosenQuest.getSpecialQuestType().toString()));
 		}
 		
 		if (chosenQuest != null) {

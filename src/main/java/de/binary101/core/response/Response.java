@@ -64,7 +64,7 @@ public class Response {
 			
 			if (this.errorCode == ResponseEnum.ERR_SESSION_ID_EXPIRED){
 				logger.error("Session ist nicht mehr gueltig");
-				account.setIsLoggedIn(false);
+				account.logout();
 				return;
 			}
 		}
