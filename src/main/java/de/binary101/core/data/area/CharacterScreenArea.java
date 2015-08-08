@@ -85,31 +85,31 @@ public class CharacterScreenArea extends BaseArea {
 					int staminaLimit = fullAttributeSum * account.getSetting().getStaminaPercentage() / 100;
 					int luckLimit = fullAttributeSum * account.getSetting().getLuckPercentage() / 100;
 					
-					if (strength.getBaseValue() <= strengthLimit && account.getOwnCharacter().getSilver() >= strength.getPriceForNextUpgrade()) {
+					if (strength.getBaseValue() <= strengthLimit && account.getOwnCharacter().getSilver() >= strength.getPriceForNextUpgrade() && canAffordBySaveValue(strength.getPriceForNextUpgrade())) {
 						++strIncrement;
 						buyAttribute(strength);
 						haveBuy = true;
 					}
 					
-					if (intelligence.getBaseValue() <= intelligenceLimit && account.getOwnCharacter().getSilver() >= intelligence.getPriceForNextUpgrade()) {
+					if (intelligence.getBaseValue() <= intelligenceLimit && account.getOwnCharacter().getSilver() >= intelligence.getPriceForNextUpgrade()&& canAffordBySaveValue(intelligence.getPriceForNextUpgrade())) {
 						++intIncrement;
 						buyAttribute(intelligence);
 						haveBuy = true;
 					}
 					
-					if (dexterity.getBaseValue() <= dexterityLimit && account.getOwnCharacter().getSilver() >= dexterity.getPriceForNextUpgrade()) {
+					if (dexterity.getBaseValue() <= dexterityLimit && account.getOwnCharacter().getSilver() >= dexterity.getPriceForNextUpgrade()&& canAffordBySaveValue(dexterity.getPriceForNextUpgrade())) {
 						++dexIncrement;
 						buyAttribute(dexterity);
 						haveBuy = true;
 					}
 					
-					if (stamina.getBaseValue() <= staminaLimit && account.getOwnCharacter().getSilver() >= stamina.getPriceForNextUpgrade()) {
+					if (stamina.getBaseValue() <= staminaLimit && account.getOwnCharacter().getSilver() >= stamina.getPriceForNextUpgrade()&& canAffordBySaveValue(stamina.getPriceForNextUpgrade())) {
 						++staIncrement;
 						buyAttribute(stamina);
 						haveBuy = true;
 					}
 					
-					if (luck.getBaseValue() <= luckLimit && account.getOwnCharacter().getSilver() >= luck.getPriceForNextUpgrade()) {
+					if (luck.getBaseValue() <= luckLimit && account.getOwnCharacter().getSilver() >= luck.getPriceForNextUpgrade()&& canAffordBySaveValue(luck.getPriceForNextUpgrade())) {
 						++lckIncrement;
 						buyAttribute(luck);
 						haveBuy = true;
@@ -128,6 +128,16 @@ public class CharacterScreenArea extends BaseArea {
 			account.setGotNewItem(false);
 		}
 
+	}
+	
+	private Boolean canAffordBySaveValue(long price) {
+		Boolean result = false;
+		
+		if ((account.getOwnCharacter().getSilver() - price) >= (account.getWagesPerHour() * 10)) {
+			result = true;
+		}
+		
+		return result;
 	}
 	
 	private void buyAttribute(Attribute target) {

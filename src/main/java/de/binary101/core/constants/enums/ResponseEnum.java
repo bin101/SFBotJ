@@ -265,7 +265,8 @@ public enum ResponseEnum
   CHANGE_NAME("803"),
   CHANGE_MAIL("804"),
   CHANGE_PASS("805"),
-  NO_RESP_TYPE("999");
+  NO_RESP_TYPE("999"),
+  WAGESPERHOUR("wagesperhour");
   
   private final String value;
 

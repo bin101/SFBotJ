@@ -43,7 +43,10 @@ public class Response {
 		
 		if (parsedData.containsKey("timestamp")) {
 			account.setServerTime(TimeManager.UTCunixTimestampToLocalDateTime(Integer.parseInt(parsedData.get("timestamp").get(0))));
-			
+		}
+		
+		if (parsedData.containsKey(ResponseEnum.WAGESPERHOUR.toString())) {
+			account.setWagesPerHour(Long.parseLong(parsedData.get(ResponseEnum.WAGESPERHOUR.toString()).get(0)));
 		}
 		
 		if (parsedData.containsKey("Error")) {

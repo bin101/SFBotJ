@@ -49,6 +49,8 @@ public class Account implements Runnable {
 	
 	@Getter @Setter private Boolean gotNewItem;
 	
+	@Getter @Setter private long wagesPerHour;
+	
 	public Boolean getHasEnoughALUForOneQuest () {
 		Boolean result = false;
 		
@@ -82,6 +84,8 @@ public class Account implements Runnable {
 		this.actionEndTime = new DateTime();
 		
 		this.gotNewItem = false;
+		
+		this.wagesPerHour = 0;
 		
 		this.hasCompletedMirror = false;
 		
