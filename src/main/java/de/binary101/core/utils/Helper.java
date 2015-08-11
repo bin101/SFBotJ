@@ -75,8 +75,8 @@ public class Helper {
 	public static void threadSleep(int minMilliSec, int maxMilliSec) {
 		try {
 			Thread.sleep((long)((Math.random() * (maxMilliSec - minMilliSec)) + minMilliSec));
-		} catch (InterruptedException e) {
-			logger.error(e);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
 	}
 	

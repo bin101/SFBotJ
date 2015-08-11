@@ -1,16 +1,9 @@
 package de.binary101.core.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -42,17 +35,15 @@ public final class CryptManager {
 
 		try {
 			cipher = Cipher.getInstance(TRANSFORMATION);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
 
 		try {
 			cipher.init(Cipher.ENCRYPT_MODE, key, ivParamSpec);
 			ciphertext = cipher.doFinal(plaintext);
-		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		} 
 
 		return Base64.getEncoder().encodeToString(ciphertext).replace("+", "-").replace("/", "_");
@@ -61,7 +52,10 @@ public final class CryptManager {
 	public static String decodeResponseString(String data, String key) {
 		String response = null;
 
-		if (data.startsWith("e") || data.startsWith("E") || data.length() <= 5) {
+		if (	data.length() <= 10
+				|| data.toLowerCase().startsWith("error") 
+				|| data.toLowerCase().contains("success")
+				|| data.toLowerCase().contains("login")) {
 			response = data;
 		} else {
 			response = decode(data.replace("|", "").replace("-", "+").replace("_", "/"), key).replaceAll("[|]+$", "");
@@ -83,9 +77,8 @@ public final class CryptManager {
 
 		try {
 			cipher = Cipher.getInstance(TRANSFORMATION);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		} 
 
 		try {
@@ -95,9 +88,8 @@ public final class CryptManager {
 			byte[] decryptedVal = cipher.doFinal(decodedValue);
 
 			plaintext = new String(decryptedVal);
-		} catch (InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		} 
 
 		return plaintext;
@@ -115,10 +107,8 @@ public final class CryptManager {
 			for (byte b : hash) {
 				result += String.format("%02X", b);
 			}
-
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
 
 		return result.toLowerCase();
@@ -136,9 +126,8 @@ public final class CryptManager {
 				result += String.format("%02X", b);
 			}
 
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		} 
 
 		return result.toLowerCase();

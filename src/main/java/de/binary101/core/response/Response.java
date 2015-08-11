@@ -59,9 +59,8 @@ public class Response {
 				try {
 					logger.error("Server scheint down zu sein, warte 10 Minuten");
 					Thread.sleep(60 * 10 * 1000);
-				} catch (InterruptedException e) {
-					logger.error(e);
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
 				}
 			}
 			

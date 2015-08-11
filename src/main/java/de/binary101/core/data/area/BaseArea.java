@@ -68,9 +68,8 @@ public class BaseArea {
 				HttpEntity entity = response.getEntity();
 				result = EntityUtils.toString(entity, "UTF-8");
 				this.account.setRequestCount(this.account.getRequestCount() + 1);
-			} catch (IOException e) {
-				logger.error(e);
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
 			}
 		} else {
 			logger.warn("Server ist nicht erreichbar");
@@ -115,9 +114,8 @@ public class BaseArea {
 				result = true;
 			}
 			
-		} catch (IOException e) {
-			logger.error(e);
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
 		
 		return result;
