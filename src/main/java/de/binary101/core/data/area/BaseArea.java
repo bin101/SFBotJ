@@ -1,6 +1,5 @@
 package de.binary101.core.data.area;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

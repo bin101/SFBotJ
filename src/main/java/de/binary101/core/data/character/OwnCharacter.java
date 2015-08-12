@@ -5,9 +5,11 @@ import lombok.Setter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.DateTime;
 
 import de.binary101.core.constants.enums.ActionEnum;
 import de.binary101.core.constants.enums.ClassEnum;
+import de.binary101.core.constants.enums.MountTypeEnum;
 import de.binary101.core.constants.enums.PlayerSaveEnum;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.utils.Helper;
@@ -27,7 +29,8 @@ public class OwnCharacter extends Character{
 	@Getter @Setter private int rank;
 	@Getter @Setter private ClassEnum charClass;
 	@Getter @Setter private int armor;
-	//TODO @Getter @Setter private Mount mount;
+	@Getter @Setter private MountTypeEnum mountType;
+	@Getter @Setter private DateTime mountEndTime;
 	@Getter @Setter private Backpack backpack;
 	//TODO @Getter @Setter private Dungeons dungeons;
 	//TODO @Getter @Setter private PotionsSlots potions;
@@ -74,28 +77,8 @@ public class OwnCharacter extends Character{
 		*/
 		this.charClass = ClassEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.CharClass.getId()].intValue()));
 		
-		/*TODO Mount
-		 * switch (Response.NormalizeItem(this.Data[286]))
-      {
-        case 1:
-          mount = Mount.Cow;
-          break;
-        case 2:
-          mount = Mount.Horse;
-          break;
-        case 3:
-          mount = Mount.Tiger;
-          break;
-        case 4:
-          mount = Mount.Dragon;
-          break;
-        default:
-          mount = (Mount) null;
-          break;
-      }
-		 */
-		
-		
+		this.mountType = MountTypeEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.Mount.getId()].intValue()));
+		this.mountEndTime = TimeManager.UTCunixTimestampToLocalDateTime(ownplayersave[PlayerSaveEnum.MountEndTime.getId()].intValue());
 		
 		//Beschaeftigungszeiten unf Flags setzten
 		account.setActionType(ActionEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[PlayerSaveEnum.ActionType.getId()].intValue())));

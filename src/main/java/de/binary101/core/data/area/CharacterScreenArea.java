@@ -3,8 +3,6 @@ package de.binary101.core.data.area;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import lombok.Getter;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,28 +14,84 @@ import de.binary101.core.request.BuyAttributeRequest;
 import de.binary101.core.request.EquipRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
+import de.binary101.core.utils.SettingsManager;
 
 public class CharacterScreenArea extends BaseArea {
 	private final static Logger logger = LogManager.getLogger(CharacterScreenArea.class);
-	
-	@Getter private Response characterScreenResponse;
 	
 	public CharacterScreenArea(Account account) {
 		super(account);
 	}
 	
 	@Override
-	public void performArea() {		
-		if(account.getGotNewItem() || ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction())) {
+	public void performArea() {
+		
+		if (account.getSetting().getPerformItemEquip() == null) {
+			account.getSetting().setPerformItemEquip(false);
+			SettingsManager.saveSettings();
+		}
+
+		if (account.getSetting().getPerformAttributeBuy() == null) {
+			account.getSetting().setPerformAttributeBuy(false);
+			
+			switch (account.getOwnCharacter().getCharClass()) {
+			case Mage:
+				account.getSetting().setStrengthPercentage(15);
+				account.getSetting().setDexterityPercentage(15);
+				account.getSetting().setIntelligencePercentage(25);
+				account.getSetting().setStaminaPercentage(25);
+				account.getSetting().setLuckPercentage(20);
+				break;
+			case Scout:
+				account.getSetting().setStrengthPercentage(15);
+				account.getSetting().setDexterityPercentage(26);
+				account.getSetting().setIntelligencePercentage(15);
+				account.getSetting().setStaminaPercentage(23);
+				account.getSetting().setLuckPercentage(21);
+				break;
+			case Warrior:
+				account.getSetting().setStrengthPercentage(30);
+				account.getSetting().setDexterityPercentage(15);
+				account.getSetting().setIntelligencePercentage(15);
+				account.getSetting().setStaminaPercentage(22);
+				account.getSetting().setLuckPercentage(18);
+				break;
+			default:
+				logger.warn("Characterklasse war noch nicht geladen");
+				break;
+			}
+			
+			SettingsManager.saveSettings();
+		}
+		
+		if (!account.getSetting().getPerformItemEquip() || !account.getSetting().getPerformAttributeBuy()) {
+			return;
+		} else if (
+					(account.getGotNewItem() && account.getSetting().getPerformItemEquip()) 
+					|| 
+					(account.getSetting().getPerformAttributeBuy() 
+							&& (
+									(!account.getSetting().getPerformQuesten() || !account.getHasEnoughALUForOneQuest())
+									&& !account.getHasRunningAction()
+							   )
+					)) {
 			logger.info("Betrete die Charakteruebersicht");
-			Helper.threadSleep(600, 1200);
 			
-			logger.info("Gucke, ob Items ausgeruestet werden koennen");
-			tryToEquipItems();
-			
-			if (!account.getGotNewItem() && account.getSetting().getPerformAttributeBuy()) {
-				//TODO Save Silver
+			if (account.getSetting().getPerformItemEquip() && account.getGotNewItem()) {
+				Helper.threadSleep(600, 1200);
 				
+				logger.info("Gucke, ob Items ausgeruestet werden koennen");
+				tryToEquipItems();
+				
+				account.setGotNewItem(false);
+			}
+			
+			if (account.getSetting().getPerformAttributeBuy() 
+					&& (
+							(!account.getSetting().getPerformQuesten() || !account.getHasEnoughALUForOneQuest())
+							&& !account.getHasRunningAction()
+					   )
+			   ) {
 				logger.info("Dann wollen wir mal meine Attribute verbessern");
 				
 				Boolean canBuyStats = true;
@@ -124,6 +178,23 @@ public class CharacterScreenArea extends BaseArea {
 				
 				logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s", strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
 			}
+		} else {
+			return;
+		}
+		
+		
+		
+		if(account.getGotNewItem() || ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction())) {
+			
+			if (account.getSetting().getPerformItemEquip()) {
+				
+			}
+			
+			
+			
+			if (!account.getGotNewItem() && account.getSetting().getPerformAttributeBuy()) {				
+				
+			}
 			
 			account.setGotNewItem(false);
 		}
@@ -142,7 +213,7 @@ public class CharacterScreenArea extends BaseArea {
 	
 	private void buyAttribute(Attribute target) {
 		String responseString = sendRequest(new BuyAttributeRequest(target));
-		Response response = new Response(responseString, this.account);
+		new Response(responseString, this.account);
 	}
 	
 	private void tryToEquipItems() {
@@ -175,7 +246,7 @@ public class CharacterScreenArea extends BaseArea {
 					
 					hasSthEquipped = true;
 					equipRespString = sendRequest(new EquipRequest(backpackItem));
-					this.characterScreenResponse = new Response(equipRespString, account);
+					new Response(equipRespString, account);
 				}
 				
 			} else if (backpackItem.getType() == ItemTypeEnum.MirrorPiece
@@ -185,7 +256,7 @@ public class CharacterScreenArea extends BaseArea {
 				
 				hasSthEquipped = true;
 				equipRespString = sendRequest(new EquipRequest(backpackItem));
-				this.characterScreenResponse = new Response(equipRespString, account);
+				new Response(equipRespString, account);
 			}
 			Helper.threadSleep(500, 1000);
 		}

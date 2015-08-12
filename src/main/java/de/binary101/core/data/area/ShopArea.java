@@ -23,6 +23,10 @@ public class ShopArea extends BaseArea {
 	@Override 
 	public void performArea() {
 		
+		if (account.getSetting().getPerformShop() == null) {
+			account.getSetting().setPerformShop(false);
+		}
+		
 		if (!account.getSetting().getPerformShop()) {
 			return;
 		}

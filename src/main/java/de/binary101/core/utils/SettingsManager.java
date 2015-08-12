@@ -54,12 +54,14 @@ public class SettingsManager {
 		}
 	}
 
-	public static void saveSettings() {
+	public synchronized static void saveSettings() {
 		File configFile = new File(FILENAME);
 		XStream xstream = openXStream();
 
 		try (FileWriter fw = new FileWriter(configFile)) {
-			xstream.toXML(settingsContainer, fw);
+			synchronized (settingsContainer) {
+				xstream.toXML(settingsContainer, fw);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

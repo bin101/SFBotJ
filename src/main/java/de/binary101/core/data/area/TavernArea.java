@@ -17,6 +17,7 @@ import de.binary101.core.request.QuestStartRequest;
 import de.binary101.core.request.Request;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
+import de.binary101.core.utils.SettingsManager;
 
 public class TavernArea extends BaseArea{
 	
@@ -30,6 +31,15 @@ public class TavernArea extends BaseArea{
 	
 	@Override
 	public void performArea() {
+		
+		if (account.getSetting().getPerformQuesten() == null) {
+			account.getSetting().setPerformQuesten(false);
+			account.getSetting().setQuestMode("exp");
+			account.getSetting().setPreferSpecialQuests(true);
+			account.getSetting().setMaxBeerToBuy(0);
+			
+			SettingsManager.saveSettings();
+		}
 		
 		if (!account.getSetting().getPerformQuesten() 
 			|| account.getOwnCharacter().getBackpack().getIsFull()) {

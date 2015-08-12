@@ -11,6 +11,7 @@ import de.binary101.core.request.TownwatchFinishRequest;
 import de.binary101.core.request.TownwatchStartRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
+import de.binary101.core.utils.SettingsManager;
 
 public class TownwatchArea extends BaseArea {
 	
@@ -22,6 +23,14 @@ public class TownwatchArea extends BaseArea {
 	
 	@Override
 	public void performArea() {
+		
+		if (account.getSetting().getPerformTownwatch() == null) {
+			account.getSetting().setPerformTownwatch(false);
+			account.getSetting().setMinHourOfDayFor10HourTownwatch(22);
+			account.getSetting().setMaxHourOfDayFor10HourTownwatch(8);
+			
+			SettingsManager.saveSettings();
+		}
 		
 		if (!account.getSetting().getPerformTownwatch()) {
 			return;
@@ -73,7 +82,7 @@ public class TownwatchArea extends BaseArea {
 		logger.info(String.format("Dann passe ich mal fuer %s Stunde/n auf", hoursToWork));
 		
 		String responseString = sendRequest(new TownwatchStartRequest(hoursToWork));
-		Response response = new Response(responseString, account);
+		new Response(responseString, account);
 		
 		logger.info(String.format("Sollte gegen %s fertig sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
 		
@@ -84,7 +93,7 @@ public class TownwatchArea extends BaseArea {
 	
 	private void finishTownwatch() {
 		String responseString = sendRequest(new TownwatchFinishRequest());
-		Response response = new Response(responseString, account);
+		new Response(responseString, account);
 	}
 
 }
