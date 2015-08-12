@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.binary101.core.constants.enums.AttributeEnum;
 import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.EnchantmentTypeEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;
@@ -60,9 +61,9 @@ public class Item {
 			}
 			
 			if (!(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
-				appendAttribute(itemData[4].intValue(), itemData[7].intValue());
-				appendAttribute(itemData[5].intValue(), itemData[8].intValue());
-				appendAttribute(itemData[6].intValue(), itemData[9].intValue());
+				appendAttribute(AttributeEnum.fromInt(itemData[4].intValue()), itemData[7].intValue());
+				appendAttribute(AttributeEnum.fromInt(itemData[5].intValue()), itemData[8].intValue());
+				appendAttribute(AttributeEnum.fromInt(itemData[6].intValue()), itemData[9].intValue());
 			}
 			
 			switch (this.type) {
@@ -129,28 +130,31 @@ public class Item {
 		return result;
 	}
 	
-	private void appendAttribute (int attributeType, int attributeValue) {
+	private void appendAttribute (AttributeEnum attributeType, int attributeValue) {
 		switch (attributeType) {
-		case 1:
+		case Strength:
 			this.strength = attributeValue;
 			break;
-		case 2:
+		case Dexterity:
 			this.dexterity = attributeValue;
 			break;
-		case 3:
+		case Intelligence:
 			this.intelligence = attributeValue;
 			break;
-		case 4:
+		case Stamina:
 			this.stamina = attributeValue;
 			break;
-		case 5:
+		case Luck:
 			this.luck = attributeValue;
 			break;
-		case 6:
+		case Epic:
 			this.epicValue = attributeValue;
 			break;
+		case None:
+			//Nothing to add
+			break;
 		default:
-			logger.error("Unbekannter AttributeType");
+			logger.error("Unbekannter AttributeType bei Item: " + this.toString());
 			break;
 		}
 	}
