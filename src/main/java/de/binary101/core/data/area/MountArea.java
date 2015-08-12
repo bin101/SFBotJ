@@ -64,8 +64,6 @@ public class MountArea extends BaseArea {
 				
 				logger.info("Mein neues Reittier wird dann wohl " + (targetMount == MountTypeEnum.Cow ? "eine Kuh" : targetMount == MountTypeEnum.Horse ? "ein Pferd" : targetMount == MountTypeEnum.Tiger ? "ein Tiger" : "ein Greifendrache"));
 				
-				String blub = "bla";
-				
 				String responseString = sendRequest(new BuyMountRequest(targetMount));
 				new Response(responseString, account);
 				
