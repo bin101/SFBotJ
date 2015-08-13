@@ -91,92 +91,94 @@ public class CharacterScreenArea extends BaseArea {
 							(!account.getSetting().getPerformQuesten() || !account.getHasEnoughALUForOneQuest())
 							&& !account.getHasRunningAction()
 					   )
-			   ) {
-				logger.info("Dann wollen wir mal meine Attribute verbessern");
+			   ) {				
+				Boolean canBuyStats = account.getOwnCharacter().getAttributeList().getCanBuyAtLeastOne();
 				
-				Boolean canBuyStats = true;
-				
-				int strIncrement = 0;
-				int intIncrement = 0;
-				int dexIncrement = 0;
-				int staIncrement = 0;
-				int lckIncrement = 0;
-				
-				while (canBuyStats) {
-					Helper.threadSleep(100, 300);
-					Boolean haveBuy = false;
+				if (canBuyStats) {
+					logger.info("Dann wollen wir mal meine Attribute verbessern");
 					
-					Attribute strength = this.account.getOwnCharacter().getAttributeList().getStrength();
-					Attribute intelligence = this.account.getOwnCharacter().getAttributeList().getIntelligence();
-					Attribute dexterity = this.account.getOwnCharacter().getAttributeList().getDexterity();
-					Attribute stamina = this.account.getOwnCharacter().getAttributeList().getStamina();
-					Attribute luck = this.account.getOwnCharacter().getAttributeList().getLuck();
+					int strIncrement = 0;
+					int intIncrement = 0;
+					int dexIncrement = 0;
+					int staIncrement = 0;
+					int lckIncrement = 0;
 					
-					int fullAttributeSum = 0;
-					if (account.getSetting().getStrengthPercentage() > 0) {
-						fullAttributeSum += strength.getBaseValue();
+					while (canBuyStats) {
+						Helper.threadSleep(100, 300);
+						Boolean haveBuy = false;
+						
+						Attribute strength = this.account.getOwnCharacter().getAttributeList().getStrength();
+						Attribute intelligence = this.account.getOwnCharacter().getAttributeList().getIntelligence();
+						Attribute dexterity = this.account.getOwnCharacter().getAttributeList().getDexterity();
+						Attribute stamina = this.account.getOwnCharacter().getAttributeList().getStamina();
+						Attribute luck = this.account.getOwnCharacter().getAttributeList().getLuck();
+						
+						int fullAttributeSum = 0;
+						if (account.getSetting().getStrengthPercentage() > 0) {
+							fullAttributeSum += strength.getBaseValue();
+						}
+						
+						if (account.getSetting().getIntelligencePercentage() > 0) {
+							fullAttributeSum += intelligence.getBaseValue();
+						}
+						
+						if (account.getSetting().getDexterityPercentage()> 0) {
+							fullAttributeSum += dexterity.getBaseValue();
+						}
+						
+						if (account.getSetting().getStaminaPercentage() > 0) {
+							fullAttributeSum += stamina.getBaseValue();
+						}
+						
+						if (account.getSetting().getLuckPercentage() > 0) {
+							fullAttributeSum += luck.getBaseValue();
+						}
+						
+						int strengthLimit = fullAttributeSum * account.getSetting().getStrengthPercentage() / 100;
+						int intelligenceLimit = fullAttributeSum * account.getSetting().getIntelligencePercentage() / 100;
+						int dexterityLimit = fullAttributeSum * account.getSetting().getDexterityPercentage() / 100;
+						int staminaLimit = fullAttributeSum * account.getSetting().getStaminaPercentage() / 100;
+						int luckLimit = fullAttributeSum * account.getSetting().getLuckPercentage() / 100;
+						
+						if (strength.getBaseValue() <= strengthLimit && account.getOwnCharacter().getSilver() >= strength.getPriceForNextUpgrade() && canAffordBySaveValue(strength.getPriceForNextUpgrade())) {
+							++strIncrement;
+							buyAttribute(strength);
+							haveBuy = true;
+						}
+						
+						if (intelligence.getBaseValue() <= intelligenceLimit && account.getOwnCharacter().getSilver() >= intelligence.getPriceForNextUpgrade()&& canAffordBySaveValue(intelligence.getPriceForNextUpgrade())) {
+							++intIncrement;
+							buyAttribute(intelligence);
+							haveBuy = true;
+						}
+						
+						if (dexterity.getBaseValue() <= dexterityLimit && account.getOwnCharacter().getSilver() >= dexterity.getPriceForNextUpgrade()&& canAffordBySaveValue(dexterity.getPriceForNextUpgrade())) {
+							++dexIncrement;
+							buyAttribute(dexterity);
+							haveBuy = true;
+						}
+						
+						if (stamina.getBaseValue() <= staminaLimit && account.getOwnCharacter().getSilver() >= stamina.getPriceForNextUpgrade()&& canAffordBySaveValue(stamina.getPriceForNextUpgrade())) {
+							++staIncrement;
+							buyAttribute(stamina);
+							haveBuy = true;
+						}
+						
+						if (luck.getBaseValue() <= luckLimit && account.getOwnCharacter().getSilver() >= luck.getPriceForNextUpgrade()&& canAffordBySaveValue(luck.getPriceForNextUpgrade())) {
+							++lckIncrement;
+							buyAttribute(luck);
+							haveBuy = true;
+						}
+						
+						if (!haveBuy) {
+							canBuyStats = false;
+						}
+						
+						Helper.threadSleep(100, 300);
 					}
 					
-					if (account.getSetting().getIntelligencePercentage() > 0) {
-						fullAttributeSum += intelligence.getBaseValue();
-					}
-					
-					if (account.getSetting().getDexterityPercentage()> 0) {
-						fullAttributeSum += dexterity.getBaseValue();
-					}
-					
-					if (account.getSetting().getStaminaPercentage() > 0) {
-						fullAttributeSum += stamina.getBaseValue();
-					}
-					
-					if (account.getSetting().getLuckPercentage() > 0) {
-						fullAttributeSum += luck.getBaseValue();
-					}
-					
-					int strengthLimit = fullAttributeSum * account.getSetting().getStrengthPercentage() / 100;
-					int intelligenceLimit = fullAttributeSum * account.getSetting().getIntelligencePercentage() / 100;
-					int dexterityLimit = fullAttributeSum * account.getSetting().getDexterityPercentage() / 100;
-					int staminaLimit = fullAttributeSum * account.getSetting().getStaminaPercentage() / 100;
-					int luckLimit = fullAttributeSum * account.getSetting().getLuckPercentage() / 100;
-					
-					if (strength.getBaseValue() <= strengthLimit && account.getOwnCharacter().getSilver() >= strength.getPriceForNextUpgrade() && canAffordBySaveValue(strength.getPriceForNextUpgrade())) {
-						++strIncrement;
-						buyAttribute(strength);
-						haveBuy = true;
-					}
-					
-					if (intelligence.getBaseValue() <= intelligenceLimit && account.getOwnCharacter().getSilver() >= intelligence.getPriceForNextUpgrade()&& canAffordBySaveValue(intelligence.getPriceForNextUpgrade())) {
-						++intIncrement;
-						buyAttribute(intelligence);
-						haveBuy = true;
-					}
-					
-					if (dexterity.getBaseValue() <= dexterityLimit && account.getOwnCharacter().getSilver() >= dexterity.getPriceForNextUpgrade()&& canAffordBySaveValue(dexterity.getPriceForNextUpgrade())) {
-						++dexIncrement;
-						buyAttribute(dexterity);
-						haveBuy = true;
-					}
-					
-					if (stamina.getBaseValue() <= staminaLimit && account.getOwnCharacter().getSilver() >= stamina.getPriceForNextUpgrade()&& canAffordBySaveValue(stamina.getPriceForNextUpgrade())) {
-						++staIncrement;
-						buyAttribute(stamina);
-						haveBuy = true;
-					}
-					
-					if (luck.getBaseValue() <= luckLimit && account.getOwnCharacter().getSilver() >= luck.getPriceForNextUpgrade()&& canAffordBySaveValue(luck.getPriceForNextUpgrade())) {
-						++lckIncrement;
-						buyAttribute(luck);
-						haveBuy = true;
-					}
-					
-					if (!haveBuy) {
-						canBuyStats = false;
-					}
-					
-					Helper.threadSleep(100, 300);
+					logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s", strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
 				}
-				
-				logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s", strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
 			}
 		} else {
 			return;
@@ -204,7 +206,7 @@ public class CharacterScreenArea extends BaseArea {
 	private Boolean canAffordBySaveValue(long price) {
 		Boolean result = false;
 		
-		if ((account.getOwnCharacter().getSilver() - price) >= (account.getWagesPerHour() * 10)) {
+		if ((account.getOwnCharacter().getSilver() - price) >= (account.getWagesPerHour() * 15)) {
 			result = true;
 		}
 		
