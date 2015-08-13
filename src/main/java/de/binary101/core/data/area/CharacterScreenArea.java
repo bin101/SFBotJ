@@ -216,7 +216,7 @@ public class CharacterScreenArea extends BaseArea {
 		new Response(responseString, this.account);
 	}
 	
-	private void tryToEquipItems() {
+	public void tryToEquipItems() {
 		Boolean hasSthEquipped = false;
 		String equipRespString = null;
 		

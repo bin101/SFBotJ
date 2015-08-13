@@ -32,7 +32,12 @@ public class ShopArea extends BaseArea {
 		}
 		
 		if (account.getOwnCharacter().getBackpack().getIsFull()) {
+			
+			CharacterScreenArea charScreenArea = new CharacterScreenArea(account);			
 			logger.info("Betrete einen der beiden Shops");
+			
+			//TODO Vll kann man das besser lösen
+			charScreenArea.tryToEquipItems();
 			
 			logger.info("Rucksack ist voll, verkaufe das billigste Item");
 			
