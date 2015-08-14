@@ -97,7 +97,6 @@ public class CharacterScreenArea extends BaseArea {
 				Boolean canBuyStats = account.getOwnCharacter().getAttributeList().getCanBuyAtLeastOne();
 				
 				if (canBuyStats) {
-					logger.info("Dann wollen wir mal meine Attribute verbessern");
 					
 					int strIncrement = 0;
 					int intIncrement = 0;
@@ -105,9 +104,11 @@ public class CharacterScreenArea extends BaseArea {
 					int staIncrement = 0;
 					int lckIncrement = 0;
 					
+					Boolean haveBuy = false;
+					
 					while (canBuyStats) {
 						Helper.threadSleep(100, 300);
-						Boolean haveBuy = false;
+						haveBuy = false;
 						
 						Attribute strength = this.account.getOwnCharacter().getAttributeList().getStrength();
 						Attribute intelligence = this.account.getOwnCharacter().getAttributeList().getIntelligence();
@@ -142,31 +143,31 @@ public class CharacterScreenArea extends BaseArea {
 						int staminaLimit = fullAttributeSum * account.getSetting().getStaminaPercentage() / 100;
 						int luckLimit = fullAttributeSum * account.getSetting().getLuckPercentage() / 100;
 						
-						if (strength.getBaseValue() <= strengthLimit && account.getOwnCharacter().getSilver() >= strength.getPriceForNextUpgrade() && canAffordBySaveValue(strength.getPriceForNextUpgrade())) {
+						if (strength.getBaseValue() <= strengthLimit && canAffordBySaveValue(strength.getPriceForNextUpgrade())) {
 							++strIncrement;
 							buyAttribute(strength);
 							haveBuy = true;
 						}
 						
-						if (intelligence.getBaseValue() <= intelligenceLimit && account.getOwnCharacter().getSilver() >= intelligence.getPriceForNextUpgrade()&& canAffordBySaveValue(intelligence.getPriceForNextUpgrade())) {
+						if (intelligence.getBaseValue() <= intelligenceLimit && canAffordBySaveValue(intelligence.getPriceForNextUpgrade())) {
 							++intIncrement;
 							buyAttribute(intelligence);
 							haveBuy = true;
 						}
 						
-						if (dexterity.getBaseValue() <= dexterityLimit && account.getOwnCharacter().getSilver() >= dexterity.getPriceForNextUpgrade()&& canAffordBySaveValue(dexterity.getPriceForNextUpgrade())) {
+						if (dexterity.getBaseValue() <= dexterityLimit && canAffordBySaveValue(dexterity.getPriceForNextUpgrade())) {
 							++dexIncrement;
 							buyAttribute(dexterity);
 							haveBuy = true;
 						}
 						
-						if (stamina.getBaseValue() <= staminaLimit && account.getOwnCharacter().getSilver() >= stamina.getPriceForNextUpgrade()&& canAffordBySaveValue(stamina.getPriceForNextUpgrade())) {
+						if (stamina.getBaseValue() <= staminaLimit && canAffordBySaveValue(stamina.getPriceForNextUpgrade())) {
 							++staIncrement;
 							buyAttribute(stamina);
 							haveBuy = true;
 						}
 						
-						if (luck.getBaseValue() <= luckLimit && account.getOwnCharacter().getSilver() >= luck.getPriceForNextUpgrade()&& canAffordBySaveValue(luck.getPriceForNextUpgrade())) {
+						if (luck.getBaseValue() <= luckLimit && canAffordBySaveValue(luck.getPriceForNextUpgrade())) {
 							++lckIncrement;
 							buyAttribute(luck);
 							haveBuy = true;
@@ -179,30 +180,15 @@ public class CharacterScreenArea extends BaseArea {
 						Helper.threadSleep(100, 300);
 					}
 					
-					logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s", strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
+					if (haveBuy) {
+						logger.info("Dann wollen wir mal meine Attribute verbessern");
+						logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s", strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
+					}
 				}
 			}
 		} else {
 			return;
 		}
-		
-		
-		
-		if(account.getGotNewItem() || ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction())) {
-			
-			if (account.getSetting().getPerformItemEquip()) {
-				
-			}
-			
-			
-			
-			if (!account.getGotNewItem() && account.getSetting().getPerformAttributeBuy()) {				
-				
-			}
-			
-			account.setGotNewItem(false);
-		}
-
 	}
 	
 	private Boolean canAffordBySaveValue(long price) {
