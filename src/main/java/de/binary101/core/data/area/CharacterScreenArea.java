@@ -7,11 +7,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.binary101.core.constants.enums.ItemTypeEnum;
+import de.binary101.core.constants.enums.RequestEnum;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.data.character.Attribute;
 import de.binary101.core.data.item.Item;
 import de.binary101.core.request.BuyAttributeRequest;
 import de.binary101.core.request.EquipRequest;
+import de.binary101.core.request.Request;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
 import de.binary101.core.utils.SettingsManager;
@@ -257,7 +259,7 @@ public class CharacterScreenArea extends BaseArea {
 				logger.info(String.format("Benutze folgendes Item: %s", backpackItem.toString()));
 				
 				hasSthEquipped = true;
-				equipRespString = sendRequest(new EquipRequest(backpackItem));
+				equipRespString = backpackItem.getType() == ItemTypeEnum.DungeonKey ? sendRequest(new Request(RequestEnum.DungeonScreen)) : sendRequest(new EquipRequest(backpackItem));
 				new Response(equipRespString, account);
 			}
 			Helper.threadSleep(500, 1000);
