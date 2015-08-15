@@ -104,26 +104,7 @@ public class Response {
 		}
 		
 		if (parsedData.containsKey("tavernspecial")) {
-			switch (parsedData.get("tavernspecial").get(0)) {
-			case "1":
-				account.setTavernSpecialEvent(EventEnum.ExperienceEvent);
-				break;
-			case "2":
-				account.setTavernSpecialEvent(EventEnum.EpicEvent);
-				break;
-			case "3":
-				account.setTavernSpecialEvent(EventEnum.GoldEvent);
-				break;
-			case "4":
-				account.setTavernSpecialEvent(EventEnum.MushroomEvent);
-				break;
-			case "5":
-				account.setTavernSpecialEvent(EventEnum.Beerfest);
-				break;
-			default:
-				account.setTavernSpecialEvent(EventEnum.None);
-				break;
-			}
+			account.getTavern().setSpecialEvent(EventEnum.fromInt(Integer.parseInt(parsedData.get("tavernspecial").get(0))));
 		}
 	}
 	

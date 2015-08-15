@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.constants.enums.PlayerSaveEnum;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.data.item.Item;
@@ -12,17 +13,16 @@ import de.binary101.core.utils.TimeManager;
 
 public class Tavern {
 
-	@Getter @Setter
-	private int remainingALUSeconds;
-	@Getter @Setter
-	private int usedBeer;
-	@Getter
-	private List<Quest> availableQuests;
+	@Getter @Setter	private int remainingALUSeconds;
+	@Getter @Setter	private int usedBeer;
+	@Getter	private List<Quest> availableQuests;
+	@Getter @Setter private EventEnum specialEvent;
 	
 	public Tavern() {
 		this.availableQuests = Arrays.asList(new Quest[3]);
 		this.remainingALUSeconds  = 0;
 		this.usedBeer = 0;
+		this.specialEvent = EventEnum.None;
 	}
 
 	public void updateTavern(Account account, Long[] ownplayersave) {

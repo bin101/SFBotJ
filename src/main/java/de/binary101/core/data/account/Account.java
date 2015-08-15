@@ -74,8 +74,6 @@ public class Account implements Runnable {
 	
 	@Getter @Setter private Boolean hasCompletedMirror;
 	
-	@Getter @Setter private EventEnum tavernSpecialEvent;
-	
 	public Account(Setting setting){
 		this.setting = setting;
 		this.lastActionTime = new DateTime();
@@ -97,8 +95,6 @@ public class Account implements Runnable {
 		this.wagesPerHour = 0;
 		
 		this.hasCompletedMirror = false;
-		
-		this.tavernSpecialEvent = EventEnum.None;
 	}
 	
 	public void logout(){

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.format.DateTimeFormat;
 
 import de.binary101.core.constants.enums.ActionEnum;
+import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;
 import de.binary101.core.constants.enums.RequestEnum;
 import de.binary101.core.data.account.Account;
@@ -123,6 +124,16 @@ public class TavernArea extends BaseArea{
 		}
 		
 		if (!oneQuestIsSpecial){
+			
+			EventEnum currentSpecialEvent = account.getTavern().getSpecialEvent();
+			String settingsQuestMode = account.getSetting().getQuestMode();
+			if (currentSpecialEvent == EventEnum.ExperienceEvent || currentSpecialEvent == EventEnum.GoldEvent) {
+				String targetQuestMode = currentSpecialEvent == EventEnum.ExperienceEvent ? "exp" : "gold";
+				
+				logger.info(String.format("Es herrscht gerade das %s, bevorzuge daher %s", currentSpecialEvent, targetQuestMode));
+				account.getSetting().setQuestMode(targetQuestMode);
+			}
+			
 			switch (account.getSetting().getQuestMode()) {
 			case "exp":
 				chosenQuest = quests
@@ -141,6 +152,10 @@ public class TavernArea extends BaseArea{
 			default:
 				logger.error("Kein oder falscher Questmode gesetzt, entscheide dich fuer den Mode gold oder exp");
 				break;
+			}
+			
+			if (currentSpecialEvent == EventEnum.ExperienceEvent || currentSpecialEvent == EventEnum.GoldEvent) {
+				account.getSetting().setQuestMode(settingsQuestMode);
 			}
 		} else {
 			logger.info(String.format("Habe den Questmode ignoriert, da Quest %s %s", chosenQuest.getIndex(), chosenQuest.getSpecialQuestType().toString()));
