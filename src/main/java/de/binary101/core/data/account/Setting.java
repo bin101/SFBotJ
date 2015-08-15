@@ -17,16 +17,41 @@ public class Setting {
 	@Setter
 	private String username;
 
-	@XStreamAlias("password")
-	@Getter
-	@Setter
-	private String password;
-
 	@XStreamAlias("serverURL")
 	@XStreamAsAttribute
 	@Getter
 	@Setter
 	private String serverURL;
+	
+	@XStreamAlias("password")
+	@Getter
+	@Setter
+	private String password;
+	
+	@XStreamAlias("dontChange_LoginCount")
+	@Getter
+	@Setter 
+	private int loginCount;
+	
+	@XStreamAlias("dontChange_SessionID")
+	@Getter
+	@Setter 
+	private String sessionID;
+	
+	@XStreamAlias("dontChange_CryptID")
+	@Getter
+	@Setter
+	private String cryptID;
+	
+	@XStreamAlias("dontChange_CryptKey")
+	@Getter
+	@Setter
+	private String cryptKey;
+	
+	@XStreamAlias("performQuests")
+	@Getter
+	@Setter
+	private Boolean performQuesten;
 
 	@XStreamAlias("setQuestModeToExpOrGold")
 	@Getter
@@ -42,11 +67,6 @@ public class Setting {
 	@Getter
 	@Setter
 	private int maxBeerToBuy;
-
-	@XStreamAlias("performQuests")
-	@Getter
-	@Setter
-	private Boolean performQuesten;
 	
 	@XStreamAlias("performShop")
 	@Getter
@@ -119,6 +139,7 @@ public class Setting {
 	}
 	
 	public Setting(String username, String password, String serverURL,
+				   int loginCount, String sessionID, String cryptID, String cryptKey,
 				   Boolean performQuesten, String questMode, Boolean preferSpecialQuests, int maxBeerPerDay, 
 				   Boolean performShop,
 				   Boolean performItemEquip,
@@ -128,6 +149,11 @@ public class Setting {
 		this.username = username;
 		this.password = password;
 		this.serverURL = serverURL;
+		
+		this.loginCount = loginCount;
+		this.sessionID = sessionID;
+		this.cryptID = cryptID;
+		this.cryptKey = cryptKey;
 		
 		this.performQuesten = performQuesten;
 		this.questMode = questMode;

@@ -23,20 +23,30 @@ public class Account implements Runnable {
 	@Getter private Setting setting;
 	@Getter @Setter private DateTime lastActionTime;
 	@Getter @Setter private DateTime serverTime;
-	@Getter @Setter private int loginCount;
 	@Getter @Setter private Long requestCount;
 	@Getter @Setter private Boolean isLoggedIn;
-	@Setter private String cryptID, cryptKey, sessionID;
 	public String getCryptID() {
-		return this.cryptID == null ? StaticValues.CryptID() : this.cryptID;
+		String result = null;
+		
+		result = this.setting.getCryptID() == null ? StaticValues.CryptID() : this.setting.getCryptID();
+		
+		return result;
 	}
 	
 	public String getCryptKey() {
-		return this.cryptKey == null ? StaticValues.CryptKey() : this.cryptKey;
+		String result = null;
+		
+		result = this.setting.getCryptKey() == null ? StaticValues.CryptKey() : this.setting.getCryptKey();
+		
+		return result;
 	}
 	
 	public String getSessionID() {
-		return this.sessionID == null ? StaticValues.SessionID() : this.sessionID;
+		String result = null;
+		
+		result = this.setting.getSessionID() == null ? StaticValues.SessionID() : this.setting.getSessionID();
+		
+		return result;
 	}
 	
 	@Getter @Setter private OwnCharacter ownCharacter;
@@ -69,7 +79,6 @@ public class Account implements Runnable {
 	public Account(Setting setting){
 		this.setting = setting;
 		this.lastActionTime = new DateTime();
-		this.loginCount = 0;
 		this.requestCount = 1l;
 		this.isLoggedIn = false;
 		
@@ -93,9 +102,6 @@ public class Account implements Runnable {
 	}
 	
 	public void logout(){
-		this.cryptID = null;
-		this.cryptKey = null;
-		this.sessionID = null;
 		this.isLoggedIn = false;
 	}
 

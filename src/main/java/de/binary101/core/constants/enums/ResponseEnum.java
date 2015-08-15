@@ -91,6 +91,7 @@ public enum ResponseEnum
   ERR_PASSWORD_TOO_SHORT("password too short"), // -3
   ERR_NAME_TOO_SHORT("-2"),
   ERR_NAME_EXISTS("character exists"), // -1
+  ERR_CRYPTID_NOT_FOUND("cryptoid not found"),
   NONE("0"),
   ACCOUNT_CREATE("1"),
   ACCOUNT_SUCCESS("1"),

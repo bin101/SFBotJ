@@ -11,6 +11,7 @@ import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.constants.enums.ResponseEnum;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.utils.CryptManager;
+import de.binary101.core.utils.SettingsManager;
 import de.binary101.core.utils.TimeManager;
 
 public class Response {
@@ -28,17 +29,21 @@ public class Response {
 		logger.debug(parsedData);
 		
 		if (parsedData.containsKey("login count")) {
-			account.setLoginCount(Integer.parseInt(parsedData.get("login count").get(0)));
+			account.getSetting().setLoginCount(Integer.parseInt(parsedData.get("login count").get(0)));
+			SettingsManager.saveSettings();
+			logger.info("Habe den LoginCount erhoeht: " + parsedData.get("login count").get(0));
 		}
 		
 		if (parsedData.containsKey("cryptoid")) {
-			account.setCryptID(parsedData.get("cryptoid").get(0));
-			logger.info("Habe eine neue CryptoID erhalten");
+			account.getSetting().setCryptID(parsedData.get("cryptoid").get(0));
+			SettingsManager.saveSettings();
+			logger.info("Habe eine neue CryptoID erhalten: " + parsedData.get("cryptoid").get(0));
 		}
 		
 		if (parsedData.containsKey("cryptokey")) {
-			account.setCryptKey(parsedData.get("cryptokey").get(0));
-			logger.info("Habe einen neue CryptoKey erhalten");
+			account.getSetting().setCryptKey(parsedData.get("cryptokey").get(0));
+			SettingsManager.saveSettings();
+			logger.info("Habe einen neue CryptoKey erhalten: " + parsedData.get("cryptokey").get(0));
 		}
 		
 		if (parsedData.containsKey("timestamp")) {
@@ -66,6 +71,21 @@ public class Response {
 			
 			if (this.errorCode == ResponseEnum.ERR_SESSION_ID_EXPIRED){
 				logger.error("Session ist nicht mehr gueltig");
+				
+				account.getSetting().setSessionID(null);
+				SettingsManager.saveSettings();
+				
+				account.logout();
+				return;
+			}
+			
+			if (this.errorCode == ResponseEnum.ERR_CRYPTID_NOT_FOUND) {
+				logger.error("CryptID stimmt nicht mehr");
+				
+				account.getSetting().setCryptID(null);
+				account.getSetting().setCryptKey(null);
+				SettingsManager.saveSettings();
+				
 				account.logout();
 				return;
 			}

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.binary101.core.constants.enums.ResponseEnum;
 import de.binary101.core.data.account.Account;
+import de.binary101.core.utils.SettingsManager;
 
 public class LoginResponse extends Response {
 	
@@ -21,7 +22,8 @@ public class LoginResponse extends Response {
 		if (parsedData.containsKey("sessionid")) {
 			this.sessionID = parsedData.get("sessionid").get(0);
 			logger.info("Aktualisiere die Session-ID: )" + this.sessionID);
-			account.setSessionID(sessionID);
+			account.getSetting().setSessionID(sessionID);
+			SettingsManager.saveSettings();
 		}
 		
 		if (parsedData.containsKey("serverversion")) {
@@ -31,7 +33,7 @@ public class LoginResponse extends Response {
 		if (this.getHasError()) {
 			if (this.getErrorCode() == ResponseEnum.ERR_LOGIN_COUNT_TOO_LOW 
 					|| this.getErrorCode() == ResponseEnum.ERR_LOGIN_FAILED) {
-				logger.warn("Login war nicht erfolgreich");
+				logger.warn("Login war nicht erfolgreich: " + this.getErrorCode());
 				account.setIsLoggedIn(false);
 			}
 		} else {

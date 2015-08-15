@@ -26,7 +26,7 @@ public class LoginArea extends BaseArea {
 			
 			do {
 				logger.info("Starte Loginvorgang");
-				String loginResponseString = sendRequest(new LoginRequest(account.getSetting().getUsername(), account.getSetting().getPassword(), account.getLoginCount()));
+				String loginResponseString = sendRequest(new LoginRequest(account.getSetting().getUsername(), account.getSetting().getPassword(), account.getSetting().getLoginCount()));
 				
 				this.loginResponse = new LoginResponse(loginResponseString, account);
 			} while (!account.getIsLoggedIn());
