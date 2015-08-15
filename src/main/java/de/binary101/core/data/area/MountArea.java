@@ -60,7 +60,7 @@ public class MountArea extends BaseArea {
 			
 			if (canBuyMount && targetMount.getId() > account.getOwnCharacter().getMountType().getId()) {
 				logger.info("Betrete den Stall");
-				Helper.threadSleep(1000, 2000);
+				Helper.threadSleepRandomBetween(1000, 2000);
 				
 				logger.info("Mein neues Reittier wird dann wohl " + (targetMount == MountTypeEnum.Cow ? "eine Kuh" : targetMount == MountTypeEnum.Horse ? "ein Pferd" : targetMount == MountTypeEnum.Tiger ? "ein Tiger" : "ein Greifendrache"));
 				

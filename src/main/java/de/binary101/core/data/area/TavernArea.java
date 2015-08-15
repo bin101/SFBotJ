@@ -48,7 +48,7 @@ public class TavernArea extends BaseArea{
 		
 		if (!account.getHasRunningAction() && account.getHasEnoughALUForOneQuest()) {
 			logger.info("Betrete Taverne");
-			Helper.threadSleep(1000, 2000);
+			Helper.threadSleepRandomBetween(1000, 2000);
 			
 			int aluSeconds = account.getTavern().getRemainingALUSeconds();
 			
@@ -62,7 +62,7 @@ public class TavernArea extends BaseArea{
 				
 				if (usedBeer < maxBeer && usedBeer < maxBeerToBuy && aluSeconds <= 20 * 60) {
 					while (aluSeconds + 20 * 60 < 100 * 60 && mushrooms > 1 && usedBeer < maxBeer && usedBeer < maxBeerToBuy) {
-						Helper.threadSleep(600, 1200);
+						Helper.threadSleepRandomBetween(600, 1200);
 						this.buyBeer();
 						aluSeconds += 20 * 60;
 						usedBeer += 1;
@@ -82,7 +82,7 @@ public class TavernArea extends BaseArea{
 			
 		} else {
 			if ( account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Quest) {
-				Helper.threadSleep(600, 1200);
+				Helper.threadSleepRandomBetween(600, 1200);
 				finishQuest();
 				logger.info("Habe die Quest beendet.");
 				
@@ -96,7 +96,7 @@ public class TavernArea extends BaseArea{
 	
 	private Boolean startBestQuest(List<Quest> quests, Boolean overwriteInventory) {
 		Boolean result = false;
-		Helper.threadSleep(2100, 3500);
+		Helper.threadSleepRandomBetween(2100, 3500);
 		
 		Boolean overwriteFullInventory = true; //TODO Sollte eigentlich aus den Settings gelesen werden.
 		

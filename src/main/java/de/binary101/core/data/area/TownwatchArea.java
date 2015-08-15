@@ -38,20 +38,25 @@ public class TownwatchArea extends BaseArea {
 		
 		if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction()) {
 			logger.info("Mache mich auf den Weg zur Stadtwache");
-			Helper.threadSleep(1000, 2000);
+			Helper.threadSleepRandomBetween(1000, 2000);
 			startTownwatch();
 			
 		} else {
 			if ( account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Townwatch) {
-				Helper.threadSleep(1000, 2000);
+				Helper.threadSleepRandomBetween(1000, 2000);
 				finishTownwatch();
 				logger.info("Habe meine Schicht beendet");
 			} else if (account.getActionEndTime().isAfterNow() && account.getActionType() == ActionEnum.Townwatch) {
 				account.logout();
 				
-				Long sleepTime = account.getActionEndTime().getMillis() - DateTime.now().getMillis();
-				logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
-				Helper.threadSleep(sleepTime.intValue(), (int)(sleepTime.intValue() * 1.15));
+				Helper.threadSleepRandomBetween(2000, 3000);
+				
+				long sleepTime = (account.getActionEndTime().getMillis() - DateTime.now().getMillis());
+				
+				sleepTime = (long) Helper.randomBetween(sleepTime, sleepTime * 1.2);
+				
+				logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", DateTime.now().plusMillis((int)sleepTime).toString(DateTimeFormat.forPattern("HH:mm:ss"))));
+				Helper.threadSleep(sleepTime);
 			}
 		}
 	}
@@ -86,9 +91,9 @@ public class TownwatchArea extends BaseArea {
 		
 		logger.info(String.format("Sollte gegen %s fertig sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
 		
-		account.logout();
-		logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
-		Helper.threadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 * hoursToWork);
+//		account.logout();
+//		logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
+//		Helper.threadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 * hoursToWork);
 	}
 	
 	private void finishTownwatch() {

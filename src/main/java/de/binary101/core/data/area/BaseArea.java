@@ -58,7 +58,7 @@ public class BaseArea {
 		request.setRequestCount(this.account.getRequestCount());
 		
 		
-		Helper.threadSleep(1000, 2000);
+		Helper.threadSleepRandomBetween(1000, 2000);
 		
 		if (checkServerConnection()) {
 			HttpGet req = new HttpGet(buildRequestString(request));

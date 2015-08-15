@@ -80,7 +80,7 @@ public class CharacterScreenArea extends BaseArea {
 			logger.info("Betrete die Charakteruebersicht");
 			
 			if (account.getSetting().getPerformItemEquip() && account.getGotNewItem()) {
-				Helper.threadSleep(600, 1200);
+				Helper.threadSleepRandomBetween(600, 1200);
 				
 				logger.info("Gucke, ob Items ausgeruestet werden koennen");
 				tryToEquipItems();
@@ -107,7 +107,7 @@ public class CharacterScreenArea extends BaseArea {
 					Boolean haveBuy = false;
 					
 					while (canBuyStats) {
-						Helper.threadSleep(100, 300);
+						Helper.threadSleepRandomBetween(100, 300);
 						haveBuy = false;
 						
 						Attribute strength = this.account.getOwnCharacter().getAttributeList().getStrength();
@@ -177,7 +177,7 @@ public class CharacterScreenArea extends BaseArea {
 							canBuyStats = false;
 						}
 						
-						Helper.threadSleep(100, 300);
+						Helper.threadSleepRandomBetween(100, 300);
 					}
 					
 					if (haveBuy) {
@@ -211,7 +211,7 @@ public class CharacterScreenArea extends BaseArea {
 		String equipRespString = null;
 		
 		for (Item backpackItem : account.getOwnCharacter().getBackpack().getItems().stream().filter(item -> item.getType() != ItemTypeEnum.None).collect(Collectors.toList())) {
-			Helper.threadSleep(500, 1000);
+			Helper.threadSleepRandomBetween(500, 1000);
 			if (backpackItem.getType().getId() >= ItemTypeEnum.Weapon.getId() && backpackItem.getType().getId() <= ItemTypeEnum.Talisman.getId()) {
 				
 				Optional<Item> equippedItem = account
@@ -248,7 +248,7 @@ public class CharacterScreenArea extends BaseArea {
 				equipRespString = backpackItem.getType() == ItemTypeEnum.DungeonKey ? sendRequest(new Request(RequestEnum.DungeonScreen)) : sendRequest(new EquipRequest(backpackItem));
 				new Response(equipRespString, account);
 			}
-			Helper.threadSleep(500, 1000);
+			Helper.threadSleepRandomBetween(500, 1000);
 		}
 		
 		if (!hasSthEquipped) {

@@ -41,7 +41,7 @@ public class ShopArea extends BaseArea {
 			
 			logger.info("Rucksack ist voll, verkaufe das billigste Item");
 			
-			Helper.threadSleep(600, 1200);
+			Helper.threadSleepRandomBetween(600, 1200);
 			
 			int backIndexForItemToSell = account.getOwnCharacter().getBackpack().getIndexForLeastValueableItem();
 			Item itemToSell = account.getOwnCharacter().getBackpack().getItems().get(backIndexForItemToSell);
@@ -51,7 +51,7 @@ public class ShopArea extends BaseArea {
 			String sellResponseString = sendRequest(new SellRequest(backIndexForItemToSell));
 			this.sellResponse = new Response(sellResponseString, account);
 			
-			Helper.threadSleep(600, 1200);
+			Helper.threadSleepRandomBetween(600, 1200);
 			
 			if (!this.sellResponse.getHasError()) {
 				logger.info("Verkauf war erfolgreich");

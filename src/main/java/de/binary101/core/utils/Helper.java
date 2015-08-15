@@ -71,8 +71,19 @@ public class Helper {
 		return TrueAttPreis;
 	}
 	
+	public static int randomBetween(double min, double max) {
+		return (int) (Math.random() * (max - min) + min);
+	}
 	
-	public static void threadSleep(int minMilliSec, int maxMilliSec) {
+	public static void threadSleep(Long sleepTime) {
+		try {
+			Thread.sleep(sleepTime);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
+	public static void threadSleepRandomBetween(int minMilliSec, int maxMilliSec) {
 		try {
 			Thread.sleep((long)((Math.random() * (maxMilliSec - minMilliSec)) + minMilliSec));
 		} catch (Exception e) {
