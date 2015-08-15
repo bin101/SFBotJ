@@ -31,17 +31,7 @@ public class TavernArea extends BaseArea{
 	}
 	
 	@Override
-	public void performArea() {
-		
-		if (account.getSetting().getPerformQuesten() == null) {
-			account.getSetting().setPerformQuesten(false);
-			account.getSetting().setQuestMode("exp");
-			account.getSetting().setPreferSpecialQuests(true);
-			account.getSetting().setMaxBeerToBuy(0);
-			
-			SettingsManager.saveSettings();
-		}
-		
+	public void performArea() {		
 		if (!account.getSetting().getPerformQuesten() 
 			|| account.getOwnCharacter().getBackpack().getIsFull()) {
 			return;
@@ -56,13 +46,18 @@ public class TavernArea extends BaseArea{
 			
 			//Gucke, ob ich ein Bier moechte
 			int maxBeerToBuy = account.getSetting().getMaxBeerToBuy();
+			int savedMushrooms = account.getSetting().getSavedMushrooms();
 			if (maxBeerToBuy > 0) {
 				int usedBeer = account.getTavern().getUsedBeer();
 				int mushrooms = account.getOwnCharacter().getMushrooms();
 				int maxBeer = 10; //TODO kann durch Enchantments auch 11 sein
 				
 				if (usedBeer < maxBeer && usedBeer < maxBeerToBuy && aluSeconds <= 20 * 60) {
-					while (aluSeconds + 20 * 60 < 100 * 60 && mushrooms > 1 && usedBeer < maxBeer && usedBeer < maxBeerToBuy) {
+					while (aluSeconds + 20 * 60 < 100 * 60 
+							&& mushrooms > 1
+							&& mushrooms > savedMushrooms
+							&& usedBeer < maxBeer 
+							&& usedBeer < maxBeerToBuy) {
 						Helper.threadSleepRandomBetween(600, 1200);
 						this.buyBeer();
 						aluSeconds += 20 * 60;

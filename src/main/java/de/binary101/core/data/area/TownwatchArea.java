@@ -22,16 +22,7 @@ public class TownwatchArea extends BaseArea {
 	}
 	
 	@Override
-	public void performArea() {
-		
-		if (account.getSetting().getPerformTownwatch() == null) {
-			account.getSetting().setPerformTownwatch(false);
-			account.getSetting().setMinHourOfDayFor10HourTownwatch(22);
-			account.getSetting().setMaxHourOfDayFor10HourTownwatch(8);
-			
-			SettingsManager.saveSettings();
-		}
-		
+	public void performArea() {		
 		if (!account.getSetting().getPerformTownwatch()) {
 			return;
 		}

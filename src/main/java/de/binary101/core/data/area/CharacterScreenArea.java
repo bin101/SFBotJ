@@ -27,14 +27,11 @@ public class CharacterScreenArea extends BaseArea {
 	
 	@Override
 	public void performArea() {
-		
-		if (account.getSetting().getPerformItemEquip() == null) {
-			account.getSetting().setPerformItemEquip(false);
-			SettingsManager.saveSettings();
-		}
-
-		if (account.getSetting().getPerformAttributeBuy() == null) {
-			account.getSetting().setPerformAttributeBuy(false);
+		if (account.getSetting().getStrengthPercentage() == -1
+				|| account.getSetting().getDexterityPercentage() == -1
+				|| account.getSetting().getIntelligencePercentage() == -1
+				|| account.getSetting().getStaminaPercentage() == -1
+				|| account.getSetting().getLuckPercentage() == -1) {
 			
 			switch (account.getOwnCharacter().getCharClass()) {
 			case Mage:

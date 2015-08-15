@@ -15,23 +15,23 @@ public class Setting {
 	@XStreamAsAttribute
 	@Getter
 	@Setter
-	private String username;
+	private String username = "YourUsername";
 
 	@XStreamAlias("serverURL")
 	@XStreamAsAttribute
 	@Getter
 	@Setter
-	private String serverURL;
+	private String serverURL = "server.sfgame.tld";
 	
 	@XStreamAlias("password")
 	@Getter
 	@Setter
-	private String password;
+	private String password = "YourPassword";
 	
 	@XStreamAlias("dontChange_LoginCount")
 	@Getter
 	@Setter 
-	private int loginCount;
+	private int loginCount = 0;
 	
 	@XStreamAlias("dontChange_SessionID")
 	@Getter
@@ -51,131 +51,95 @@ public class Setting {
 	@XStreamAlias("performQuests")
 	@Getter
 	@Setter
-	private Boolean performQuesten;
+	private Boolean performQuesten = false;
 
 	@XStreamAlias("setQuestModeToExpOrGold")
 	@Getter
 	@Setter
-	private String questMode;
+	private String questMode = "exp";
 	
 	@XStreamAlias("preferSpecialQuests")
 	@Getter
 	@Setter
-	private Boolean preferSpecialQuests;
+	private Boolean preferSpecialQuests = true;
 
 	@XStreamAlias("maxBeerPerDay")
 	@Getter
 	@Setter
-	private int maxBeerToBuy;
+	private int maxBeerToBuy = 0;
+	
+	@XStreamAlias("savedMushroomsExceptMountBuy")
+	@Getter
+	@Setter
+	private int savedMushrooms = 0;
 	
 	@XStreamAlias("performShop")
 	@Getter
 	@Setter
-	private Boolean performShop;
+	private Boolean performShop = false;
 	
 	@XStreamAlias("performItemEquip")
 	@Getter
 	@Setter
-	private Boolean performItemEquip;
+	private Boolean performItemEquip = false;
 	
 	@XStreamAlias("performAttributeBuy")
 	@Getter
 	@Setter
-	private Boolean performAttributeBuy;
+	private Boolean performAttributeBuy = false;
 	
 	@XStreamAlias("strengthPercentage")
 	@Getter
 	@Setter
-	private int strengthPercentage;
+	private int strengthPercentage = -1;
 	
 	@XStreamAlias("dexterityPercentage")
 	@Getter
 	@Setter
-	private int dexterityPercentage;
+	private int dexterityPercentage = -1;
 	
 	@XStreamAlias("intelligencePercentage")
 	@Getter
 	@Setter
-	private int intelligencePercentage;
+	private int intelligencePercentage = -1;
 	
 	@XStreamAlias("staminaPercentage")
 	@Getter
 	@Setter
-	private int staminaPercentage;
+	private int staminaPercentage = -1;
 	
 	@XStreamAlias("luckPercentage")
 	@Getter
 	@Setter
-	private int luckPercentage;
+	private int luckPercentage = -1;
 	
 	@XStreamAlias("performTownwatch")
 	@Getter
 	@Setter
-	private Boolean performTownwatch;
+	private Boolean performTownwatch = false;
 	
 	@XStreamAlias("minHourOfDayFor10HourTownwatch")
 	@Getter
 	@Setter
-	private int minHourOfDayFor10HourTownwatch;
+	private int minHourOfDayFor10HourTownwatch = 22;
 	
 	@XStreamAlias("maxHourOfDayFor10HourTownwatch")
 	@Getter
 	@Setter
-	private int maxHourOfDayFor10HourTownwatch;
+	private int maxHourOfDayFor10HourTownwatch = 8;
 	
 	@XStreamAlias("performMountBuy")
 	@Getter
 	@Setter
-	private Boolean performMountBuy;
+	private Boolean performMountBuy = false;
 	
 	@XStreamAlias("maxMountToBuy")
 	@Getter
 	@Setter
-	private MountTypeEnum maxMountToBuy;
+	private MountTypeEnum maxMountToBuy = MountTypeEnum.None;
 	
 
 	public Setting() {
 
-	}
-	
-	public Setting(String username, String password, String serverURL,
-				   int loginCount, String sessionID, String cryptID, String cryptKey,
-				   Boolean performQuesten, String questMode, Boolean preferSpecialQuests, int maxBeerPerDay, 
-				   Boolean performShop,
-				   Boolean performItemEquip,
-				   Boolean performAttributeBuy, int strengthPercentage, int dexterityPercentage, int intelligencePercentage, int staminaPercentage, int luckPercentage,
-				   Boolean performTownwatch, int minHourOfDayFor10HourTownwatch, int maxHourOfDayFor10HourTownwatch,
-				   Boolean performMountBuy, MountTypeEnum maxMountToBuy) {
-		this.username = username;
-		this.password = password;
-		this.serverURL = serverURL;
-		
-		this.loginCount = loginCount;
-		this.sessionID = sessionID;
-		this.cryptID = cryptID;
-		this.cryptKey = cryptKey;
-		
-		this.performQuesten = performQuesten;
-		this.questMode = questMode;
-		this.preferSpecialQuests = preferSpecialQuests;
-		this.maxBeerToBuy = maxBeerPerDay;
-		
-		this.performShop = performShop;
-		
-		this.performItemEquip = performItemEquip;
-		
-		this.performAttributeBuy = performAttributeBuy;
-		this.strengthPercentage = strengthPercentage;
-		this.dexterityPercentage = dexterityPercentage;
-		this.intelligencePercentage = intelligencePercentage;
-		this.staminaPercentage = staminaPercentage;
-		this.luckPercentage =  luckPercentage;
-		
-		this.performTownwatch = performTownwatch;
-		this.minHourOfDayFor10HourTownwatch = minHourOfDayFor10HourTownwatch;
-		this.maxHourOfDayFor10HourTownwatch = maxHourOfDayFor10HourTownwatch;
-		
-		this.performMountBuy = performMountBuy;
-		this.maxMountToBuy = maxMountToBuy;
 	}
 }

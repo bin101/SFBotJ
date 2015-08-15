@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import de.binary101.core.data.account.Setting;
@@ -30,7 +31,7 @@ public class SettingsManager {
 	
 	private static XStream openXStream() {
 		
-		XStream xstream = new XStream(new DomDriver());
+		XStream xstream = new XStream(new PureJavaReflectionProvider(), new DomDriver());
 		xstream.processAnnotations(SettingList.class);
 		xstream.autodetectAnnotations(true);
 		
@@ -46,6 +47,7 @@ public class SettingsManager {
 		if (configFile.exists()) {
 			try (FileReader fr = new FileReader(configFile)) {
 				settingsContainer = (SettingList) xstream.fromXML(fr);
+				SettingsManager.saveSettings();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

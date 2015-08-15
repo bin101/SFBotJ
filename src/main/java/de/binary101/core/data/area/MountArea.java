@@ -29,15 +29,7 @@ public class MountArea extends BaseArea {
 	}
 	
 	@Override 
-	public void performArea() {
-		
-		if (account.getSetting().getPerformMountBuy() == null) {
-			account.getSetting().setPerformMountBuy(false);
-			account.getSetting().setMaxMountToBuy(MountTypeEnum.None);
-			
-			SettingsManager.saveSettings();
-		}
-		
+	public void performArea() {		
 		if (!account.getSetting().getPerformMountBuy()
 				|| (account.getOwnCharacter().getMountEndTime().isAfter(DateTime.now()) && account.getOwnCharacter().getMountType().getId() >= account.getSetting().getMaxMountToBuy().getId())
 				|| (account.getSetting().getMaxMountToBuy() == MountTypeEnum.None)
