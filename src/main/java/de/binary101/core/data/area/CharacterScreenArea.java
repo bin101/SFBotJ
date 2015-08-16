@@ -177,7 +177,11 @@ public class CharacterScreenArea extends BaseArea {
 						Helper.threadSleepRandomBetween(100, 300);
 					}
 					
-					if (haveBuy) {
+					if (strIncrement != 0
+							|| intIncrement != 0
+							|| dexIncrement != 0
+							|| staIncrement != 0
+							|| lckIncrement != 0) {
 						logger.info("Dann wollen wir mal meine Attribute verbessern");
 						logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s", strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
 					}
