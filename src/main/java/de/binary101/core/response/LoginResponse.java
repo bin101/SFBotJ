@@ -38,8 +38,8 @@ public class LoginResponse extends Response {
 			}
 		} else {
 			account.setIsLoggedIn(true);
-			account.setPollThread(new Thread(account, Thread.currentThread().getName() +"+PollThread"));
-			account.getPollThread().start();
+			account.getPollArea().setPollThread(new Thread(account.getPollArea(), Thread.currentThread().getName() +"+PollThread"));
+			account.getPollArea().getPollThread().start();
 		}
 	}
 }

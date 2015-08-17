@@ -11,7 +11,6 @@ import de.binary101.core.request.TownwatchFinishRequest;
 import de.binary101.core.request.TownwatchStartRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
-import de.binary101.core.utils.SettingsManager;
 
 public class TownwatchArea extends BaseArea {
 	

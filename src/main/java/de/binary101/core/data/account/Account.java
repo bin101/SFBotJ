@@ -5,21 +5,18 @@ import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.apache.logging.log4j.ThreadContext;
 import org.joda.time.DateTime;
 
 import de.binary101.core.constants.StaticValues;
 import de.binary101.core.constants.enums.ActionEnum;
-import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.data.area.PollArea;
 import de.binary101.core.data.area.tavern.Quest;
 import de.binary101.core.data.area.tavern.Tavern;
 import de.binary101.core.data.character.OwnCharacter;
 
-public class Account implements Runnable {
+public class Account {
 	
-	@Getter @Setter private Thread pollThread;
-	private PollArea pollArea;
+	@Getter @Setter private PollArea pollArea;
 	@Getter private Setting setting;
 	@Getter @Setter private DateTime lastActionTime;
 	@Getter @Setter private DateTime serverTime;
@@ -75,6 +72,8 @@ public class Account implements Runnable {
 	@Getter @Setter private Boolean hasCompletedMirror;
 	
 	public Account(Setting setting){
+		this.pollArea = new PollArea(this);
+		
 		this.setting = setting;
 		this.lastActionTime = new DateTime();
 		this.requestCount = 1l;
@@ -99,26 +98,6 @@ public class Account implements Runnable {
 	
 	public void logout(){
 		this.isLoggedIn = false;
-	}
-
-	@Override
-	public void run() {
-		ThreadContext.put("logFileName", this.toString());
-		
-		this.pollArea = new PollArea(this);
-		while (this.isLoggedIn) {
-			try {
-				Thread.sleep(10000);
-				
-				synchronized (this.requestCount) {
-				pollArea.performArea();
-				}
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
 	}
 	
 	@Override

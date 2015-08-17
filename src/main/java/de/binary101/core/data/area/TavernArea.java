@@ -18,7 +18,6 @@ import de.binary101.core.request.QuestStartRequest;
 import de.binary101.core.request.Request;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
-import de.binary101.core.utils.SettingsManager;
 
 public class TavernArea extends BaseArea{
 	

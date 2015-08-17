@@ -9,7 +9,6 @@ import de.binary101.core.data.account.Account;
 import de.binary101.core.request.BuyMountRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
-import de.binary101.core.utils.SettingsManager;
 
 public class MountArea extends BaseArea {
 	private final static Logger logger = LogManager.getLogger(MountArea.class);
