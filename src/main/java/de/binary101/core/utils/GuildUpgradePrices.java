@@ -7,6 +7,11 @@ public class GuildUpgradePrices {
 	private GuildUpgradePrices(){}
 	
 	private static HashMap<Integer, UpgradePrice> staticPrices = new HashMap<Integer, UpgradePrice>(){
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5078627081195734562L;
+
 		{
 			put(1, new UpgradePrice(500,0));
 			put(2, new UpgradePrice(900,0));

@@ -56,9 +56,13 @@ public class Guild {
 		this.silver = ownGuildSave[OwnGuildSaveEnum.Silver.getId()];
 		this.mushrooms = Helper.normalizeResponseInt(ownGuildSave[OwnGuildSaveEnum.Mushroom.getId()].intValue());
 		
-		this.guildUpgrades.set(0, new GuildUpgrade(GuildUpgradeTypeEnum.Fortress, ownGuildSave[OwnGuildSaveEnum.FortressLevel.getId()].intValue(), GuildUpgradePrices.getPrice(ownGuildSave[OwnGuildSaveEnum.FortressLevel.getId()].intValue() + 1)));
-		this.guildUpgrades.set(1, new GuildUpgrade(GuildUpgradeTypeEnum.Treasure, ownGuildSave[OwnGuildSaveEnum.TreasureLevel.getId()].intValue(), GuildUpgradePrices.getPrice(ownGuildSave[OwnGuildSaveEnum.TreasureLevel.getId()].intValue() + 1)));
-		this.guildUpgrades.set(2, new GuildUpgrade(GuildUpgradeTypeEnum.Instructor, ownGuildSave[OwnGuildSaveEnum.InstructorLevel.getId()].intValue(), GuildUpgradePrices.getPrice(ownGuildSave[OwnGuildSaveEnum.InstructorLevel.getId()].intValue() + 1)));
+		int fortressLevel = Helper.normalizeResponseInt(ownGuildSave[OwnGuildSaveEnum.FortressLevel.getId()].intValue());
+		int treasureLevel = Helper.normalizeResponseInt(ownGuildSave[OwnGuildSaveEnum.TreasureLevel.getId()].intValue());
+		int instructorLevel = Helper.normalizeResponseInt(ownGuildSave[OwnGuildSaveEnum.InstructorLevel.getId()].intValue());
+		
+		this.guildUpgrades.set(0, new GuildUpgrade(GuildUpgradeTypeEnum.Fortress, fortressLevel, GuildUpgradePrices.getPrice(fortressLevel + 1)));
+		this.guildUpgrades.set(1, new GuildUpgrade(GuildUpgradeTypeEnum.Treasure, treasureLevel, GuildUpgradePrices.getPrice(treasureLevel + 1)));
+		this.guildUpgrades.set(2, new GuildUpgrade(GuildUpgradeTypeEnum.Instructor, instructorLevel, GuildUpgradePrices.getPrice(instructorLevel + 1)));
 
 		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextFightTime.getId()].intValue());
 		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue());

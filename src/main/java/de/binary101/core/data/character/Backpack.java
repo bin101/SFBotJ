@@ -4,17 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import de.binary101.core.constants.enums.ItemTypeEnum;
 import de.binary101.core.data.item.Item;
 
 public class Backpack {
-	
-	private final static Logger logger = LogManager.getLogger(Backpack.class);
-
 	@Getter private List<Item> items;
 	
 	public Boolean getIsFull() {
