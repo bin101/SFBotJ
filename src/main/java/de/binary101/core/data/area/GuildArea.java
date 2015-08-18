@@ -27,7 +27,7 @@ public class GuildArea extends BaseArea {
 		}
 		
 		if (account.getHasGuild()) {
-			if ((account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) 
+			if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) 
 					&& account.getSetting().getDonateGoldToGuild()
 					&& !account.getHasRunningAction()
 					&& account.getSetting().getLastDonateDate().getDayOfYear() != DateTime.now().getDayOfYear()
