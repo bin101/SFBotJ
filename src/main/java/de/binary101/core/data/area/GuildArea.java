@@ -8,6 +8,7 @@ import de.binary101.core.data.account.Account;
 import de.binary101.core.request.DonateGoldRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
+import de.binary101.core.utils.SettingsManager;
 
 public class GuildArea extends BaseArea {
 	
@@ -49,6 +50,7 @@ public class GuildArea extends BaseArea {
 					if (donateGold(silverAmountToDonate)) {
 						logger.info(String.format("Habe gerade %s gold an die Gilde gespendet", silverAmountToDonate / 100));
 						account.getGuild().setLastDonateTime(DateTime.now());
+						SettingsManager.saveSettings();
 					}
 				}
 			}
