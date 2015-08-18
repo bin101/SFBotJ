@@ -10,9 +10,10 @@ import org.joda.time.DateTime;
 import de.binary101.core.constants.StaticValues;
 import de.binary101.core.constants.enums.ActionEnum;
 import de.binary101.core.data.area.PollArea;
-import de.binary101.core.data.area.tavern.Quest;
-import de.binary101.core.data.area.tavern.Tavern;
 import de.binary101.core.data.character.OwnCharacter;
+import de.binary101.core.data.guild.Guild;
+import de.binary101.core.data.tavern.Quest;
+import de.binary101.core.data.tavern.Tavern;
 
 public class Account {
 	
@@ -48,6 +49,10 @@ public class Account {
 	
 	@Getter @Setter private OwnCharacter ownCharacter;
 	@Getter @Setter private Tavern tavern;
+	@Getter @Setter private Guild guild;
+	public Boolean getHasGuild() {
+		return this.guild.getName().equals("None") ? false : true;
+	}
 	
 	@Getter @Setter private Boolean hasRunningAction;
 	@Getter @Setter private ActionEnum actionType;
@@ -83,6 +88,7 @@ public class Account {
 		
 		this.ownCharacter = new OwnCharacter();
 		this.tavern = new Tavern();
+		this.guild = new Guild();
 		
 		this.hasRunningAction = false;
 		this.actionType = ActionEnum.None;

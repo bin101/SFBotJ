@@ -1,4 +1,4 @@
-package de.binary101.core.data.area.tavern;
+package de.binary101.core.data.tavern;
 
 import lombok.Getter;
 

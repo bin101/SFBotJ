@@ -3,6 +3,9 @@ package de.binary101.core.data.account;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
@@ -28,31 +31,16 @@ public class Setting {
 	@Setter
 	private String password = "YourPassword";
 	
-	@XStreamAlias("dontChange_LoginCount")
-	@Getter
-	@Setter 
-	private int loginCount = 0;
-	
-	@XStreamAlias("dontChange_SessionID")
-	@Getter
-	@Setter 
-	private String sessionID;
-	
-	@XStreamAlias("dontChange_CryptID")
-	@Getter
-	@Setter
-	private String cryptID;
-	
-	@XStreamAlias("dontChange_CryptKey")
-	@Getter
-	@Setter
-	private String cryptKey;
-	
 	@XStreamAlias("performQuests")
 	@Getter
 	@Setter
 	private Boolean performQuesten = false;
 
+	@XStreamAlias("Info_Possible_QuestMode_Values")
+	@Getter
+	@Setter
+	private String Info_Possible_QuestMode_Values = "exp|gold";
+	
 	@XStreamAlias("setQuestModeToExpOrGold")
 	@Getter
 	@Setter
@@ -133,10 +121,57 @@ public class Setting {
 	@Setter
 	private Boolean performMountBuy = false;
 	
+	@XStreamAlias("Info_Possible_Mount_Values")
+	@Getter
+	@Setter
+	private String Info_Mount_Values = "None|Cow|Horse|Tiger|Dragon";
+	
 	@XStreamAlias("maxMountToBuy")
 	@Getter
 	@Setter
 	private MountTypeEnum maxMountToBuy = MountTypeEnum.None;
+	
+	@XStreamAlias("performGuild")
+	@Getter
+	@Setter
+	private Boolean performGuild = false;
+	
+	@XStreamAlias("donateGoldToGuild")
+	@Getter
+	@Setter
+	private Boolean donateGoldToGuild = false;
+	
+	@XStreamAlias("donatePercentage")
+	@Getter
+	@Setter
+	private int donatePercentage = 20;
+	
+	@XStreamAlias("dontChange_LoginCount")
+	@Getter
+	@Setter 
+	private int loginCount = 0;
+	
+	@XStreamAlias("dontChange_SessionID")
+	@Getter
+	@Setter 
+	private String sessionID;
+	
+	@XStreamAlias("dontChange_CryptID")
+	@Getter
+	@Setter
+	private String cryptID;
+	
+	@XStreamAlias("dontChange_CryptKey")
+	@Getter
+	@Setter
+	private String cryptKey;
+	
+	@XStreamAlias("dontChange_LastDonateDate")
+	@Getter
+	private String lastDonateDate = "01-01-1970";
+	public void setLastDonateDate(DateTime lastDonateDate) {
+		this.lastDonateDate = lastDonateDate.toString(DateTimeFormat.forPattern("dd-MM-yyyy"));
+	}
 	
 
 	public Setting() {

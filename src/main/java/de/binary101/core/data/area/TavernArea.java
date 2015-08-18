@@ -12,7 +12,7 @@ import de.binary101.core.constants.enums.EventEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;
 import de.binary101.core.constants.enums.RequestEnum;
 import de.binary101.core.data.account.Account;
-import de.binary101.core.data.area.tavern.Quest;
+import de.binary101.core.data.tavern.Quest;
 import de.binary101.core.request.QuestFinishRequest;
 import de.binary101.core.request.QuestStartRequest;
 import de.binary101.core.request.Request;

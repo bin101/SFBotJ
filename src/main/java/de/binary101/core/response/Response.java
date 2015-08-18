@@ -92,20 +92,35 @@ public class Response {
 		}
 		
 		if (parsedData.containsKey("ownplayersave")) {
-			String[] stringArray = parsedData.get("ownplayersave").get(0).split("/");
-			Long[] longArray = new Long[stringArray.length];
+			Long[] ownPlayerSaveLong = convertStringArrayToLongArray(parsedData.get("ownplayersave").get(0).split("/"));
 			
-			for (int i = 0; i < stringArray.length; i++) {
-				longArray[i] = Long.parseLong(stringArray[i]);
-			}
+			account.getOwnCharacter().updateOwnCharacter(account, ownPlayerSaveLong);
+			account.getTavern().updateTavern(account, ownPlayerSaveLong);
+		}
+		
+		if (parsedData.containsKey("owngroupsave")) {
+			Long[] ownGuildSaveLong = convertStringArrayToLongArray(parsedData.get("owngroupsave").get(0).split("/"));
+			String ownGuildName = parsedData.get("owngroupname").get(0);
+			String ownGuildDescription = parsedData.get("owngroupdescription").get(0);
+			String[] ownGuildMembers = parsedData.get("owngroupmember").get(0).split(",");
+			int ownGuildRank = Integer.parseInt(parsedData.get("owngrouprank").get(0));
 			
-			account.getOwnCharacter().updateOwnCharacter(account, longArray);
-			account.getTavern().updateTavern(account, longArray);
+			account.getGuild().updateGuild(account, ownGuildSaveLong, ownGuildName, ownGuildRank, ownGuildDescription, ownGuildMembers);
 		}
 		
 		if (parsedData.containsKey("tavernspecial")) {
 			account.getTavern().setSpecialEvent(EventEnum.fromInt(Integer.parseInt(parsedData.get("tavernspecial").get(0))));
 		}
+	}
+	
+	private Long[] convertStringArrayToLongArray(String[] source) {
+		Long[] result = new Long[source.length];
+		
+		for (int i = 0; i < source.length; i++) {
+			result[i] = Long.parseLong(source[i]);
+		}
+		
+		return result;
 	}
 	
 	private void parseResponseString(String data, String key) {
