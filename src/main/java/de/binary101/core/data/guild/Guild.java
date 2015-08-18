@@ -29,7 +29,6 @@ public class Guild {
 	@Getter @Setter private DateTime nextAttackTime;
 	@Getter @Setter private DateTime nextDefenseTime;
 	@Getter @Setter private GuildRaidTypeEnum nextRaidType;
-	@Getter @Setter private DateTime lastDonateTime;
 
 	public Guild() {
 		this.name = "None";
@@ -45,7 +44,6 @@ public class Guild {
 		this.nextAttackTime = new DateTime();
 		this.nextDefenseTime = new DateTime();
 		this.nextRaidType = GuildRaidTypeEnum.None;
-		this.lastDonateTime = new DateTime();
 	}
 	
 	public void updateGuild(Account account, Long[] ownGuildSave, String ownGuildName, int ownGuildRank, String ownGuildDescription, String[] ownGuildMembers) {
@@ -62,8 +60,5 @@ public class Guild {
 		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextFightTime.getId()].intValue());
 		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue());
 		this.nextRaidType = GuildRaidTypeEnum.fromInt(ownGuildSave[OwnGuildSaveEnum.NextRaidID.getId()].intValue());
-		
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
-		this.lastDonateTime = formatter.parseDateTime(account.getSetting().getLastDonateDate());
 	}
 }

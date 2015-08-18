@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -167,8 +168,11 @@ public class Setting {
 	private String cryptKey;
 	
 	@XStreamAlias("dontChange_LastDonateDate")
-	@Getter
 	private String lastDonateDate = "01-01-1970";
+	public DateTime getLastDonateDate() {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+		return formatter.parseDateTime(this.lastDonateDate);
+	}
 	public void setLastDonateDate(DateTime lastDonateDate) {
 		this.lastDonateDate = lastDonateDate.toString(DateTimeFormat.forPattern("dd-MM-yyyy"));
 	}

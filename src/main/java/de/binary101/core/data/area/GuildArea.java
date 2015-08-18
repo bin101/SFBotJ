@@ -30,7 +30,7 @@ public class GuildArea extends BaseArea {
 			if ((account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) 
 					&& account.getSetting().getDonateGoldToGuild()
 					&& !account.getHasRunningAction()
-					&& account.getGuild().getLastDonateTime().getDayOfYear() != DateTime.now().getDayOfYear()
+					&& account.getSetting().getLastDonateDate().getDayOfYear() != DateTime.now().getDayOfYear()
 					) {
 				logger.info("Spenden wir mal der Gilde etwas Gold");
 				Helper.threadSleepRandomBetween(1000, 2000);
@@ -49,7 +49,7 @@ public class GuildArea extends BaseArea {
 				if (silverAmountToDonate > 0) {
 					if (donateGold(silverAmountToDonate)) {
 						logger.info(String.format("Habe gerade %s gold an die Gilde gespendet", silverAmountToDonate / 100));
-						account.getGuild().setLastDonateTime(DateTime.now());
+						account.getSetting().setLastDonateDate(DateTime.now());
 						SettingsManager.saveSettings();
 					}
 				}
