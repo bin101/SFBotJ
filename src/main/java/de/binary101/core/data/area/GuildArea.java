@@ -4,8 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 
+import de.binary101.core.constants.enums.GuildRankEnum;
+import de.binary101.core.constants.enums.GuildUpgradeTypeEnum;
 import de.binary101.core.data.account.Account;
+import de.binary101.core.data.guild.GuildUpgrade;
 import de.binary101.core.request.DonateGoldRequest;
+import de.binary101.core.request.UpgradeGuildRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
 import de.binary101.core.utils.SettingsManager;
@@ -54,6 +58,30 @@ public class GuildArea extends BaseArea {
 					}
 				}
 			}
+			GuildRankEnum myRank = account.getGuild().getMembers().stream().filter(member -> member.getName().equals(account.getSetting().getUsername())).findFirst().get().getGuildRank();
+			if (account.getSetting().getUpgradeGuild() && myRank == GuildRankEnum.Leader) {
+				Helper.threadSleepRandomBetween(1000, 2000);
+				
+				GuildUpgrade upgradeWithLowestLevel = account
+						.getGuild()
+						.getGuildUpgrades()
+						.stream()
+						.min((upgrade1, upgrade2) -> Integer.compare(
+								upgrade1.getLevel(), upgrade2.getLevel()))
+						.get();
+				
+				if (upgradeWithLowestLevel.getPrices().getSilverPrice() <= account.getGuild().getSilver()
+						&& upgradeWithLowestLevel.getPrices().getMushroomPrice() <= account.getGuild().getMushrooms()
+						&& upgradeGuild(upgradeWithLowestLevel)) {
+					logger.info(String
+							.format("Habe der Gilde ein Upgrade verpasst, %s ist nun auf Level %s",
+									upgradeWithLowestLevel.getUpgradeType() == GuildUpgradeTypeEnum.Fortress ? "die Festung"
+											: upgradeWithLowestLevel
+													.getUpgradeType() == GuildUpgradeTypeEnum.Treasure ? "die Schatztrue"
+													: "der Lehrmeister",
+									upgradeWithLowestLevel.getLevel() + 1));
+				}
+			}
 		} else {
 			return;
 		}
@@ -64,6 +92,21 @@ public class GuildArea extends BaseArea {
 		Boolean result = false;
 		
 		String responseString = sendRequest(new DonateGoldRequest(silverAmountToDonate));
+		Response response = new Response(responseString, account);
+		
+		if (!response.getHasError()) {
+			result = true;
+		} else {
+			logger.error("Es ist ein Fehler beim Spenden aufgetreten: " + response.getErrorCode());
+		}
+		
+		return result;
+	}
+	
+	private Boolean upgradeGuild(GuildUpgrade upgradeToUpgrade) {
+		Boolean result = false;
+		
+		String responseString = sendRequest(new UpgradeGuildRequest(upgradeToUpgrade.getUpgradeType()));
 		Response response = new Response(responseString, account);
 		
 		if (!response.getHasError()) {

@@ -147,6 +147,11 @@ public class Setting {
 	@Setter
 	private int donatePercentage = 20;
 	
+	@XStreamAlias("upgradeGuild")
+	@Getter
+	@Setter
+	private Boolean upgradeGuild = false;
+	
 	@XStreamAlias("dontChange_LoginCount")
 	@Getter
 	@Setter 
