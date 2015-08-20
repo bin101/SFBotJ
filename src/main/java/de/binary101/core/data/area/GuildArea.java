@@ -83,29 +83,43 @@ public class GuildArea extends BaseArea {
 					.get().getGuildRank();
 			if (account.getSetting().getUpgradeGuild()
 					&& myRank == GuildRankEnum.Leader) {
-				Helper.threadSleepRandomBetween(1000, 2000);
 
-				GuildUpgrade upgradeWithLowestLevel = account
-						.getGuild()
-						.getGuildUpgrades()
-						.stream()
-						.min((upgrade1, upgrade2) -> Integer.compare(
-								upgrade1.getLevel(), upgrade2.getLevel()))
-						.get();
+				Boolean haveBuyedGuildUpgrade = false;
+				Boolean canBuyGuildUpgrade = true;
+				
+				while (canBuyGuildUpgrade) {
+					Helper.threadSleepRandomBetween(1000, 2000);
+					haveBuyedGuildUpgrade = false;
 
-				if (upgradeWithLowestLevel.getPrices().getSilverPrice() <= account
-						.getGuild().getSilver()
-						&& upgradeWithLowestLevel.getPrices()
-								.getMushroomPrice() <= account.getGuild()
-								.getMushrooms()
-						&& upgradeGuild(upgradeWithLowestLevel)) {
-					logger.info(String
-							.format("Habe der Gilde ein Upgrade verpasst, %s ist nun auf Level %s",
-									upgradeWithLowestLevel.getUpgradeType() == GuildUpgradeTypeEnum.Fortress ? "die Festung"
-											: upgradeWithLowestLevel
-													.getUpgradeType() == GuildUpgradeTypeEnum.Treasure ? "die Schatztrue"
-													: "der Lehrmeister",
-									upgradeWithLowestLevel.getLevel() + 1));
+					GuildUpgrade upgradeWithLowestLevel = account
+							.getGuild()
+							.getGuildUpgrades()
+							.stream()
+							.min((upgrade1, upgrade2) -> Integer.compare(
+									upgrade1.getLevel(), upgrade2.getLevel()))
+							.get();
+
+					if (upgradeWithLowestLevel.getPrices().getSilverPrice() <= account
+							.getGuild().getSilver()
+							&& upgradeWithLowestLevel.getPrices()
+									.getMushroomPrice() <= account.getGuild()
+									.getMushrooms()
+							&& upgradeGuild(upgradeWithLowestLevel)) {
+						
+						haveBuyedGuildUpgrade = true;
+
+						logger.info(String
+								.format("Habe der Gilde ein Upgrade verpasst, %s ist nun auf Level %s",
+										upgradeWithLowestLevel.getUpgradeType() == GuildUpgradeTypeEnum.Fortress ? "die Festung"
+												: upgradeWithLowestLevel
+														.getUpgradeType() == GuildUpgradeTypeEnum.Treasure ? "die Schatztrue"
+														: "der Lehrmeister",
+										upgradeWithLowestLevel.getLevel() + 1));
+					}
+					
+					if (!haveBuyedGuildUpgrade) {
+						canBuyGuildUpgrade = false;
+					}
 				}
 			}
 		} else {
