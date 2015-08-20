@@ -13,41 +13,46 @@ import de.binary101.core.utils.Helper;
 
 public class ShopArea extends BaseArea {
 	private final static Logger logger = LogManager.getLogger(ShopArea.class);
-	
-	@Getter private Response sellResponse;
-	
+
+	@Getter
+	private Response sellResponse;
+
 	public ShopArea(Account account) {
 		super(account);
 	}
-	
-	@Override 
-	public void performArea() {		
+
+	@Override
+	public void performArea() {
 		if (!account.getSetting().getPerformShop()) {
 			return;
 		}
-		
+
 		if (account.getOwnCharacter().getBackpack().getIsFull()) {
-			
-			CharacterScreenArea charScreenArea = new CharacterScreenArea(account);			
+
+			CharacterScreenArea charScreenArea = new CharacterScreenArea(
+					account);
 			logger.info("Betrete einen der beiden Shops");
-			
-			//TODO Vll kann man das besser lösen
+
+			// TODO Vll kann man das besser lösen
 			charScreenArea.tryToEquipItems();
-			
+
 			logger.info("Rucksack ist voll, verkaufe das billigste Item");
-			
+
 			Helper.threadSleepRandomBetween(600, 1200);
-			
-			int backIndexForItemToSell = account.getOwnCharacter().getBackpack().getIndexForLeastValueableItem();
-			Item itemToSell = account.getOwnCharacter().getBackpack().getItems().get(backIndexForItemToSell);
-			
+
+			int backIndexForItemToSell = account.getOwnCharacter()
+					.getBackpack().getIndexForLeastValueableItem();
+			Item itemToSell = account.getOwnCharacter().getBackpack()
+					.getItems().get(backIndexForItemToSell);
+
 			logger.info("Verkaufe folgendes Item: " + itemToSell.toString());
-			
-			String sellResponseString = sendRequest(new SellRequest(backIndexForItemToSell));
+
+			String sellResponseString = sendRequest(new SellRequest(
+					backIndexForItemToSell));
 			this.sellResponse = new Response(sellResponseString, account);
-			
+
 			Helper.threadSleepRandomBetween(600, 1200);
-			
+
 			if (!this.sellResponse.getHasError()) {
 				logger.info("Verkauf war erfolgreich");
 			}

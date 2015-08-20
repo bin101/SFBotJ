@@ -17,30 +17,31 @@ public class SettingsManager {
 
 	private static final String FILENAME = "accounts.xml";
 	private static SettingList settingsContainer = new SettingList();
-	
+
 	public static ArrayList<Setting> getSettings() {
 		return SettingsManager.settingsContainer.getSettings();
 	}
 
 	private SettingsManager() {
 	}
-	
+
 	public static void addSetting(Setting setting) {
 		settingsContainer.getSettings().add(setting);
 	}
-	
+
 	private static XStream openXStream() {
-		
-		XStream xstream = new XStream(new PureJavaReflectionProvider(), new DomDriver());
+
+		XStream xstream = new XStream(new PureJavaReflectionProvider(),
+				new DomDriver());
 		xstream.processAnnotations(SettingList.class);
 		xstream.autodetectAnnotations(true);
-		
+
 		return xstream;
 	}
 
 	public static void loadSettings() {
 		settingsContainer.getSettings().clear();
-		
+
 		XStream xstream = openXStream();
 		File configFile = new File(FILENAME);
 

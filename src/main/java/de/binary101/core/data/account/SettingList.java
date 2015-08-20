@@ -8,7 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @XStreamAlias("settings")
-public class SettingList{
+public class SettingList {
 
 	@Getter
 	@XStreamImplicit

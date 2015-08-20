@@ -10,39 +10,48 @@ import de.binary101.core.data.account.Account;
 
 public class AttributeList {
 	private Map<AttributeEnum, Attribute> attributeList;
-	
+
 	private Account account;
-	
+
 	public Attribute getStrength() {
 		return this.attributeList.get(AttributeEnum.Strength);
 	}
-	
+
 	public Attribute getDexterity() {
 		return this.attributeList.get(AttributeEnum.Dexterity);
 	}
-	
+
 	public Attribute getIntelligence() {
 		return this.attributeList.get(AttributeEnum.Intelligence);
 	}
-	
+
 	public Attribute getStamina() {
 		return this.attributeList.get(AttributeEnum.Stamina);
 	}
-	
+
 	public Attribute getLuck() {
 		return this.attributeList.get(AttributeEnum.Luck);
 	}
-	
+
 	public Boolean getCanBuyAtLeastOne() {
 		long currentSilver = account.getOwnCharacter().getSilver();
-		Optional<Entry<AttributeEnum, Attribute>> result = this.attributeList.entrySet().stream().filter(attr -> (currentSilver - attr.getValue().getPriceForNextUpgrade()) >= (account.getWagesPerHour() * 15)).findFirst();
+		Optional<Entry<AttributeEnum, Attribute>> result = this.attributeList
+				.entrySet()
+				.stream()
+				.filter(attr -> (currentSilver - attr.getValue()
+						.getPriceForNextUpgrade()) >= (account
+						.getWagesPerHour() * 15)).findFirst();
 		return result.isPresent();
 	}
 
-	public AttributeList(	final int strength,		final int dexterity,		final int intelligence,		final int stamina,		final int luck, 
-							final int strengthBonus, 	final int dexterityBonus,	final int intelligenceBonus, 	final int staminaBonus, 	final int luckBonus,
-							final int strengthPrice, 	final int dexterityPrice, final int intelligencePrice,	final int staminaPrice,	final int luckPrice, Account account) {
-		
+	public AttributeList(final int strength, final int dexterity,
+			final int intelligence, final int stamina, final int luck,
+			final int strengthBonus, final int dexterityBonus,
+			final int intelligenceBonus, final int staminaBonus,
+			final int luckBonus, final int strengthPrice,
+			final int dexterityPrice, final int intelligencePrice,
+			final int staminaPrice, final int luckPrice, Account account) {
+
 		this.account = account;
 		this.attributeList = new HashMap<AttributeEnum, Attribute>();
 

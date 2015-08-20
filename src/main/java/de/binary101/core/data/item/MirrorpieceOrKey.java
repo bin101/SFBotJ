@@ -8,10 +8,12 @@ import org.apache.logging.log4j.Logger;
 import de.binary101.core.constants.enums.ItemTypeEnum;
 
 public class MirrorpieceOrKey extends Item {
-	
-	private final static Logger logger = LogManager.getLogger(MirrorpieceOrKey.class);
-	
-	@Getter	private int piece;
+
+	private final static Logger logger = LogManager
+			.getLogger(MirrorpieceOrKey.class);
+
+	@Getter
+	private int piece;
 
 	public MirrorpieceOrKey(Long[] itemData, int backpackIndex) {
 		super(itemData, backpackIndex);
@@ -40,7 +42,7 @@ public class MirrorpieceOrKey extends Item {
 			builder.append(" PieceNr:" + this.piece);
 			break;
 		case Toiletkey:
-			//nichts zu appenden
+			// nichts zu appenden
 			break;
 		default:
 			logger.error("Unbekanntes Special Item");

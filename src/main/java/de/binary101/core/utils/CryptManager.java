@@ -14,8 +14,9 @@ import org.apache.logging.log4j.Logger;
 import de.binary101.core.constants.StaticValues;
 
 public final class CryptManager {
-	private final static Logger logger = LogManager.getLogger(CryptManager.class);
-	
+	private final static Logger logger = LogManager
+			.getLogger(CryptManager.class);
+
 	private static String TRANSFORMATION = "AES/CBC/NoPadding";
 	private static String ALGORITHM = "AES";
 
@@ -44,21 +45,23 @@ public final class CryptManager {
 			ciphertext = cipher.doFinal(plaintext);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-		} 
+		}
 
-		return Base64.getEncoder().encodeToString(ciphertext).replace("+", "-").replace("/", "_");
+		return Base64.getEncoder().encodeToString(ciphertext).replace("+", "-")
+				.replace("/", "_");
 	}
 
 	public static String decodeResponseString(String data, String key) {
 		String response = null;
 
-		if (	data.length() <= 10
-				|| data.toLowerCase().startsWith("error") 
+		if (data.length() <= 10 || data.toLowerCase().startsWith("error")
 				|| data.toLowerCase().contains("success")
 				|| data.toLowerCase().contains("login")) {
 			response = data;
 		} else {
-			response = decode(data.replace("|", "").replace("-", "+").replace("_", "/"), key).replaceAll("[|]+$", "");
+			response = decode(
+					data.replace("|", "").replace("-", "+").replace("_", "/"),
+					key).replaceAll("[|]+$", "");
 		}
 
 		return response;
@@ -79,7 +82,7 @@ public final class CryptManager {
 			cipher = Cipher.getInstance(TRANSFORMATION);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-		} 
+		}
 
 		try {
 			cipher.init(Cipher.DECRYPT_MODE, key, ivParamSpec);
@@ -90,12 +93,11 @@ public final class CryptManager {
 			plaintext = new String(decryptedVal);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-		} 
+		}
 
 		return plaintext;
 	}
-	
-	
+
 	public static String getSHA1HashData(String data) {
 		String result = "";
 
@@ -113,10 +115,10 @@ public final class CryptManager {
 
 		return result.toLowerCase();
 	}
-	
+
 	public static String getMD5HashData(String data) {
 		String result = "";
-		
+
 		MessageDigest messageDigest;
 		try {
 			messageDigest = MessageDigest.getInstance("MD5");
@@ -128,7 +130,7 @@ public final class CryptManager {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-		} 
+		}
 
 		return result.toLowerCase();
 	}

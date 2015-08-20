@@ -8,22 +8,24 @@ import de.binary101.core.constants.enums.ItemTypeEnum;
 import de.binary101.core.data.item.Item;
 
 public class Backpack {
-	@Getter private List<Item> items;
-	
+	@Getter
+	private List<Item> items;
+
 	public Boolean getIsFull() {
 		Boolean result = false;
-		
-		if (this.items.stream().filter(item -> item.getType() == ItemTypeEnum.None).count() == 0) {
+
+		if (this.items.stream()
+				.filter(item -> item.getType() == ItemTypeEnum.None).count() == 0) {
 			result = true;
 		}
-		
+
 		return result;
 	}
-	
+
 	public Backpack() {
 		this.items = Arrays.asList(new Item[5]);
 	}
-	
+
 	public int getIndexForLeastValueableItem() {
 		int indexForLeastValueableItem = -1;
 
@@ -36,10 +38,8 @@ public class Backpack {
 
 		return indexForLeastValueableItem;
 	}
-	
-	
-	
-	public synchronized void updateBackpack (Long[] backpackData) {		
+
+	public synchronized void updateBackpack(Long[] backpackData) {
 		for (int i = 0; i < items.size(); i++) {
 			items.set(i, Item.createItem(backpackData, i * 12, i));
 		}

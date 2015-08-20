@@ -7,8 +7,7 @@ public class PollRequest extends Request {
 	public PollRequest() {
 		super(RequestEnum.Poll);
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return super.toString();

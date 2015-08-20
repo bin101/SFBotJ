@@ -10,36 +10,46 @@ import de.binary101.core.constants.enums.SpecialQuestTypeEnum;
 import de.binary101.core.data.item.Item;
 
 public class Quest {
-	
+
 	private final static Logger logger = LogManager.getLogger(Quest.class);
-	
-	@Getter private int index;
-	@Getter private int duration;
-	@Getter private long silver;
-	@Getter private int exp;
-	@Getter private Item item;
-	@Getter private int monsterId;
-	
-	//Special Check
-	@Getter private Boolean isSpecial;
+
+	@Getter
+	private int index;
+	@Getter
+	private int duration;
+	@Getter
+	private long silver;
+	@Getter
+	private int exp;
+	@Getter
+	private Item item;
+	@Getter
+	private int monsterId;
+
+	// Special Check
+	@Getter
+	private Boolean isSpecial;
 	private Boolean isRedQuest;
-	@Getter private SpecialQuestTypeEnum specialQuestType;
-	
+	@Getter
+	private SpecialQuestTypeEnum specialQuestType;
+
 	public double getExpPerSecond() {
 		return this.exp / this.duration;
 	}
-	
+
 	public double getSilverPerSecond() {
 		double itemSilver = 0;
-		
-		if (this.item.getType().getId() >= 1 && this.item.getType().getId() <= 10) {
+
+		if (this.item.getType().getId() >= 1
+				&& this.item.getType().getId() <= 10) {
 			itemSilver = this.item.getSilverPrice();
 		}
-		
+
 		return (this.silver + itemSilver) / this.duration;
 	}
-	
-	public Quest(int index, int duration, long silver, int exp, Item item, int monsterId) {
+
+	public Quest(int index, int duration, long silver, int exp, Item item,
+			int monsterId) {
 		this.index = index;
 		this.duration = duration;
 		this.silver = silver;
@@ -49,20 +59,20 @@ public class Quest {
 		this.isRedQuest = checkForRedQuest(monsterId);
 		this.isSpecial = false;
 		this.specialQuestType = SpecialQuestTypeEnum.None;
-		
+
 		if (isRedQuest) {
 			this.isSpecial = true;
 			this.specialQuestType = SpecialQuestTypeEnum.RedQuest;
 		}
-		
+
 		if (item.getType() != ItemTypeEnum.None && item.getIsEpic()) {
 			this.isSpecial = true;
 			this.specialQuestType = SpecialQuestTypeEnum.hasEpicItem;
 		}
-		
+
 		if (item.getType() != ItemTypeEnum.None && item.getType().getId() > 100) {
 			this.isSpecial = true;
-			
+
 			switch (item.getType()) {
 			case MirrorPiece:
 				this.specialQuestType = SpecialQuestTypeEnum.hasMirrorpiece;
@@ -80,27 +90,27 @@ public class Quest {
 			}
 		}
 	}
-	
+
 	private Boolean checkForRedQuest(int monsterId) {
 		Boolean result;
-		
+
 		switch (monsterId) {
 		case 148:
-        case 152:
-        case 155:
-        case 157:
-        case 139:
-        case 145:
+		case 152:
+		case 155:
+		case 157:
+		case 139:
+		case 145:
 			result = true;
 			break;
 		default:
 			result = false;
 			break;
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -112,7 +122,7 @@ public class Quest {
 			builder.append("	Item: " + this.item.toString() + "\n");
 		}
 		builder.append("	MonsterId: " + this.monsterId + "\n");
-		
+
 		return builder.toString();
 	}
 }

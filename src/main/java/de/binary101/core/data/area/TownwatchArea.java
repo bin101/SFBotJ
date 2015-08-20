@@ -13,79 +13,103 @@ import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
 
 public class TownwatchArea extends BaseArea {
-	
-	private final static Logger logger = LogManager.getLogger(TownwatchArea.class);
+
+	private final static Logger logger = LogManager
+			.getLogger(TownwatchArea.class);
 
 	public TownwatchArea(Account account) {
 		super(account);
 	}
-	
+
 	@Override
-	public void performArea() {		
+	public void performArea() {
 		if (!account.getSetting().getPerformTownwatch()) {
 			return;
 		}
-		
-		if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten()) && !account.getHasRunningAction()) {
+
+		if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting()
+				.getPerformQuesten()) && !account.getHasRunningAction()) {
 			logger.info("Mache mich auf den Weg zur Stadtwache");
 			Helper.threadSleepRandomBetween(1000, 2000);
 			startTownwatch();
-			
+
 		} else {
-			if ( account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Townwatch) {
+			if (account.getActionEndTime().isBeforeNow()
+					&& account.getActionType() == ActionEnum.Townwatch) {
 				Helper.threadSleepRandomBetween(1000, 2000);
 				finishTownwatch();
 				logger.info("Habe meine Schicht beendet");
-			} else if (account.getActionEndTime().isAfterNow() && account.getActionType() == ActionEnum.Townwatch) {
+			} else if (account.getActionEndTime().isAfterNow()
+					&& account.getActionType() == ActionEnum.Townwatch) {
 				account.logout();
-				
+
 				Helper.threadSleepRandomBetween(2000, 3000);
-				
-				long sleepTime = (account.getActionEndTime().getMillis() - DateTime.now().getMillis());
-				
-				sleepTime = (long) Helper.randomBetween(sleepTime, sleepTime * 1.2);
-				
-				logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", DateTime.now().plusMillis((int)sleepTime).toString(DateTimeFormat.forPattern("HH:mm:ss"))));
+
+				long sleepTime = (account.getActionEndTime().getMillis() - DateTime
+						.now().getMillis());
+
+				sleepTime = Helper.randomBetween(sleepTime, sleepTime * 1.2);
+
+				logger.info(String
+						.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein",
+								DateTime.now()
+										.plusMillis((int) sleepTime)
+										.toString(
+												DateTimeFormat
+														.forPattern("HH:mm:ss"))));
 				Helper.threadSleep(sleepTime);
 			}
 		}
 	}
-	
+
 	private void startTownwatch() {
 		int hoursToWork = 0;
-		
-		int minHourOfDay = account.getSetting().getMinHourOfDayFor10HourTownwatch();
-		int maxHourOfDay = account.getSetting().getMaxHourOfDayFor10HourTownwatch();
-		
-		DateTime minTime = DateTime.now().getHourOfDay() < maxHourOfDay ? DateTime.now().minusDays(1).withHourOfDay(minHourOfDay) : DateTime.now().withHourOfDay(minHourOfDay);
-		DateTime maxTime = DateTime.now().getHourOfDay() < maxHourOfDay ? DateTime.now().withHourOfDay(maxHourOfDay) : DateTime.now().plusDays(1).withHourOfDay(maxHourOfDay);
-		
+
+		int minHourOfDay = account.getSetting()
+				.getMinHourOfDayFor10HourTownwatch();
+		int maxHourOfDay = account.getSetting()
+				.getMaxHourOfDayFor10HourTownwatch();
+
+		DateTime minTime = DateTime.now().getHourOfDay() < maxHourOfDay ? DateTime
+				.now().minusDays(1).withHourOfDay(minHourOfDay)
+				: DateTime.now().withHourOfDay(minHourOfDay);
+		DateTime maxTime = DateTime.now().getHourOfDay() < maxHourOfDay ? DateTime
+				.now().withHourOfDay(maxHourOfDay) : DateTime.now().plusDays(1)
+				.withHourOfDay(maxHourOfDay);
+
 		DateTime helper = DateTime.now();
-		
+
 		if (minTime.isAfter(helper) && maxTime.isAfter(helper)) {
 			hoursToWork = 1;
 		} else {
-			
+
 			while (helper.isBefore(maxTime)) {
 				++hoursToWork;
 				helper = helper.plusHours(1);
 			}
-			
+
 			hoursToWork = Math.min(10, hoursToWork);
 		}
-		
-		logger.info(String.format("Dann passe ich mal fuer %s Stunde/n auf", hoursToWork));
-		
-		String responseString = sendRequest(new TownwatchStartRequest(hoursToWork));
+
+		logger.info(String.format("Dann passe ich mal fuer %s Stunde/n auf",
+				hoursToWork));
+
+		String responseString = sendRequest(new TownwatchStartRequest(
+				hoursToWork));
 		new Response(responseString, account);
-		
-		logger.info(String.format("Sollte gegen %s fertig sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
-		
-//		account.logout();
-//		logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein", account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
-//		Helper.threadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 * hoursToWork);
+
+		logger.info(String.format(
+				"Sollte gegen %s fertig sein",
+				account.getActionEndTime().toString(
+						DateTimeFormat.forPattern("HH:mm:ss"))));
+
+		// account.logout();
+		// logger.info(String.format("Bin derzeit auf Stadtwache, werde mich daher bis %s ausloggen, um weniger auffaellig zu sein",
+		// account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss"))));
+		// Helper.threadSleep(1000 * 60 * 60 * hoursToWork, 1150 * 60 * 60 *
+		// hoursToWork);
 	}
-	
+
 	private void finishTownwatch() {
 		String responseString = sendRequest(new TownwatchFinishRequest());
 		new Response(responseString, account);

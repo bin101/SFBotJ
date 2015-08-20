@@ -6,11 +6,12 @@ import de.binary101.core.constants.enums.RequestEnum;
 
 public class BuyMountRequest extends Request {
 
-	@Getter private MountTypeEnum mountType;
-	
+	@Getter
+	private MountTypeEnum mountType;
+
 	public BuyMountRequest(MountTypeEnum mountType) {
 		super(RequestEnum.BuyMount);
-		
+
 		this.mountType = mountType;
 	}
 

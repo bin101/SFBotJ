@@ -17,56 +17,58 @@ import de.binary101.core.utils.UpdateChecker;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		//Ueberpruefe die Aufrufargumente
-		if (args.length > 0 ) {
+
+		// Ueberpruefe die Aufrufargumente
+		if (args.length > 0) {
 			for (String argument : args) {
 				switch (argument) {
 				case "-console":
-					//Starte App als Console App
+					// Starte App als Console App
 					break;
 				default:
-					//TODO Starte App als GUI App
+					// TODO Starte App als GUI App
 					break;
 				}
 			}
 		}
-		
+
 		SettingsManager.loadSettings();
-		
+
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		ThreadGroup botThreads = new ThreadGroup("Bots");
-		
+
 		if (SettingsManager.getSettings().size() != 0) {
-			SettingsManager.getSettings().forEach(setting -> accounts.add(new Account(setting)));
-			
+			SettingsManager.getSettings().forEach(
+					setting -> accounts.add(new Account(setting)));
+
 			for (Account account : accounts) {
 				SFBotJCore core = new SFBotJCore(account);
-				
-				//Initialisiere die Areas
+
+				// Initialisiere die Areas
 				core.getAreas().add(new LoginArea(account));
 				core.getAreas().add(new ShopArea(account));
 				core.getAreas().add(new MountArea(account));
 				core.getAreas().add(new TavernArea(account));
-//				core.getAreas().add(new ToiletArea(account));
-//				core.getAreas().add(new ArenaArea(account));
+				// core.getAreas().add(new ToiletArea(account));
+				// core.getAreas().add(new ArenaArea(account));
 				core.getAreas().add(new GuildArea(account));
 				core.getAreas().add(new CharacterScreenArea(account));
-//				core.getAreas().add(new DungeonArea(account));
+				// core.getAreas().add(new DungeonArea(account));
 				core.getAreas().add(new TownwatchArea(account));
-//				core.getAreas().add(new SinglePortalArea(account));
-				
-				//Erzeuge den Thread
-				Thread thread = new Thread(botThreads, core, (core.getAccount().toString()));
+				// core.getAreas().add(new SinglePortalArea(account));
+
+				// Erzeuge den Thread
+				Thread thread = new Thread(botThreads, core,
+						(core.getAccount().toString()));
 				thread.start();
 			}
-			
+
 			UpdateChecker updateChecker = new UpdateChecker();
-			
+
 			Boolean isUpToDate = true;
 			while (isUpToDate) {
 				isUpToDate = updateChecker.checkCurrentVersionIsUptoDate();
-				
+
 				if (isUpToDate) {
 					try {
 						Thread.sleep(1000 * 60 * 10);
@@ -82,7 +84,7 @@ public class Main {
 					System.exit(0);
 				}
 			}
-			
-		}//else do nothing
+
+		}// else do nothing
 	}
 }

@@ -9,27 +9,31 @@ import de.binary101.core.constants.enums.PotionEnum;
 import de.binary101.core.constants.enums.PotionSizeEnum;
 
 public class Potion extends Item {
-	
+
 	private final static Logger logger = LogManager.getLogger(Potion.class);
-	
-	@Getter PotionEnum potionType;
-	@Getter PotionSizeEnum potionSize;
+
+	@Getter
+	PotionEnum potionType;
+	@Getter
+	PotionSizeEnum potionSize;
 
 	public Potion(Long[] itemData, int backpackIndex) {
 		super(itemData, backpackIndex);
-		
+
 		this.potionType = getPotionType(itemData[1].intValue());
 		this.potionSize = getPotionSize(itemData[1].intValue());
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("Type:%s PotionType:%s PotionSize:%s Value:%s", this.getType(), this.potionType, this.potionSize, this.getSilverPrice());
+		return String.format("Type:%s PotionType:%s PotionSize:%s Value:%s",
+				this.getType(), this.potionType, this.potionSize,
+				this.getSilverPrice());
 	}
-	
-	private PotionEnum getPotionType (int rawValue) {
+
+	private PotionEnum getPotionType(int rawValue) {
 		PotionEnum potionType = PotionEnum.None;
-		
+
 		switch (rawValue) {
 		case 1:
 		case 6:
@@ -62,11 +66,11 @@ public class Potion extends Item {
 			logger.error("Unbekannter Potion Typ");
 			break;
 		}
-		
+
 		return potionType;
 	}
-	
-	private PotionSizeEnum getPotionSize (int rawValue) {
+
+	private PotionSizeEnum getPotionSize(int rawValue) {
 		PotionSizeEnum potionSize = PotionSizeEnum.Small;
 
 		switch (rawValue) {
