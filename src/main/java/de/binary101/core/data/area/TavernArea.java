@@ -173,10 +173,9 @@ public class TavernArea extends BaseArea{
 		return result;
 	}
 	
-	@SuppressWarnings("unused")
 	private void finishQuest() {
 		String responseString = sendRequest(new QuestFinishRequest(false));
-		Response response = new Response(responseString, account);
+		new Response(responseString, account);
 	}
 	
 	private Boolean buyBeer() {

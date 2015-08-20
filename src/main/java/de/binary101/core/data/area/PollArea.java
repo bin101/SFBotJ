@@ -7,12 +7,11 @@ import org.apache.logging.log4j.ThreadContext;
 
 import de.binary101.core.data.account.Account;
 import de.binary101.core.request.PollRequest;
-import de.binary101.core.response.PollResponse;
+import de.binary101.core.response.Response;
 
 public class PollArea extends BaseArea implements Runnable {
 	
 	@Getter @Setter private Thread pollThread;
-	@Getter private PollResponse response;
 
 	public PollArea(Account account) {
 		super(account);
@@ -21,9 +20,8 @@ public class PollArea extends BaseArea implements Runnable {
 	@Override
 	public void performArea() {
 		if (account.getIsLoggedIn()) {
-			String pollResponseString = sendRequest(new PollRequest());
-			
-			response = new PollResponse(pollResponseString, account);
+			String responseString = sendRequest(new PollRequest());
+			new Response(responseString, account);
 		}
 	}
 
