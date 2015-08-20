@@ -48,9 +48,16 @@ public class Guild {
 		this.nextRaidType = GuildRaidTypeEnum.None;
 	}
 	
-	public void updateGuild(Account account, Long[] ownGuildSave, String ownGuildName, int ownGuildRank, String ownGuildDescription, String[] ownGuildMembers) {
-		this.name = ownGuildName;
-		this.description = SFStringManager.GetSFDecodingString(ownGuildDescription);
+	public synchronized void updateGuild(Account account, Long[] ownGuildSave, String ownGuildName, int ownGuildRank, String ownGuildDescription, String[] ownGuildMembers) {
+		
+		if (ownGuildName != null && !ownGuildName.equals("")) {
+			this.name = ownGuildName;
+		}
+		
+		if (ownGuildDescription != null && !ownGuildDescription.equals("")) {
+			this.description = SFStringManager.GetSFDecodingString(ownGuildDescription);
+		}
+
 		this.honor = ownGuildSave[OwnGuildSaveEnum.Honor.getId()].intValue();
 		this.rank = ownGuildRank;
 		this.silver = ownGuildSave[OwnGuildSaveEnum.Silver.getId()];
@@ -68,28 +75,30 @@ public class Guild {
 		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue());
 		this.nextRaidType = GuildRaidTypeEnum.fromInt(ownGuildSave[OwnGuildSaveEnum.NextRaidID.getId()].intValue());
 		
-		this.members.clear();
-		
-		for (int i = 0; i < ownGuildMembers.length; ++i) {
-			GuildMember member = new GuildMember();
+		if (ownGuildMembers != null && ownGuildMembers.length != 0) {
+			this.members.clear();
 			
-			member.setName(ownGuildMembers[i]);
-			int attackStatus = 0;
-			member.setLevel(ownGuildSave[OwnGuildSaveEnum.MemberLevelStartIndex.getId() + i].intValue());
-			while(member.getLevel() > 1000) {
-				member.setLevel(member.getLevel() - 1000);
-				++attackStatus;
+			for (int i = 0; i < ownGuildMembers.length; ++i) {
+				GuildMember member = new GuildMember();
+				
+				member.setName(ownGuildMembers[i]);
+				int attackStatus = 0;
+				member.setLevel(ownGuildSave[OwnGuildSaveEnum.MemberLevelStartIndex.getId() + i].intValue());
+				while(member.getLevel() > 1000) {
+					member.setLevel(member.getLevel() - 1000);
+					++attackStatus;
+				}
+				member.setAttackStatus(AttackStatusEnum.fromInt(attackStatus));
+				member.setLastOnline(TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.MemberLastOnlineStartIndex.getId() + i].intValue()));
+				member.setDonatedSilver(ownGuildSave[OwnGuildSaveEnum.MemberDonatedSilverStartIndex.getId() + i]);
+				member.setDonatedMushrooms(ownGuildSave[OwnGuildSaveEnum.MemberDonatedMushroomsStartIndex.getId() + i].intValue());
+				member.setGuildRank(GuildRankEnum.fromInt(ownGuildSave[OwnGuildSaveEnum.MemberGuildRankStartIndex.getId() + i].intValue()));
+				member.setPortalFought(ownGuildSave[OwnGuildSaveEnum.MemberLastPortalFoughtDateStartIndex.getId() + i].intValue() == 0 || TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.MemberLastPortalFoughtDateStartIndex.getId() + i].intValue()).dayOfYear() == DateTime.now().dayOfYear());
+				member.setPlayerID(ownGuildSave[OwnGuildSaveEnum.MemberPlayerIDStartIndex.getId() + i].intValue());
+				member.setPlayerGuildIndex(i);
+				
+				members.add(member);
 			}
-			member.setAttackStatus(AttackStatusEnum.fromInt(attackStatus));
-			member.setLastOnline(TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.MemberLastOnlineStartIndex.getId() + i].intValue()));
-			member.setDonatedSilver(ownGuildSave[OwnGuildSaveEnum.MemberDonatedSilverStartIndex.getId() + i]);
-			member.setDonatedMushrooms(ownGuildSave[OwnGuildSaveEnum.MemberDonatedMushroomsStartIndex.getId() + i].intValue());
-			member.setGuildRank(GuildRankEnum.fromInt(ownGuildSave[OwnGuildSaveEnum.MemberGuildRankStartIndex.getId() + i].intValue()));
-			member.setPortalFought(ownGuildSave[OwnGuildSaveEnum.MemberLastPortalFoughtDateStartIndex.getId() + i].intValue() == 0 || TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.MemberLastPortalFoughtDateStartIndex.getId() + i].intValue()).dayOfYear() == DateTime.now().dayOfYear());
-			member.setPlayerID(ownGuildSave[OwnGuildSaveEnum.MemberPlayerIDStartIndex.getId() + i].intValue());
-			member.setPlayerGuildIndex(i);
-			
-			members.add(member);
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class OwnCharacter extends Character{
 		this.equipment = new Equipment();
 	}
 
-	public void updateOwnCharacter(Account account, Long[] ownplayersave) {
+	public synchronized void updateOwnCharacter(Account account, Long[] ownplayersave) {
 		
 		int newLevel = Helper.normalizeResponseInt(ownplayersave[OwnPlayerSaveEnum.Level.getId()].intValue());
 		if (this.level != 0 && this.level < newLevel) {

@@ -39,7 +39,7 @@ public class Backpack {
 	
 	
 	
-	public void updateBackpack (Long[] backpackData) {		
+	public synchronized void updateBackpack (Long[] backpackData) {		
 		for (int i = 0; i < items.size(); i++) {
 			items.set(i, Item.createItem(backpackData, i * 12, i));
 		}

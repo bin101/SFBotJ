@@ -58,6 +58,9 @@ public class GuildArea extends BaseArea {
 					}
 				}
 			}
+			
+			Helper.threadSleepRandomBetween(1000, 2000);
+			
 			GuildRankEnum myRank = account.getGuild().getMembers().stream().filter(member -> member.getName().equals(account.getSetting().getUsername())).findFirst().get().getGuildRank();
 			if (account.getSetting().getUpgradeGuild() && myRank == GuildRankEnum.Leader) {
 				Helper.threadSleepRandomBetween(1000, 2000);
@@ -118,3 +121,43 @@ public class GuildArea extends BaseArea {
 		return result;
 	}
 }
+
+//public void registerForGuildFights(Account acc, bool Automatic = true)
+//{
+//  if (DateTime.UtcNow > acc.JoinedGuild.AddDays(1.0))
+//  {
+//    bool flag1 = false;
+//    bool flag2 = false;
+//    if (this.NextFight > DateTime.Now && this.NextDefense > DateTime.Now && acc.AttackStatus != GuildPlayer.AttackState.Both)
+//    {
+//      switch (acc.AttackStatus)
+//      {
+//        case GuildPlayer.AttackState.None:
+//          flag2 = true;
+//          flag1 = true;
+//          break;
+//        case GuildPlayer.AttackState.Fight:
+//          flag2 = true;
+//          break;
+//        case GuildPlayer.AttackState.Defense:
+//          flag1 = true;
+//          break;
+//      }
+//    }
+//    else if (this.NextFight > DateTime.Now && this.NextDefense < DateTime.Now && acc.AttackStatus != GuildPlayer.AttackState.Fight)
+//      flag1 = true;
+//    else if (this.NextFight < DateTime.Now && this.NextDefense > DateTime.Now && acc.AttackStatus != GuildPlayer.AttackState.Defense)
+//      flag2 = true;
+//    if (flag1)
+//    {
+//      acc.send(new Command(CommandType.JoinAttack, 0));
+//      acc.Log.writeLog(string.Format(Resources.Gildenkampfmeldung, (object) this.NextFight.ToString(), this.AttackedGuild != null ? (object) this.AttackedGuild.Name : (object) ""), LogWeight.Info, LogSource.Guild, (Exception) null);
+//    }
+//    if (!flag2)
+//      return;
+//    acc.send(new Command(CommandType.JoinDefense, 0));
+//    acc.Log.writeLog(string.Format(Resources.Gildenverteidigungmeldung, (object) this.NextDefense.ToString(), this.AttackingGuild != null ? (object) this.AttackingGuild.Name : (object) ""), LogWeight.Info, LogSource.Guild, (Exception) null);
+//  }
+//  else if (!Automatic)
+//    throw new InvalidOperationException(Resources.Erstnach24Stunden);
+//}

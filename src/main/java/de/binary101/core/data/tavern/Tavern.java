@@ -25,7 +25,7 @@ public class Tavern {
 		this.specialEvent = EventEnum.None;
 	}
 
-	public void updateTavern(Account account, Long[] ownplayersave) {
+	public synchronized void updateTavern(Account account, Long[] ownplayersave) {
 		
 		this.remainingALUSeconds = ownplayersave[OwnPlayerSaveEnum.ALUinSeconds.getId()].intValue();
 		this.usedBeer = ownplayersave[OwnPlayerSaveEnum.UsedBeerToday.getId()].intValue();

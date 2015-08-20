@@ -13,7 +13,7 @@ public class Equipment {
 		this.items = Arrays.asList(new Item[10]);
 	}
 	
-	public void updateEquipment(Long[] equipmentData) {		
+	public synchronized void updateEquipment(Long[] equipmentData) {		
 		for (int i = 0; i < items.size(); i++) {
 			items.set(i, Item.createItem(equipmentData, i * 12, i));
 		}

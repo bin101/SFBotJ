@@ -35,7 +35,7 @@ public class MountArea extends BaseArea {
 				) {
 			return;
 		}
-		
+
 		if (!account.getHasRunningAction() || account.getHasCompletedMirror()) {
 			
 			Boolean canBuyMount = false;
