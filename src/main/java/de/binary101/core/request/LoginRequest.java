@@ -23,9 +23,8 @@ public class LoginRequest extends Request {
 		return super.toString()
 				+ this.username
 				+ '/'
-				+ CryptManager.getSHA1HashData(CryptManager
-						.getSHA1HashData(this.password
-								+ StaticValues.SHA1HashConstant())
+				+ CryptManager.getSHA1HashData(CryptManager.getSHA1HashData(this.password
+						+ StaticValues.SHA1HashConstant())
 						+ this.loginCount) + '/' + this.loginCount;
 	}
 }

@@ -22,12 +22,12 @@ public class Main {
 		if (args.length > 0) {
 			for (String argument : args) {
 				switch (argument) {
-				case "-console":
-					// Starte App als Console App
-					break;
-				default:
-					// TODO Starte App als GUI App
-					break;
+					case "-console":
+						// Starte App als Console App
+						break;
+					default:
+						// TODO Starte App als GUI App
+						break;
 				}
 			}
 		}
@@ -38,8 +38,7 @@ public class Main {
 		ThreadGroup botThreads = new ThreadGroup("Bots");
 
 		if (SettingsManager.getSettings().size() != 0) {
-			SettingsManager.getSettings().forEach(
-					setting -> accounts.add(new Account(setting)));
+			SettingsManager.getSettings().forEach(setting -> accounts.add(new Account(setting)));
 
 			for (Account account : accounts) {
 				SFBotJCore core = new SFBotJCore(account);
@@ -58,8 +57,7 @@ public class Main {
 				// core.getAreas().add(new SinglePortalArea(account));
 
 				// Erzeuge den Thread
-				Thread thread = new Thread(botThreads, core,
-						(core.getAccount().toString()));
+				Thread thread = new Thread(botThreads, core, (core.getAccount().toString()));
 				thread.start();
 			}
 

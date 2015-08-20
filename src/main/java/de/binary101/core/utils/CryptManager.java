@@ -14,8 +14,7 @@ import org.apache.logging.log4j.Logger;
 import de.binary101.core.constants.StaticValues;
 
 public final class CryptManager {
-	private final static Logger logger = LogManager
-			.getLogger(CryptManager.class);
+	private final static Logger logger = LogManager.getLogger(CryptManager.class);
 
 	private static String TRANSFORMATION = "AES/CBC/NoPadding";
 	private static String ALGORITHM = "AES";
@@ -31,8 +30,7 @@ public final class CryptManager {
 		Cipher cipher = null;
 		SecretKey key = new SecretKeySpec(stringKey.getBytes(), ALGORITHM);
 
-		IvParameterSpec ivParamSpec = new IvParameterSpec(StaticValues
-				.CryptIV().getBytes());
+		IvParameterSpec ivParamSpec = new IvParameterSpec(StaticValues.CryptIV().getBytes());
 
 		try {
 			cipher = Cipher.getInstance(TRANSFORMATION);
@@ -47,21 +45,17 @@ public final class CryptManager {
 			logger.error(e.getMessage(), e);
 		}
 
-		return Base64.getEncoder().encodeToString(ciphertext).replace("+", "-")
-				.replace("/", "_");
+		return Base64.getEncoder().encodeToString(ciphertext).replace("+", "-").replace("/", "_");
 	}
 
 	public static String decodeResponseString(String data, String key) {
 		String response = null;
 
-		if (data.length() <= 10 || data.toLowerCase().startsWith("error")
-				|| data.toLowerCase().contains("success")
+		if (data.length() <= 10 || data.toLowerCase().startsWith("error") || data.toLowerCase().contains("success")
 				|| data.toLowerCase().contains("login")) {
 			response = data;
 		} else {
-			response = decode(
-					data.replace("|", "").replace("-", "+").replace("_", "/"),
-					key).replaceAll("[|]+$", "");
+			response = decode(data.replace("|", "").replace("-", "+").replace("_", "/"), key).replaceAll("[|]+$", "");
 		}
 
 		return response;
@@ -75,8 +69,7 @@ public final class CryptManager {
 		Cipher cipher = null;
 		SecretKey key = new SecretKeySpec(stringKey.getBytes(), ALGORITHM);
 
-		IvParameterSpec ivParamSpec = new IvParameterSpec(StaticValues
-				.CryptIV().getBytes());
+		IvParameterSpec ivParamSpec = new IvParameterSpec(StaticValues.CryptIV().getBytes());
 
 		try {
 			cipher = Cipher.getInstance(TRANSFORMATION);

@@ -34,8 +34,7 @@ public class SFBotJCore implements Runnable {
 
 		ThreadContext.put("logFileName", this.account.toString());
 
-		System.setErr(new PrintStream(new LoggingOutputStream(logger,
-				Level.ERROR), true));
+		System.setErr(new PrintStream(new LoggingOutputStream(logger, Level.ERROR), true));
 
 		while (this.hasSomethingToDo) {
 			areas.forEach(area -> area.performArea());

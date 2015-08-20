@@ -40,22 +40,17 @@ public class BaseArea {
 
 		List<Header> header = new ArrayList<Header>();
 
-		header.add(new BasicHeader(
-				"user-agent",
+		header.add(new BasicHeader("user-agent",
 				"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.125 Safari/537.36"));
 		header.add(new BasicHeader("accept",
 				"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
 		header.add(new BasicHeader("accept-encoding", "gzip, deflate, sdch"));
-		header.add(new BasicHeader("accept-language",
-				"de,en-US;q=0.8,en;q=0.6,de-DE;q=0.4"));
+		header.add(new BasicHeader("accept-language", "de,en-US;q=0.8,en;q=0.6,de-DE;q=0.4"));
 		header.add(new BasicHeader("connection", "keep-alive"));
 		header.add(new BasicHeader("dnt", "1"));
-		header.add(new BasicHeader("x-requested-with",
-				"ShockwaveFlash/18.0.0.160"));
-		header.add(new BasicHeader("host", account.getSetting().getServerURL()
-				.substring(7)));
-		header.add(new BasicHeader("referer", account.getSetting()
-				.getServerURL() + '/'));
+		header.add(new BasicHeader("x-requested-with", "ShockwaveFlash/18.0.0.160"));
+		header.add(new BasicHeader("host", account.getSetting().getServerURL().substring(7)));
+		header.add(new BasicHeader("referer", account.getSetting().getServerURL() + '/'));
 
 		return HttpClientBuilder.create().setDefaultHeaders(header).build();
 	}
@@ -72,8 +67,7 @@ public class BaseArea {
 				HttpResponse response = refClient.execute(req);
 				HttpEntity entity = response.getEntity();
 				result = EntityUtils.toString(entity, "UTF-8");
-				this.account
-						.setRequestCount(this.account.getRequestCount() + 1);
+				this.account.setRequestCount(this.account.getRequestCount() + 1);
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
 			}
@@ -91,18 +85,15 @@ public class BaseArea {
 		requestStringBuilder.append("/req.php?req=");
 		requestStringBuilder.append(this.account.getCryptID());
 
-		String sessionCommandAndSeperator = this.account.getSessionID() + '|'
-				+ request.toString();
+		String sessionCommandAndSeperator = this.account.getSessionID() + '|' + request.toString();
 
-		logger.debug("Session + Command in plaintext:"
-				+ sessionCommandAndSeperator);
+		logger.debug("Session + Command in plaintext:" + sessionCommandAndSeperator);
 
 		while (sessionCommandAndSeperator.length() % 16 > 0) {
 			sessionCommandAndSeperator += '|';
 		}
 
-		requestStringBuilder.append(CryptManager.encode(
-				sessionCommandAndSeperator, this.account.getCryptKey()));
+		requestStringBuilder.append(CryptManager.encode(sessionCommandAndSeperator, this.account.getCryptKey()));
 		requestStringBuilder.append("&rnd=" + Math.random());
 		requestStringBuilder.append("&c=" + request.getRequestCount());
 
@@ -115,8 +106,7 @@ public class BaseArea {
 		Boolean result = false;
 
 		try (CloseableHttpClient refClient = HttpClients.createDefault()) {
-			HttpGet request = new HttpGet(this.account.getSetting()
-					.getServerURL());
+			HttpGet request = new HttpGet(this.account.getSetting().getServerURL());
 			HttpResponse response = refClient.execute(request);
 
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {

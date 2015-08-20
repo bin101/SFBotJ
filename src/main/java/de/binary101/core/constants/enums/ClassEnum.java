@@ -1,7 +1,10 @@
 package de.binary101.core.constants.enums;
 
 public enum ClassEnum {
-	All(0), Warrior(1), Mage(2), Scout(3);
+	All(0),
+	Warrior(1),
+	Mage(2),
+	Scout(3);
 
 	private final Integer id;
 

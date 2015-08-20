@@ -15,29 +15,17 @@ public class Item {
 
 	private final static Logger logger = LogManager.getLogger(Item.class);
 
-	@Getter
-	@Setter
-	private ItemTypeEnum type;
-	@Getter
-	private int picNumber;
-	@Getter
-	private int strength, dexterity, intelligence, stamina, luck, armor;
-	@Getter
-	private ClassEnum itemClass;
-	@Getter
-	private Boolean isEpic;
-	@Getter
-	private int epicValue;
-	@Getter
-	private double silverPrice;
-	@Getter
-	private int mushroomPrice;
-	@Getter
-	private Boolean stinks;
-	@Getter
-	private EnchantmentTypeEnum enchantment;
-	@Getter
-	private int backpackIndex;
+	@Getter @Setter private ItemTypeEnum type;
+	@Getter private int picNumber;
+	@Getter private int strength, dexterity, intelligence, stamina, luck, armor;
+	@Getter private ClassEnum itemClass;
+	@Getter private Boolean isEpic;
+	@Getter private int epicValue;
+	@Getter private double silverPrice;
+	@Getter private int mushroomPrice;
+	@Getter private Boolean stinks;
+	@Getter private EnchantmentTypeEnum enchantment;
+	@Getter private int backpackIndex;
 
 	public Item(Long[] itemData, int backpackIndex) {
 
@@ -55,8 +43,7 @@ public class Item {
 			type = (int) (type - helper1 * Math.pow(2.0, 24.0));
 			picNumber = (int) (picNumber - helper2 * Math.pow(2.0, 16.0));
 			int helper3 = (int) (mushroomPrice / Math.pow(2.0, 16.0));
-			mushroomPrice = (int) (mushroomPrice - helper3
-					* Math.pow(2.0, 16.0));
+			mushroomPrice = (int) (mushroomPrice - helper3 * Math.pow(2.0, 16.0));
 		}
 
 		this.type = ItemTypeEnum.fromInt(type);
@@ -69,64 +56,56 @@ public class Item {
 			this.mushroomPrice = mushroomPrice;
 			this.enchantment = EnchantmentTypeEnum.fromInt(helper1);
 
-			if (!(this instanceof Weapon) && !(this instanceof Potion)
-					&& !(this instanceof MirrorpieceOrKey)) {
+			if (!(this instanceof Weapon) && !(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
 				this.armor = itemData[2].intValue();
 			}
 
-			if (!(this instanceof Potion)
-					&& !(this instanceof MirrorpieceOrKey)) {
-				appendAttribute(AttributeEnum.fromInt(itemData[4].intValue()),
-						itemData[7].intValue());
-				appendAttribute(AttributeEnum.fromInt(itemData[5].intValue()),
-						itemData[8].intValue());
-				appendAttribute(AttributeEnum.fromInt(itemData[6].intValue()),
-						itemData[9].intValue());
+			if (!(this instanceof Potion) && !(this instanceof MirrorpieceOrKey)) {
+				appendAttribute(AttributeEnum.fromInt(itemData[4].intValue()), itemData[7].intValue());
+				appendAttribute(AttributeEnum.fromInt(itemData[5].intValue()), itemData[8].intValue());
+				appendAttribute(AttributeEnum.fromInt(itemData[6].intValue()), itemData[9].intValue());
 			}
 
 			switch (this.type) {
-			case Amulet:
-			case Ring:
-			case Talisman:
-			case MirrorOrKey:
-				this.itemClass = ClassEnum.All;
-				break;
-			default:
-				this.itemClass = calcItemClass(this.picNumber);
-				break;
+				case Amulet:
+				case Ring:
+				case Talisman:
+				case MirrorOrKey:
+					this.itemClass = ClassEnum.All;
+					break;
+				default:
+					this.itemClass = calcItemClass(this.picNumber);
+					break;
 			}
 		}
 	}
 
-	public static Item createItem(Long[] longArray, int itemOffset,
-			int backpackIndex) {
+	public static Item createItem(Long[] longArray, int itemOffset, int backpackIndex) {
 		Item resultingItem = null;
 
 		Long[] itemData = new Long[12];
 		System.arraycopy(longArray, itemOffset, itemData, 0, 12);
 
 		int helper = (int) ((double) itemData[0] / Math.pow(2, 24));
-		ItemTypeEnum type = ItemTypeEnum
-				.fromInt(itemData[0].intValue() > 99 ? (int) (itemData[0]
-						.intValue() - helper * Math.pow(2.0, 24.0))
-						: itemData[0].intValue());
+		ItemTypeEnum type = ItemTypeEnum.fromInt(itemData[0].intValue() > 99 ? (int) (itemData[0].intValue() - helper
+				* Math.pow(2.0, 24.0)) : itemData[0].intValue());
 
 		switch (type) {
-		case Shield:
-			resultingItem = new Shield(itemData, backpackIndex);
-			break;
-		case Weapon:
-			resultingItem = new Weapon(itemData, backpackIndex);
-			break;
-		case Potion:
-			resultingItem = new Potion(itemData, backpackIndex);
-			break;
-		case MirrorOrKey:
-			resultingItem = new MirrorpieceOrKey(itemData, backpackIndex);
-			break;
-		default:
-			resultingItem = new Item(itemData, backpackIndex);
-			break;
+			case Shield:
+				resultingItem = new Shield(itemData, backpackIndex);
+				break;
+			case Weapon:
+				resultingItem = new Weapon(itemData, backpackIndex);
+				break;
+			case Potion:
+				resultingItem = new Potion(itemData, backpackIndex);
+				break;
+			case MirrorOrKey:
+				resultingItem = new MirrorpieceOrKey(itemData, backpackIndex);
+				break;
+			default:
+				resultingItem = new Item(itemData, backpackIndex);
+				break;
 		}
 
 		return resultingItem;
@@ -135,11 +114,9 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return String
-				.format("Type:%s Str:%s Dex:%s Int:%s Sta:%s Luc:%s Epic:%s isEpic:%s Value:%s",
-						this.type, this.strength, this.dexterity,
-						this.intelligence, this.stamina, this.luck,
-						this.epicValue, this.isEpic, this.silverPrice);
+		return String.format("Type:%s Str:%s Dex:%s Int:%s Sta:%s Luc:%s Epic:%s isEpic:%s Value:%s", this.type,
+				this.strength, this.dexterity, this.intelligence, this.stamina, this.luck, this.epicValue, this.isEpic,
+				this.silverPrice);
 	}
 
 	private ClassEnum calcItemClass(int picNumber) {
@@ -158,31 +135,30 @@ public class Item {
 
 	private void appendAttribute(AttributeEnum attributeType, int attributeValue) {
 		switch (attributeType) {
-		case Strength:
-			this.strength = attributeValue;
-			break;
-		case Dexterity:
-			this.dexterity = attributeValue;
-			break;
-		case Intelligence:
-			this.intelligence = attributeValue;
-			break;
-		case Stamina:
-			this.stamina = attributeValue;
-			break;
-		case Luck:
-			this.luck = attributeValue;
-			break;
-		case Epic:
-			this.epicValue = attributeValue;
-			break;
-		case None:
-			// Nothing to add
-			break;
-		default:
-			logger.error("Unbekannter AttributeType bei Item: "
-					+ this.toString());
-			break;
+			case Strength:
+				this.strength = attributeValue;
+				break;
+			case Dexterity:
+				this.dexterity = attributeValue;
+				break;
+			case Intelligence:
+				this.intelligence = attributeValue;
+				break;
+			case Stamina:
+				this.stamina = attributeValue;
+				break;
+			case Luck:
+				this.luck = attributeValue;
+				break;
+			case Epic:
+				this.epicValue = attributeValue;
+				break;
+			case None:
+				// Nothing to add
+				break;
+			default:
+				logger.error("Unbekannter AttributeType bei Item: " + this.toString());
+				break;
 		}
 	}
 

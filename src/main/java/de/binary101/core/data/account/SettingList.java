@@ -10,8 +10,6 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XStreamAlias("settings")
 public class SettingList {
 
-	@Getter
-	@XStreamImplicit
-	private ArrayList<Setting> settings = new ArrayList<Setting>();
+	@Getter @XStreamImplicit private ArrayList<Setting> settings = new ArrayList<Setting>();
 
 }

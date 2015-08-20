@@ -31,8 +31,7 @@ public class SettingsManager {
 
 	private static XStream openXStream() {
 
-		XStream xstream = new XStream(new PureJavaReflectionProvider(),
-				new DomDriver());
+		XStream xstream = new XStream(new PureJavaReflectionProvider(), new DomDriver());
 		xstream.processAnnotations(SettingList.class);
 		xstream.autodetectAnnotations(true);
 

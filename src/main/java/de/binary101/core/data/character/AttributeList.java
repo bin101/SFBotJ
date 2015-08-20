@@ -38,19 +38,15 @@ public class AttributeList {
 		Optional<Entry<AttributeEnum, Attribute>> result = this.attributeList
 				.entrySet()
 				.stream()
-				.filter(attr -> (currentSilver - attr.getValue()
-						.getPriceForNextUpgrade()) >= (account
+				.filter(attr -> (currentSilver - attr.getValue().getPriceForNextUpgrade()) >= (account
 						.getWagesPerHour() * 15)).findFirst();
 		return result.isPresent();
 	}
 
-	public AttributeList(final int strength, final int dexterity,
-			final int intelligence, final int stamina, final int luck,
-			final int strengthBonus, final int dexterityBonus,
-			final int intelligenceBonus, final int staminaBonus,
-			final int luckBonus, final int strengthPrice,
-			final int dexterityPrice, final int intelligencePrice,
-			final int staminaPrice, final int luckPrice, Account account) {
+	public AttributeList(final int strength, final int dexterity, final int intelligence, final int stamina,
+			final int luck, final int strengthBonus, final int dexterityBonus, final int intelligenceBonus,
+			final int staminaBonus, final int luckBonus, final int strengthPrice, final int dexterityPrice,
+			final int intelligencePrice, final int staminaPrice, final int luckPrice, Account account) {
 
 		this.account = account;
 		this.attributeList = new HashMap<AttributeEnum, Attribute>();

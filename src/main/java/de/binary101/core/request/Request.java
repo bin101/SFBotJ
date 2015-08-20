@@ -5,11 +5,8 @@ import lombok.Setter;
 import de.binary101.core.constants.enums.RequestEnum;
 
 public class Request {
-	@Getter
-	private RequestEnum type;
-	@Getter
-	@Setter
-	private Long requestCount;
+	@Getter private RequestEnum type;
+	@Getter @Setter private Long requestCount;
 
 	public Request(RequestEnum type) {
 		this.type = type;

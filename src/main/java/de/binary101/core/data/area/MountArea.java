@@ -30,10 +30,8 @@ public class MountArea extends BaseArea {
 	@Override
 	public void performArea() {
 		if (!account.getSetting().getPerformMountBuy()
-				|| (account.getOwnCharacter().getMountEndTime()
-						.isAfter(DateTime.now()) && account.getOwnCharacter()
-						.getMountType().getId() >= account.getSetting()
-						.getMaxMountToBuy().getId())
+				|| (account.getOwnCharacter().getMountEndTime().isAfter(DateTime.now()) && account.getOwnCharacter()
+						.getMountType().getId() >= account.getSetting().getMaxMountToBuy().getId())
 				|| (account.getSetting().getMaxMountToBuy() == MountTypeEnum.None)) {
 			return;
 		}
@@ -51,20 +49,16 @@ public class MountArea extends BaseArea {
 				}
 			}
 
-			if (canBuyMount
-					&& targetMount.getId() > account.getOwnCharacter()
-							.getMountType().getId()) {
+			if (canBuyMount && targetMount.getId() > account.getOwnCharacter().getMountType().getId()) {
 				logger.info("Betrete den Stall");
 				Helper.threadSleepRandomBetween(1000, 2000);
 
 				logger.info("Mein neues Reittier wird dann wohl "
 						+ (targetMount == MountTypeEnum.Cow ? "eine Kuh"
 								: targetMount == MountTypeEnum.Horse ? "ein Pferd"
-										: targetMount == MountTypeEnum.Tiger ? "ein Tiger"
-												: "ein Greifendrache"));
+										: targetMount == MountTypeEnum.Tiger ? "ein Tiger" : "ein Greifendrache"));
 
-				String responseString = sendRequest(new BuyMountRequest(
-						targetMount));
+				String responseString = sendRequest(new BuyMountRequest(targetMount));
 				new Response(responseString, account);
 
 			}
@@ -79,33 +73,29 @@ public class MountArea extends BaseArea {
 		int currentMushroom = account.getOwnCharacter().getMushrooms();
 
 		switch (mountType) {
-		case Cow:
-			if (currentSilver >= cowSilverPrice
-					&& currentMushroom >= cowMushroomPrice) {
-				canBuyMount = true;
-			}
-			break;
-		case Horse:
-			if (currentSilver >= horseSilverPrice
-					&& currentMushroom >= horseMushroomPrice) {
-				canBuyMount = true;
-			}
-			break;
-		case Tiger:
-			if (currentSilver >= tigerSilverPrice
-					&& currentMushroom >= tigerMushroomPrice) {
-				canBuyMount = true;
-			}
-			break;
-		case Dragon:
-			if (currentSilver >= dragonSilverPrice
-					&& currentMushroom >= dragonMushroomPrice) {
-				canBuyMount = true;
-			}
-			break;
-		default:
-			canBuyMount = false;
-			break;
+			case Cow:
+				if (currentSilver >= cowSilverPrice && currentMushroom >= cowMushroomPrice) {
+					canBuyMount = true;
+				}
+				break;
+			case Horse:
+				if (currentSilver >= horseSilverPrice && currentMushroom >= horseMushroomPrice) {
+					canBuyMount = true;
+				}
+				break;
+			case Tiger:
+				if (currentSilver >= tigerSilverPrice && currentMushroom >= tigerMushroomPrice) {
+					canBuyMount = true;
+				}
+				break;
+			case Dragon:
+				if (currentSilver >= dragonSilverPrice && currentMushroom >= dragonMushroomPrice) {
+					canBuyMount = true;
+				}
+				break;
+			default:
+				canBuyMount = false;
+				break;
 		}
 
 		return canBuyMount;

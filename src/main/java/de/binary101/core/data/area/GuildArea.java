@@ -31,40 +31,30 @@ public class GuildArea extends BaseArea {
 		}
 
 		if (account.getHasGuild()) {
-			if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting()
-					.getPerformQuesten())
-					&& account.getSetting().getDonateGoldToGuild()
-					&& !account.getHasRunningAction()
-					&& account.getSetting().getLastDonateDate().getDayOfYear() != DateTime
-							.now().getDayOfYear()) {
+			if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten())
+					&& account.getSetting().getDonateGoldToGuild() && !account.getHasRunningAction()
+					&& account.getSetting().getLastDonateDate().getDayOfYear() != DateTime.now().getDayOfYear()) {
 				logger.info("Spenden wir mal der Gilde etwas Gold");
 				Helper.threadSleepRandomBetween(1000, 2000);
 
-				Long silverAmountToDonate = account.getOwnCharacter()
-						.getSilver()
-						/ 100
+				Long silverAmountToDonate = account.getOwnCharacter().getSilver() / 100
 						* account.getSetting().getDonatePercentage();
 				// Nur Goldwerte spenden
-				silverAmountToDonate = silverAmountToDonate
-						- silverAmountToDonate % 100;
+				silverAmountToDonate = silverAmountToDonate - silverAmountToDonate % 100;
 				// auf eine glate summe abrunden statt 5487 Gold lieber 5000
 				// gold spenden
 				silverAmountToDonate = (long) (silverAmountToDonate - silverAmountToDonate
-						% Math.pow(10,
-								silverAmountToDonate.toString().length() - 1));
+						% Math.pow(10, silverAmountToDonate.toString().length() - 1));
 
-				if (silverAmountToDonate > (1000000000 - account.getGuild()
-						.getSilver())) {
+				if (silverAmountToDonate > (1000000000 - account.getGuild().getSilver())) {
 					// Spende nur den Betrag, der zum Gold-Cap der Gilde
 					// benötigt wird
-					silverAmountToDonate = 1000000000 - account.getGuild()
-							.getSilver();
+					silverAmountToDonate = 1000000000 - account.getGuild().getSilver();
 				} // else do nothing
 
 				if (silverAmountToDonate > 0) {
 					if (donateGold(silverAmountToDonate)) {
-						logger.info(String.format(
-								"Habe gerade %s gold an die Gilde gespendet",
+						logger.info(String.format("Habe gerade %s gold an die Gilde gespendet",
 								silverAmountToDonate / 100));
 						account.getSetting().setLastDonateDate(DateTime.now());
 						SettingsManager.saveSettings();
@@ -74,49 +64,35 @@ public class GuildArea extends BaseArea {
 
 			Helper.threadSleepRandomBetween(1000, 2000);
 
-			GuildRankEnum myRank = account
-					.getGuild()
-					.getMembers()
-					.stream()
-					.filter(member -> member.getName().equals(
-							account.getSetting().getUsername())).findFirst()
-					.get().getGuildRank();
-			if (account.getSetting().getUpgradeGuild()
-					&& myRank == GuildRankEnum.Leader) {
+			GuildRankEnum myRank = account.getGuild().getMembers().stream()
+					.filter(member -> member.getName().equals(account.getSetting().getUsername())).findFirst().get()
+					.getGuildRank();
+			if (account.getSetting().getUpgradeGuild() && myRank == GuildRankEnum.Leader) {
 
 				Boolean haveBuyedGuildUpgrade = false;
 				Boolean canBuyGuildUpgrade = true;
-				
+
 				while (canBuyGuildUpgrade) {
 					Helper.threadSleepRandomBetween(1000, 2000);
 					haveBuyedGuildUpgrade = false;
 
-					GuildUpgrade upgradeWithLowestLevel = account
-							.getGuild()
-							.getGuildUpgrades()
-							.stream()
-							.min((upgrade1, upgrade2) -> Integer.compare(
-									upgrade1.getLevel(), upgrade2.getLevel()))
+					GuildUpgrade upgradeWithLowestLevel = account.getGuild().getGuildUpgrades().stream()
+							.min((upgrade1, upgrade2) -> Integer.compare(upgrade1.getLevel(), upgrade2.getLevel()))
 							.get();
 
-					if (upgradeWithLowestLevel.getPrices().getSilverPrice() <= account
-							.getGuild().getSilver()
-							&& upgradeWithLowestLevel.getPrices()
-									.getMushroomPrice() <= account.getGuild()
-									.getMushrooms()
-							&& upgradeGuild(upgradeWithLowestLevel)) {
-						
+					if (upgradeWithLowestLevel.getPrices().getSilverPrice() <= account.getGuild().getSilver()
+							&& upgradeWithLowestLevel.getPrices().getMushroomPrice() <= account.getGuild()
+									.getMushrooms() && upgradeGuild(upgradeWithLowestLevel)) {
+
 						haveBuyedGuildUpgrade = true;
 
 						logger.info(String
 								.format("Habe der Gilde ein Upgrade verpasst, %s ist nun auf Level %s",
 										upgradeWithLowestLevel.getUpgradeType() == GuildUpgradeTypeEnum.Fortress ? "die Festung"
-												: upgradeWithLowestLevel
-														.getUpgradeType() == GuildUpgradeTypeEnum.Treasure ? "die Schatztrue"
-														: "der Lehrmeister",
-										upgradeWithLowestLevel.getLevel() + 1));
+												: upgradeWithLowestLevel.getUpgradeType() == GuildUpgradeTypeEnum.Treasure ? "die Schatztrue"
+														: "der Lehrmeister", upgradeWithLowestLevel.getLevel() + 1));
 					}
-					
+
 					if (!haveBuyedGuildUpgrade) {
 						canBuyGuildUpgrade = false;
 					}
@@ -131,15 +107,13 @@ public class GuildArea extends BaseArea {
 	private Boolean donateGold(long silverAmountToDonate) {
 		Boolean result = false;
 
-		String responseString = sendRequest(new DonateGoldRequest(
-				silverAmountToDonate));
+		String responseString = sendRequest(new DonateGoldRequest(silverAmountToDonate));
 		Response response = new Response(responseString, account);
 
 		if (!response.getHasError()) {
 			result = true;
 		} else {
-			logger.error("Es ist ein Fehler beim Spenden aufgetreten: "
-					+ response.getErrorCode());
+			logger.error("Es ist ein Fehler beim Spenden aufgetreten: " + response.getErrorCode());
 		}
 
 		return result;
@@ -148,15 +122,13 @@ public class GuildArea extends BaseArea {
 	private Boolean upgradeGuild(GuildUpgrade upgradeToUpgrade) {
 		Boolean result = false;
 
-		String responseString = sendRequest(new UpgradeGuildRequest(
-				upgradeToUpgrade.getUpgradeType()));
+		String responseString = sendRequest(new UpgradeGuildRequest(upgradeToUpgrade.getUpgradeType()));
 		Response response = new Response(responseString, account);
 
 		if (!response.getHasError()) {
 			result = true;
 		} else {
-			logger.error("Es ist ein Fehler beim Spenden aufgetreten: "
-					+ response.getErrorCode());
+			logger.error("Es ist ein Fehler beim Spenden aufgetreten: " + response.getErrorCode());
 		}
 
 		return result;

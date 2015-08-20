@@ -5,8 +5,7 @@ import de.binary101.core.constants.enums.RequestEnum;
 
 public class SellRequest extends Request {
 
-	@Getter
-	private int backpackPosition;
+	@Getter private int backpackPosition;
 
 	public SellRequest(int backpackPosition) {
 		super(RequestEnum.ACT_INVENTORY_CHANGE);

@@ -4,8 +4,7 @@ import lombok.Getter;
 import de.binary101.core.constants.enums.RequestEnum;
 
 public class QuestFinishRequest extends Request {
-	@Getter
-	private Boolean skipQuest;
+	@Getter private Boolean skipQuest;
 
 	public QuestFinishRequest(Boolean skipQuest) {
 		super(RequestEnum.FinishQuest);

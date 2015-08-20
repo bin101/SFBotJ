@@ -1,9 +1,15 @@
 package de.binary101.core.constants.enums;
 
 public enum EnchantmentTypeEnum {
-	SwordOfVengeance(11), MariosBeard(31), Boots36960Feet(41), ShadowOfTheCowboy(
-			51), AdventurersArchaeologicalAura(61), ThirstyWanderer(71), UnholyAcquisitiveness(
-			81), GraveRobbersPrayer(91), RobberBaronRitual(101);
+	SwordOfVengeance(11),
+	MariosBeard(31),
+	Boots36960Feet(41),
+	ShadowOfTheCowboy(51),
+	AdventurersArchaeologicalAura(61),
+	ThirstyWanderer(71),
+	UnholyAcquisitiveness(81),
+	GraveRobbersPrayer(91),
+	RobberBaronRitual(101);
 
 	private final Integer id;
 

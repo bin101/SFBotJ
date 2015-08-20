@@ -19,8 +19,7 @@ import de.binary101.core.utils.Helper;
 import de.binary101.core.utils.SettingsManager;
 
 public class CharacterScreenArea extends BaseArea {
-	private final static Logger logger = LogManager
-			.getLogger(CharacterScreenArea.class);
+	private final static Logger logger = LogManager.getLogger(CharacterScreenArea.class);
 
 	public CharacterScreenArea(Account account) {
 		super(account);
@@ -28,55 +27,48 @@ public class CharacterScreenArea extends BaseArea {
 
 	@Override
 	public void performArea() {
-		if (account.getSetting().getStrengthPercentage() == -1
-				|| account.getSetting().getDexterityPercentage() == -1
+		if (account.getSetting().getStrengthPercentage() == -1 || account.getSetting().getDexterityPercentage() == -1
 				|| account.getSetting().getIntelligencePercentage() == -1
-				|| account.getSetting().getStaminaPercentage() == -1
-				|| account.getSetting().getLuckPercentage() == -1) {
+				|| account.getSetting().getStaminaPercentage() == -1 || account.getSetting().getLuckPercentage() == -1) {
 
 			switch (account.getOwnCharacter().getCharClass()) {
-			case Mage:
-				account.getSetting().setStrengthPercentage(15);
-				account.getSetting().setDexterityPercentage(15);
-				account.getSetting().setIntelligencePercentage(25);
-				account.getSetting().setStaminaPercentage(25);
-				account.getSetting().setLuckPercentage(20);
-				break;
-			case Scout:
-				account.getSetting().setStrengthPercentage(15);
-				account.getSetting().setDexterityPercentage(26);
-				account.getSetting().setIntelligencePercentage(15);
-				account.getSetting().setStaminaPercentage(23);
-				account.getSetting().setLuckPercentage(21);
-				break;
-			case Warrior:
-				account.getSetting().setStrengthPercentage(30);
-				account.getSetting().setDexterityPercentage(15);
-				account.getSetting().setIntelligencePercentage(15);
-				account.getSetting().setStaminaPercentage(22);
-				account.getSetting().setLuckPercentage(18);
-				break;
-			default:
-				logger.warn("Characterklasse war noch nicht geladen");
-				break;
+				case Mage:
+					account.getSetting().setStrengthPercentage(15);
+					account.getSetting().setDexterityPercentage(15);
+					account.getSetting().setIntelligencePercentage(25);
+					account.getSetting().setStaminaPercentage(25);
+					account.getSetting().setLuckPercentage(20);
+					break;
+				case Scout:
+					account.getSetting().setStrengthPercentage(15);
+					account.getSetting().setDexterityPercentage(26);
+					account.getSetting().setIntelligencePercentage(15);
+					account.getSetting().setStaminaPercentage(23);
+					account.getSetting().setLuckPercentage(21);
+					break;
+				case Warrior:
+					account.getSetting().setStrengthPercentage(30);
+					account.getSetting().setDexterityPercentage(15);
+					account.getSetting().setIntelligencePercentage(15);
+					account.getSetting().setStaminaPercentage(22);
+					account.getSetting().setLuckPercentage(18);
+					break;
+				default:
+					logger.warn("Characterklasse war noch nicht geladen");
+					break;
 			}
 
 			SettingsManager.saveSettings();
 		}
 
-		if (!account.getSetting().getPerformItemEquip()
-				|| !account.getSetting().getPerformAttributeBuy()) {
+		if (!account.getSetting().getPerformItemEquip() || !account.getSetting().getPerformAttributeBuy()) {
 			return;
-		} else if ((account.getGotNewItem() && account.getSetting()
-				.getPerformItemEquip())
-				|| (account.getSetting().getPerformAttributeBuy() && ((!account
-						.getSetting().getPerformQuesten() || !account
-						.getHasEnoughALUForOneQuest()) && !account
-						.getHasRunningAction()))) {
+		} else if ((account.getGotNewItem() && account.getSetting().getPerformItemEquip())
+				|| (account.getSetting().getPerformAttributeBuy() && ((!account.getSetting().getPerformQuesten() || !account
+						.getHasEnoughALUForOneQuest()) && !account.getHasRunningAction()))) {
 			logger.info("Betrete die Charakteruebersicht");
 
-			if (account.getSetting().getPerformItemEquip()
-					&& account.getGotNewItem()) {
+			if (account.getSetting().getPerformItemEquip() && account.getGotNewItem()) {
 				Helper.threadSleepRandomBetween(600, 1200);
 
 				logger.info("Gucke, ob Items ausgeruestet werden koennen");
@@ -86,11 +78,9 @@ public class CharacterScreenArea extends BaseArea {
 			}
 
 			if (account.getSetting().getPerformAttributeBuy()
-					&& ((!account.getSetting().getPerformQuesten() || !account
-							.getHasEnoughALUForOneQuest()) && !account
+					&& ((!account.getSetting().getPerformQuesten() || !account.getHasEnoughALUForOneQuest()) && !account
 							.getHasRunningAction())) {
-				Boolean canBuyStats = account.getOwnCharacter()
-						.getAttributeList().getCanBuyAtLeastOne();
+				Boolean canBuyStats = account.getOwnCharacter().getAttributeList().getCanBuyAtLeastOne();
 
 				if (canBuyStats) {
 
@@ -106,16 +96,11 @@ public class CharacterScreenArea extends BaseArea {
 						Helper.threadSleepRandomBetween(100, 300);
 						haveBuy = false;
 
-						Attribute strength = this.account.getOwnCharacter()
-								.getAttributeList().getStrength();
-						Attribute intelligence = this.account.getOwnCharacter()
-								.getAttributeList().getIntelligence();
-						Attribute dexterity = this.account.getOwnCharacter()
-								.getAttributeList().getDexterity();
-						Attribute stamina = this.account.getOwnCharacter()
-								.getAttributeList().getStamina();
-						Attribute luck = this.account.getOwnCharacter()
-								.getAttributeList().getLuck();
+						Attribute strength = this.account.getOwnCharacter().getAttributeList().getStrength();
+						Attribute intelligence = this.account.getOwnCharacter().getAttributeList().getIntelligence();
+						Attribute dexterity = this.account.getOwnCharacter().getAttributeList().getDexterity();
+						Attribute stamina = this.account.getOwnCharacter().getAttributeList().getStamina();
+						Attribute luck = this.account.getOwnCharacter().getAttributeList().getLuck();
 
 						int fullAttributeSum = 0;
 						if (account.getSetting().getStrengthPercentage() > 0) {
@@ -138,57 +123,42 @@ public class CharacterScreenArea extends BaseArea {
 							fullAttributeSum += luck.getBaseValue();
 						}
 
-						int strengthLimit = fullAttributeSum
-								* account.getSetting().getStrengthPercentage()
+						int strengthLimit = fullAttributeSum * account.getSetting().getStrengthPercentage() / 100;
+						int intelligenceLimit = fullAttributeSum * account.getSetting().getIntelligencePercentage()
 								/ 100;
-						int intelligenceLimit = fullAttributeSum
-								* account.getSetting()
-										.getIntelligencePercentage() / 100;
-						int dexterityLimit = fullAttributeSum
-								* account.getSetting().getDexterityPercentage()
-								/ 100;
-						int staminaLimit = fullAttributeSum
-								* account.getSetting().getStaminaPercentage()
-								/ 100;
-						int luckLimit = fullAttributeSum
-								* account.getSetting().getLuckPercentage()
-								/ 100;
+						int dexterityLimit = fullAttributeSum * account.getSetting().getDexterityPercentage() / 100;
+						int staminaLimit = fullAttributeSum * account.getSetting().getStaminaPercentage() / 100;
+						int luckLimit = fullAttributeSum * account.getSetting().getLuckPercentage() / 100;
 
 						if (strength.getBaseValue() <= strengthLimit
-								&& canAffordBySaveValue(strength
-										.getPriceForNextUpgrade())) {
+								&& canAffordBySaveValue(strength.getPriceForNextUpgrade())) {
 							++strIncrement;
 							buyAttribute(strength);
 							haveBuy = true;
 						}
 
 						if (intelligence.getBaseValue() <= intelligenceLimit
-								&& canAffordBySaveValue(intelligence
-										.getPriceForNextUpgrade())) {
+								&& canAffordBySaveValue(intelligence.getPriceForNextUpgrade())) {
 							++intIncrement;
 							buyAttribute(intelligence);
 							haveBuy = true;
 						}
 
 						if (dexterity.getBaseValue() <= dexterityLimit
-								&& canAffordBySaveValue(dexterity
-										.getPriceForNextUpgrade())) {
+								&& canAffordBySaveValue(dexterity.getPriceForNextUpgrade())) {
 							++dexIncrement;
 							buyAttribute(dexterity);
 							haveBuy = true;
 						}
 
 						if (stamina.getBaseValue() <= staminaLimit
-								&& canAffordBySaveValue(stamina
-										.getPriceForNextUpgrade())) {
+								&& canAffordBySaveValue(stamina.getPriceForNextUpgrade())) {
 							++staIncrement;
 							buyAttribute(stamina);
 							haveBuy = true;
 						}
 
-						if (luck.getBaseValue() <= luckLimit
-								&& canAffordBySaveValue(luck
-										.getPriceForNextUpgrade())) {
+						if (luck.getBaseValue() <= luckLimit && canAffordBySaveValue(luck.getPriceForNextUpgrade())) {
 							++lckIncrement;
 							buyAttribute(luck);
 							haveBuy = true;
@@ -201,15 +171,11 @@ public class CharacterScreenArea extends BaseArea {
 						Helper.threadSleepRandomBetween(100, 300);
 					}
 
-					if (strIncrement != 0 || intIncrement != 0
-							|| dexIncrement != 0 || staIncrement != 0
+					if (strIncrement != 0 || intIncrement != 0 || dexIncrement != 0 || staIncrement != 0
 							|| lckIncrement != 0) {
 						logger.info("Dann wollen wir mal meine Attribute verbessern");
-						logger.info(String
-								.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s",
-										strIncrement, intIncrement,
-										dexIncrement, staIncrement,
-										lckIncrement));
+						logger.info(String.format("Puh, bin fertig. Str:+%s Int:+%s Dex:+%s Sta:+%s Lck:+%s",
+								strIncrement, intIncrement, dexIncrement, staIncrement, lckIncrement));
 					}
 				}
 			}
@@ -221,8 +187,7 @@ public class CharacterScreenArea extends BaseArea {
 	private Boolean canAffordBySaveValue(long price) {
 		Boolean result = false;
 
-		if ((account.getOwnCharacter().getSilver() - price) >= (account
-				.getWagesPerHour() * 15)) {
+		if ((account.getOwnCharacter().getSilver() - price) >= (account.getWagesPerHour() * 15)) {
 			result = true;
 		}
 
@@ -238,35 +203,24 @@ public class CharacterScreenArea extends BaseArea {
 		Boolean hasSthEquipped = false;
 		String equipRespString = null;
 
-		for (Item backpackItem : account.getOwnCharacter().getBackpack()
-				.getItems().stream()
-				.filter(item -> item.getType() != ItemTypeEnum.None)
-				.collect(Collectors.toList())) {
+		for (Item backpackItem : account.getOwnCharacter().getBackpack().getItems().stream()
+				.filter(item -> item.getType() != ItemTypeEnum.None).collect(Collectors.toList())) {
 			Helper.threadSleepRandomBetween(500, 1000);
 			if (backpackItem.getType().getId() >= ItemTypeEnum.Weapon.getId()
-					&& backpackItem.getType().getId() <= ItemTypeEnum.Talisman
-							.getId()) {
+					&& backpackItem.getType().getId() <= ItemTypeEnum.Talisman.getId()) {
 
-				Optional<Item> equippedItem = account
-						.getOwnCharacter()
-						.getEquipment()
-						.getItems()
-						.stream()
-						.filter(item -> item.getType().name()
-								.equals(backpackItem.getType().name()))
-						.findFirst();
+				Optional<Item> equippedItem = account.getOwnCharacter().getEquipment().getItems().stream()
+						.filter(item -> item.getType().name().equals(backpackItem.getType().name())).findFirst();
 				Boolean backpackItemIsBetter = false;
 
 				if (equippedItem.isPresent()) {
-					backpackItemIsBetter = Helper.isBackpackItemBetter(
-							backpackItem, equippedItem.get(), account);
+					backpackItemIsBetter = Helper.isBackpackItemBetter(backpackItem, equippedItem.get(), account);
 				} else {
 					backpackItemIsBetter = true;
 				}
 
 				if (backpackItemIsBetter) {
-					logger.info(String.format("Lege folgendes Item an: %s",
-							backpackItem.toString()));
+					logger.info(String.format("Lege folgendes Item an: %s", backpackItem.toString()));
 
 					hasSthEquipped = true;
 					equipRespString = sendRequest(new EquipRequest(backpackItem));
@@ -276,13 +230,11 @@ public class CharacterScreenArea extends BaseArea {
 			} else if (backpackItem.getType() == ItemTypeEnum.MirrorPiece
 					|| backpackItem.getType() == ItemTypeEnum.Toiletkey
 					|| backpackItem.getType() == ItemTypeEnum.DungeonKey) {
-				logger.info(String.format("Benutze folgendes Item: %s",
-						backpackItem.toString()));
+				logger.info(String.format("Benutze folgendes Item: %s", backpackItem.toString()));
 
 				hasSthEquipped = true;
 				equipRespString = backpackItem.getType() == ItemTypeEnum.DungeonKey ? sendRequest(new Request(
-						RequestEnum.DungeonScreen))
-						: sendRequest(new EquipRequest(backpackItem));
+						RequestEnum.DungeonScreen)) : sendRequest(new EquipRequest(backpackItem));
 				new Response(equipRespString, account);
 			}
 			Helper.threadSleepRandomBetween(500, 1000);

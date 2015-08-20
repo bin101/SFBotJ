@@ -14,8 +14,7 @@ import de.binary101.core.utils.Helper;
 public class ShopArea extends BaseArea {
 	private final static Logger logger = LogManager.getLogger(ShopArea.class);
 
-	@Getter
-	private Response sellResponse;
+	@Getter private Response sellResponse;
 
 	public ShopArea(Account account) {
 		super(account);
@@ -29,8 +28,7 @@ public class ShopArea extends BaseArea {
 
 		if (account.getOwnCharacter().getBackpack().getIsFull()) {
 
-			CharacterScreenArea charScreenArea = new CharacterScreenArea(
-					account);
+			CharacterScreenArea charScreenArea = new CharacterScreenArea(account);
 			logger.info("Betrete einen der beiden Shops");
 
 			// TODO Vll kann man das besser lösen
@@ -40,15 +38,12 @@ public class ShopArea extends BaseArea {
 
 			Helper.threadSleepRandomBetween(600, 1200);
 
-			int backIndexForItemToSell = account.getOwnCharacter()
-					.getBackpack().getIndexForLeastValueableItem();
-			Item itemToSell = account.getOwnCharacter().getBackpack()
-					.getItems().get(backIndexForItemToSell);
+			int backIndexForItemToSell = account.getOwnCharacter().getBackpack().getIndexForLeastValueableItem();
+			Item itemToSell = account.getOwnCharacter().getBackpack().getItems().get(backIndexForItemToSell);
 
 			logger.info("Verkaufe folgendes Item: " + itemToSell.toString());
 
-			String sellResponseString = sendRequest(new SellRequest(
-					backIndexForItemToSell));
+			String sellResponseString = sendRequest(new SellRequest(backIndexForItemToSell));
 			this.sellResponse = new Response(sellResponseString, account);
 
 			Helper.threadSleepRandomBetween(600, 1200);

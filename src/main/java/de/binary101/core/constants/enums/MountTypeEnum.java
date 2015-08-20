@@ -1,7 +1,11 @@
 package de.binary101.core.constants.enums;
 
 public enum MountTypeEnum {
-	None(0), Cow(1), Horse(2), Tiger(3), Dragon(4);
+	None(0),
+	Cow(1),
+	Horse(2),
+	Tiger(3),
+	Dragon(4);
 
 	private final Integer id;
 

@@ -9,11 +9,9 @@ import de.binary101.core.constants.enums.ItemTypeEnum;
 
 public class MirrorpieceOrKey extends Item {
 
-	private final static Logger logger = LogManager
-			.getLogger(MirrorpieceOrKey.class);
+	private final static Logger logger = LogManager.getLogger(MirrorpieceOrKey.class);
 
-	@Getter
-	private int piece;
+	@Getter private int piece;
 
 	public MirrorpieceOrKey(Long[] itemData, int backpackIndex) {
 		super(itemData, backpackIndex);
@@ -35,18 +33,18 @@ public class MirrorpieceOrKey extends Item {
 		builder.append("Type:" + this.getType());
 
 		switch (this.getType()) {
-		case DungeonKey:
-			builder.append(" KeyNr:" + this.getPicNumber());
-			break;
-		case MirrorPiece:
-			builder.append(" PieceNr:" + this.piece);
-			break;
-		case Toiletkey:
-			// nichts zu appenden
-			break;
-		default:
-			logger.error("Unbekanntes Special Item");
-			break;
+			case DungeonKey:
+				builder.append(" KeyNr:" + this.getPicNumber());
+				break;
+			case MirrorPiece:
+				builder.append(" PieceNr:" + this.piece);
+				break;
+			case Toiletkey:
+				// nichts zu appenden
+				break;
+			default:
+				logger.error("Unbekanntes Special Item");
+				break;
 		}
 
 		return builder.toString();

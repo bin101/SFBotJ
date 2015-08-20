@@ -11,9 +11,7 @@ import de.binary101.core.response.Response;
 
 public class PollArea extends BaseArea implements Runnable {
 
-	@Getter
-	@Setter
-	private Thread pollThread;
+	@Getter @Setter private Thread pollThread;
 
 	public PollArea(Account account) {
 		super(account);

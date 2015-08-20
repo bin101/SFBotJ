@@ -1,7 +1,10 @@
 package de.binary101.core.constants.enums;
 
 public enum AttackStatusEnum {
-	None(0), Fight(1), Defense(2), Both(3);
+	None(0),
+	Fight(1),
+	Defense(2),
+	Both(3);
 
 	private final Integer id;
 

@@ -53,11 +53,9 @@ public class LoggingOutputStream extends OutputStream {
 	 * @throws IllegalArgumentException
 	 *             in case if one of arguments is null.
 	 */
-	public LoggingOutputStream(final Logger log, final Level level)
-			throws IllegalArgumentException {
+	public LoggingOutputStream(final Logger log, final Level level) throws IllegalArgumentException {
 		if (log == null || level == null) {
-			throw new IllegalArgumentException(
-					"Logger or log level must be not null");
+			throw new IllegalArgumentException("Logger or log level must be not null");
 		}
 		this.log = log;
 		this.level = level;

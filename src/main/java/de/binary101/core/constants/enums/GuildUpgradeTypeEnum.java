@@ -1,7 +1,9 @@
 package de.binary101.core.constants.enums;
 
 public enum GuildUpgradeTypeEnum {
-	Fortress(1), Treasure(2), Instructor(3);
+	Fortress(1),
+	Treasure(2),
+	Instructor(3);
 
 	private final Integer id;
 

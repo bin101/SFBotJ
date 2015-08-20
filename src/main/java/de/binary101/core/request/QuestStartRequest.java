@@ -5,10 +5,8 @@ import de.binary101.core.constants.enums.RequestEnum;
 
 public class QuestStartRequest extends Request {
 
-	@Getter
-	private int questNumber;
-	@Getter
-	private Boolean overwriteFullInventory;
+	@Getter private int questNumber;
+	@Getter private Boolean overwriteFullInventory;
 
 	public QuestStartRequest(int questNumber, Boolean overwriteFullInventory) {
 		super(RequestEnum.StartQuest);
@@ -19,7 +17,6 @@ public class QuestStartRequest extends Request {
 
 	@Override
 	public String toString() {
-		return super.toString() + this.questNumber + "/"
-				+ (this.overwriteFullInventory ? "1" : "0");
+		return super.toString() + this.questNumber + "/" + (this.overwriteFullInventory ? "1" : "0");
 	}
 }

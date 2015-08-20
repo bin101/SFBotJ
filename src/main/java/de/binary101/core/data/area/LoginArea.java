@@ -13,8 +13,7 @@ public class LoginArea extends BaseArea {
 
 	private final static Logger logger = LogManager.getLogger(LoginArea.class);
 
-	@Getter
-	private LoginResponse loginResponse;
+	@Getter private LoginResponse loginResponse;
 
 	public LoginArea(Account account) {
 		super(account);
@@ -27,13 +26,10 @@ public class LoginArea extends BaseArea {
 
 			do {
 				logger.info("Starte Loginvorgang");
-				String loginResponseString = sendRequest(new LoginRequest(
-						account.getSetting().getUsername(), account
-								.getSetting().getPassword(), account
-								.getSetting().getLoginCount()));
+				String loginResponseString = sendRequest(new LoginRequest(account.getSetting().getUsername(), account
+						.getSetting().getPassword(), account.getSetting().getLoginCount()));
 
-				this.loginResponse = new LoginResponse(loginResponseString,
-						account);
+				this.loginResponse = new LoginResponse(loginResponseString, account);
 			} while (!account.getIsLoggedIn());
 
 			logger.info("Login war erfolgreich");

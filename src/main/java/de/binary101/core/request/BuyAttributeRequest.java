@@ -7,10 +7,8 @@ import de.binary101.core.data.character.Attribute;
 
 public class BuyAttributeRequest extends Request {
 
-	@Getter
-	private AttributeEnum targetAttributeType;
-	@Getter
-	private int targetedAttributeLevel;
+	@Getter private AttributeEnum targetAttributeType;
+	@Getter private int targetedAttributeLevel;
 
 	public BuyAttributeRequest(Attribute targetAttribute) {
 		super(RequestEnum.BuySkill);
@@ -21,8 +19,7 @@ public class BuyAttributeRequest extends Request {
 
 	@Override
 	public String toString() {
-		return super.toString() + this.targetAttributeType.getId() + "/"
-				+ this.targetedAttributeLevel;
+		return super.toString() + this.targetAttributeType.getId() + "/" + this.targetedAttributeLevel;
 	}
 
 }
