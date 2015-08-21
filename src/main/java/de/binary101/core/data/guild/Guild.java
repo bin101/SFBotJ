@@ -1,8 +1,7 @@
 package de.binary101.core.data.guild;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +22,7 @@ import de.binary101.core.utils.TimeManager;
 public class Guild {
 
 	@Getter @Setter private String name;
-	@Getter @Setter private ArrayList<GuildMember> members;
+	@Getter @Setter private CopyOnWriteArrayList<GuildMember> members;
 	@Getter @Setter private String description;
 	@Getter @Setter private int honor;
 	@Getter @Setter private int rank;
@@ -32,17 +31,17 @@ public class Guild {
 	@Getter @Setter private DateTime nextAttackTime;
 	@Getter @Setter private DateTime nextDefenseTime;
 	@Getter @Setter private GuildRaidTypeEnum nextRaidType;
-	@Getter @Setter private List<GuildUpgrade> guildUpgrades;
+	@Getter @Setter private CopyOnWriteArrayList<GuildUpgrade> guildUpgrades;
 
 	public Guild() {
 		this.name = "None";
-		this.members = new ArrayList<GuildMember>();
+		this.members = new CopyOnWriteArrayList<GuildMember>();
 		this.description = "None";
 		this.honor = 0;
 		this.rank = 0;
 		this.silver = 0l;
 		this.mushrooms = 0;
-		this.guildUpgrades = Arrays.asList(new GuildUpgrade[3]);
+		this.guildUpgrades = (CopyOnWriteArrayList<GuildUpgrade>) Arrays.asList(new GuildUpgrade[3]);
 		this.nextAttackTime = new DateTime();
 		this.nextDefenseTime = new DateTime();
 		this.nextRaidType = GuildRaidTypeEnum.None;
