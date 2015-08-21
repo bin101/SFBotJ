@@ -1,6 +1,7 @@
 package de.binary101.core.data.guild;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class Guild {
 	@Getter @Setter private DateTime nextAttackTime;
 	@Getter @Setter private DateTime nextDefenseTime;
 	@Getter @Setter private GuildRaidTypeEnum nextRaidType;
-	@Getter @Setter private CopyOnWriteArrayList<GuildUpgrade> guildUpgrades;
+	@Getter @Setter private List<GuildUpgrade> guildUpgrades;
 
 	public Guild() {
 		this.name = "None";
@@ -41,7 +42,7 @@ public class Guild {
 		this.rank = 0;
 		this.silver = 0l;
 		this.mushrooms = 0;
-		this.guildUpgrades = (CopyOnWriteArrayList<GuildUpgrade>) Arrays.asList(new GuildUpgrade[3]);
+		this.guildUpgrades = Arrays.asList(new GuildUpgrade[3]);
 		this.nextAttackTime = new DateTime();
 		this.nextDefenseTime = new DateTime();
 		this.nextRaidType = GuildRaidTypeEnum.None;
