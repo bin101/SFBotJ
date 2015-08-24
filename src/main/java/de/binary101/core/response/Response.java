@@ -111,6 +111,8 @@ public class Response {
 		if (parsedData.containsKey("tavernspecial")) {
 			account.getTavern().setSpecialEvent(
 					EventEnum.fromInt(Integer.parseInt(parsedData.get("tavernspecial").get(0))));
+		} else {
+			account.getTavern().setSpecialEvent(EventEnum.None);
 		}
 	}
 
