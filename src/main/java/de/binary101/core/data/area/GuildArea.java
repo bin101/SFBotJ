@@ -6,9 +6,12 @@ import org.joda.time.DateTime;
 
 import de.binary101.core.constants.enums.GuildRankEnum;
 import de.binary101.core.constants.enums.GuildUpgradeTypeEnum;
+import de.binary101.core.constants.enums.RequestEnum;
 import de.binary101.core.data.account.Account;
+import de.binary101.core.data.guild.GuildMember;
 import de.binary101.core.data.guild.GuildUpgrade;
 import de.binary101.core.request.DonateGoldRequest;
+import de.binary101.core.request.Request;
 import de.binary101.core.request.UpgradeGuildRequest;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
@@ -31,6 +34,51 @@ public class GuildArea extends BaseArea {
 		}
 
 		if (account.getHasGuild()) {
+			GuildMember me = account.getGuild().getMembers().stream()
+					.filter(member -> member.getName().equals(account.getSetting().getUsername())).findFirst().get();
+
+			DateTime joinedGuildDate = account.getOwnCharacter().getJoinedGuildDate();
+
+			if (joinedGuildDate.plusDays(1).isBefore(DateTime.now())) {
+				if (account.getGuild().getNextAttackTime().isAfter(DateTime.now())
+						|| account.getGuild().getNextDefenseTime().isAfter(DateTime.now())) {
+					Boolean hasJoinedAttack = false;
+					Boolean hasJoinedDefense = false;
+
+					switch (me.getAttackStatus()) {
+						case Fight:
+							hasJoinedAttack = true;
+							break;
+						case Defense:
+							hasJoinedDefense = true;
+							break;
+						case Both:
+							hasJoinedAttack = true;
+							hasJoinedDefense = true;
+							break;
+						default:
+							//Have joined Nothing
+							break;
+					}
+
+					if (account.getGuild().getNextAttackTime().isAfter(DateTime.now()) && !hasJoinedAttack) {
+						Helper.threadSleepRandomBetween(1000, 2000);
+						String requestString = sendRequest(new Request(RequestEnum.JoinAttack));
+						new Response(requestString, account);
+						logger.info("Habe mich zum Gildenangriff gemeldet");
+						Helper.threadSleepRandomBetween(1000, 2000);
+					}
+
+					if (account.getGuild().getNextDefenseTime().isAfter(DateTime.now()) && !hasJoinedDefense) {
+						Helper.threadSleepRandomBetween(1000, 2000);
+						String requestString = sendRequest(new Request(RequestEnum.JoinDefense));
+						new Response(requestString, account);
+						logger.info("Habe mich zur Gildenverteidigung gemeldet");
+						Helper.threadSleepRandomBetween(1000, 2000);
+					}
+				}
+			}
+
 			if ((!account.getHasEnoughALUForOneQuest() || !account.getSetting().getPerformQuesten())
 					&& account.getSetting().getDonateGoldToGuild() && !account.getHasRunningAction()
 					&& account.getSetting().getLastDonateDate().getDayOfYear() != DateTime.now().getDayOfYear()) {
@@ -64,9 +112,7 @@ public class GuildArea extends BaseArea {
 
 			Helper.threadSleepRandomBetween(1000, 2000);
 
-			GuildRankEnum myRank = account.getGuild().getMembers().stream()
-					.filter(member -> member.getName().equals(account.getSetting().getUsername())).findFirst().get()
-					.getGuildRank();
+			GuildRankEnum myRank = me.getGuildRank();
 			if (account.getSetting().getUpgradeGuild() && myRank == GuildRankEnum.Leader) {
 
 				Boolean haveBuyedGuildUpgrade = false;

@@ -11,8 +11,8 @@ public enum OwnGuildSaveEnum {
 
 	Honor(13),
 
-	NextFightTime(365),
-	NextDefenseTime(367),
+	NextFightTime(367),
+	NextDefenseTime(365),
 
 	// Member
 	MemberLevelStartIndex(64),

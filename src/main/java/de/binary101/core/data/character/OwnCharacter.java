@@ -42,6 +42,8 @@ public class OwnCharacter extends Character {
 	@Getter @Setter private int minDamageBase;
 	@Getter @Setter private int maxDamageBase;
 
+	@Getter @Setter private DateTime joinedGuildDate;
+
 	public OwnCharacter() {
 		super();
 
@@ -72,6 +74,9 @@ public class OwnCharacter extends Character {
 						.getRealAttributePrice(ownplayersave[42].intValue()), Helper
 						.getRealAttributePrice(ownplayersave[43].intValue()), Helper
 						.getRealAttributePrice(ownplayersave[44].intValue()), account));
+
+		this.joinedGuildDate = TimeManager
+				.UTCunixTimestampToLocalDateTime(ownplayersave[OwnPlayerSaveEnum.JoinedGuildDate.getId()].intValue());
 
 		String mirrorHelper = ownplayersave[OwnPlayerSaveEnum.Mirror.getId()].toString();
 		while (mirrorHelper.length() < 32) {

@@ -19,6 +19,5 @@ public class GuildMember {
 	@Getter @Setter private DateTime lastOnline;
 	@Getter @Setter private AttackStatusEnum attackStatus;
 	@Getter @Setter private GuildRankEnum guildRank;
-	@Getter @Setter private DateTime guildJoinedDate;
 
 }
