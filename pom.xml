@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.binary101</groupId>
 	<artifactId>SFBotJ</artifactId>
-	<version>1.3.8</version>
+	<version>1.3.9</version>
 	<name>SFBotJ</name>
 	<description>Shakes &amp; Fidget Bot written in Java</description>
 	<organization>
@@ -38,6 +38,18 @@
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.danielflower.mavenplugins</groupId>
+				<artifactId>gitlog-maven-plugin</artifactId>
+				<version>1.12.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
