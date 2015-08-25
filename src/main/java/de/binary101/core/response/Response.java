@@ -142,7 +142,7 @@ public class Response {
 				}// else do nothing
 
 				if (mapKey.contains("(")) {
-					mapKey = mapKey.split("(")[0];
+					mapKey = mapKey.split("\\(")[0];
 				}// else do nothing
 
 				this.parsedData.put(mapKey, mapValue);
