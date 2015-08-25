@@ -45,6 +45,13 @@
 				<groupId>com.github.danielflower.mavenplugins</groupId>
 				<artifactId>gitlog-maven-plugin</artifactId>
 				<version>1.12.0</version>
+				<configuration>
+					<generatePlainTextChangeLog>false</generatePlainTextChangeLog>
+					<generateSimpleHTMLChangeLog>true</generateSimpleHTMLChangeLog>
+					<generateMarkdownChangeLog>false</generateMarkdownChangeLog>
+					<generateHTMLTableOnlyChangeLog>false</generateHTMLTableOnlyChangeLog>
+					<generateJSONChangeLog>false</generateJSONChangeLog>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
