@@ -9,21 +9,19 @@ import org.joda.time.format.DateTimeFormat;
 
 import de.binary101.core.constants.enums.ActionEnum;
 import de.binary101.core.constants.enums.EventEnum;
-import de.binary101.core.constants.enums.ItemTypeEnum;
 import de.binary101.core.constants.enums.RequestEnum;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.data.tavern.Quest;
 import de.binary101.core.request.QuestFinishRequest;
 import de.binary101.core.request.QuestStartRequest;
 import de.binary101.core.request.Request;
+import de.binary101.core.response.PlayerFightResponse;
 import de.binary101.core.response.Response;
 import de.binary101.core.utils.Helper;
 
 public class TavernArea extends BaseArea {
 
 	private final static Logger logger = LogManager.getLogger(TavernArea.class);
-
-	private Boolean gotNewItem = false;
 
 	public TavernArea(Account account) {
 		super(account);
@@ -72,12 +70,6 @@ public class TavernArea extends BaseArea {
 			if (account.getActionEndTime().isBeforeNow() && account.getActionType() == ActionEnum.Quest) {
 				Helper.threadSleepRandomBetween(600, 1200);
 				finishQuest();
-				logger.info("Habe die Quest beendet.");
-
-				if (gotNewItem) {
-					account.setGotNewItem(true);
-					gotNewItem = false;
-				}
 			}
 		}
 	}
@@ -157,10 +149,6 @@ public class TavernArea extends BaseArea {
 				logger.info(chosenQuest.toString());
 				logger.info("Also so gegen: "
 						+ account.getActionEndTime().toString(DateTimeFormat.forPattern("HH:mm:ss")));
-
-				if (chosenQuest.getItem().getType() != ItemTypeEnum.None) {
-					this.gotNewItem = true;
-				}
 			}
 		}
 		return result;
@@ -168,7 +156,9 @@ public class TavernArea extends BaseArea {
 
 	private void finishQuest() {
 		String responseString = sendRequest(new QuestFinishRequest(false));
-		new Response(responseString, account);
+		PlayerFightResponse fightResult = new PlayerFightResponse(responseString, account);
+
+		logger.info(fightResult.toString());
 	}
 
 	private Boolean buyBeer() {

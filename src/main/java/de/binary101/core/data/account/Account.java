@@ -11,6 +11,7 @@ import de.binary101.core.constants.StaticValues;
 import de.binary101.core.constants.enums.ActionEnum;
 import de.binary101.core.data.area.PollArea;
 import de.binary101.core.data.character.OwnCharacter;
+import de.binary101.core.data.dungeon.Dungeons;
 import de.binary101.core.data.guild.Guild;
 import de.binary101.core.data.tavern.Quest;
 import de.binary101.core.data.tavern.Tavern;
@@ -51,6 +52,7 @@ public class Account {
 	@Getter @Setter private OwnCharacter ownCharacter;
 	@Getter @Setter private Tavern tavern;
 	@Getter @Setter private Guild guild;
+	@Getter @Setter private Dungeons dungeons;
 
 	public Boolean getHasGuild() {
 		return this.guild.getName().equals("None") ? false : true;
@@ -92,6 +94,7 @@ public class Account {
 		this.ownCharacter = new OwnCharacter();
 		this.tavern = new Tavern();
 		this.guild = new Guild();
+		this.dungeons = new Dungeons();
 
 		this.hasRunningAction = false;
 		this.actionType = ActionEnum.None;

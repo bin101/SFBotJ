@@ -32,17 +32,18 @@ public class OwnCharacter extends Character {
 	@Getter @Setter private MountTypeEnum mountType;
 	@Getter @Setter private DateTime mountEndTime;
 	@Getter @Setter private Backpack backpack;
-	// TODO @Getter @Setter private Dungeons dungeons;
 	// TODO @Getter @Setter private PotionsSlots potions;
 	@Getter @Setter private Equipment equipment;
 	@Getter @Setter private String description;
 	@Getter @Setter private String guildName;
-	// TODO @Getter @Setter private int portalLifeBonus;
-	// TODO @Getter @Setter private int portalDamageBonus;
+	@Getter @Setter private int portalLifeBonus;
+	@Getter @Setter private int portalDamageBonus;
 	@Getter @Setter private int minDamageBase;
 	@Getter @Setter private int maxDamageBase;
 
 	@Getter @Setter private DateTime joinedGuildDate;
+	@Getter @Setter private DateTime arenaTimer;
+	@Getter @Setter private DateTime dungeonTimer;
 
 	public OwnCharacter() {
 		super();
@@ -75,8 +76,17 @@ public class OwnCharacter extends Character {
 						.getRealAttributePrice(ownplayersave[43].intValue()), Helper
 						.getRealAttributePrice(ownplayersave[44].intValue()), account));
 
+		// Portal Zeug
+		double portalHelper = ownplayersave[445] / 65536.0;
+		this.portalLifeBonus = (int) (portalHelper / 256.0);
+		this.portalDamageBonus = (int) (portalHelper - (double) (this.portalLifeBonus * 256));
+
 		this.joinedGuildDate = TimeManager
 				.UTCunixTimestampToLocalDateTime(ownplayersave[OwnPlayerSaveEnum.JoinedGuildDate.getId()].intValue());
+		this.dungeonTimer = TimeManager.UTCunixTimestampToLocalDateTime(ownplayersave[OwnPlayerSaveEnum.DungeonTimer
+				.getId()].intValue());
+		this.arenaTimer = TimeManager.UTCunixTimestampToLocalDateTime(ownplayersave[OwnPlayerSaveEnum.ArenaTimer
+				.getId()].intValue());
 
 		String mirrorHelper = ownplayersave[OwnPlayerSaveEnum.Mirror.getId()].toString();
 		while (mirrorHelper.length() < 32) {
@@ -96,7 +106,7 @@ public class OwnCharacter extends Character {
 		this.mountEndTime = TimeManager.UTCunixTimestampToLocalDateTime(ownplayersave[OwnPlayerSaveEnum.MountEndTime
 				.getId()].intValue());
 
-		// Beschaeftigungszeiten unf Flags setzten
+		// Beschaeftigungszeiten und Flags setzten
 		account.setActionType(ActionEnum.fromInt(Helper.normalizeResponseInt(ownplayersave[OwnPlayerSaveEnum.ActionType
 				.getId()].intValue())));
 

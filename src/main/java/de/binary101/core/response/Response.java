@@ -95,6 +95,7 @@ public class Response {
 
 			account.getOwnCharacter().updateOwnCharacter(account, ownPlayerSaveLong);
 			account.getTavern().updateTavern(account, ownPlayerSaveLong);
+			account.getDungeons().updateDungeons(account, ownPlayerSaveLong);
 		}
 
 		if (parsedData.containsKey("owngroupsave")) {
@@ -116,7 +117,7 @@ public class Response {
 		}
 	}
 
-	private Long[] convertStringArrayToLongArray(String[] source) {
+	protected Long[] convertStringArrayToLongArray(String[] source) {
 		Long[] result = new Long[source.length];
 
 		for (int i = 0; i < source.length; i++) {

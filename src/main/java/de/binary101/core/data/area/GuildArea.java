@@ -57,7 +57,7 @@ public class GuildArea extends BaseArea {
 							hasJoinedDefense = true;
 							break;
 						default:
-							//Have joined Nothing
+							// Have joined Nothing
 							break;
 					}
 

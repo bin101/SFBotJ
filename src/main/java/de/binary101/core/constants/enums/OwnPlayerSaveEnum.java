@@ -18,7 +18,7 @@ public enum OwnPlayerSaveEnum {
 	Mount(286), // Must be
 				// normalized
 	JoinedGuildDate(443),
-	
+
 	MountEndTime(451),
 	DonateableMushrooms(437),
 	NextArenaBattleTime(460),

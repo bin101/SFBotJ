@@ -69,6 +69,8 @@ public class Setting {
 
 	@XStreamAlias("upgradeGuild") @Getter @Setter private Boolean upgradeGuild = false;
 
+	@XStreamAlias("performDungeon") @Getter @Setter private Boolean performDungeon = false;
+
 	@XStreamAlias("dontChange_LoginCount") @Getter @Setter private int loginCount = 0;
 
 	@XStreamAlias("dontChange_SessionID") @Getter @Setter private String sessionID;

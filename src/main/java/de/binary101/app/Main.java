@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import de.binary101.core.SFBotJCore;
 import de.binary101.core.data.account.Account;
 import de.binary101.core.data.area.CharacterScreenArea;
+import de.binary101.core.data.area.DungeonArea;
 import de.binary101.core.data.area.GuildArea;
 import de.binary101.core.data.area.LoginArea;
 import de.binary101.core.data.area.MountArea;
@@ -52,7 +53,7 @@ public class Main {
 				// core.getAreas().add(new ArenaArea(account));
 				core.getAreas().add(new GuildArea(account));
 				core.getAreas().add(new CharacterScreenArea(account));
-				// core.getAreas().add(new DungeonArea(account));
+				core.getAreas().add(new DungeonArea(account));
 				core.getAreas().add(new TownwatchArea(account));
 				// core.getAreas().add(new SinglePortalArea(account));
 
