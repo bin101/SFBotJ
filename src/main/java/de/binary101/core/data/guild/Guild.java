@@ -85,9 +85,9 @@ public class Guild {
 						.getPrice(instructorLevel + 1)));
 
 		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(
-				ownGuildSave[OwnGuildSaveEnum.NextFightTime.getId()].intValue()).plusHours(10);
-		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(
-				ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue()).plusHours(10);
+				ownGuildSave[OwnGuildSaveEnum.NextFightTime.getId()].intValue());
+		this.nextDefenseTime = TimeManager.UTCunixTimestampToLocalDateTime(
+				ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue());
 		this.nextRaidType = GuildRaidTypeEnum.fromInt(ownGuildSave[OwnGuildSaveEnum.NextRaidID.getId()].intValue());
 
 		if (ownGuildMembers != null && ownGuildMembers.length != 0) {

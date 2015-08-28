@@ -41,19 +41,19 @@ public class PlayerFightResponse extends Response {
 			builder.append("Habe den Kampf gewonnen und folgendes erhalten:\n");
 
 			if (this.silverGet != 0) {
-				builder.append(String.format("	Silber:	%d \n", this.silverGet));
+				builder.append(String.format("	Silber: %d \n", this.silverGet));
 			}
 
 			if (this.expGet != 0) {
-				builder.append(String.format("	Erfahrung:	%d \n", this.expGet));
+				builder.append(String.format("	Erfahrung: %d \n", this.expGet));
 			}
 
 			if (this.mushroomGet != 0) {
-				builder.append(String.format("	Pilze:	%d \n", this.mushroomGet));
+				builder.append(String.format("	Pilze: %d \n", this.mushroomGet));
 			}
 
 			if (this.honorGet != 0) {
-				builder.append(String.format("	Ehre:	%d \n", this.honorGet));
+				builder.append(String.format("	Ehre: %d \n", this.honorGet));
 			}
 
 			if (this.itemGet.getType() != ItemTypeEnum.None) {

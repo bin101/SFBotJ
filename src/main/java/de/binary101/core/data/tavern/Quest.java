@@ -105,13 +105,13 @@ public class Quest {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Quest " + this.index + ":\n");
-		builder.append("	Dauer:	" + this.duration + "\n");
-		builder.append("	Silber:	" + this.silver + "\n");
-		builder.append("	Exp:	" + this.exp + "\n");
+		builder.append("	Dauer: " + this.duration + "\n");
+		builder.append("	Silber: " + this.silver + "\n");
+		builder.append("	Exp: " + this.exp + "\n");
 		if (this.item.getType() != ItemTypeEnum.None) {
-			builder.append("	Item:	" + this.item.toString() + "\n");
+			builder.append("	Item: " + this.item.toString() + "\n");
 		}
-		builder.append("	MonsterId:	" + this.monsterId + "\n");
+		builder.append("	MonsterId: " + this.monsterId + "\n");
 
 		return builder.toString();
 	}
