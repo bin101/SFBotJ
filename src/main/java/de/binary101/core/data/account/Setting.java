@@ -84,7 +84,7 @@ public class Setting {
 	@XStreamAlias("dontChange_LastDonateDate") private String lastDonateDate = "01-01-1970";
 
 	@XStreamAlias("dontChange_LastWeaponShopCheckTime") private String lastWeaponShopCheckTime = "01-01-1970 12:34";
-	
+
 	@XStreamAlias("dontChange_LastMagicShopCheckTime") private String lastMagicShopCheckTime = "01-01-1970 12:34";
 
 	public DateTime getLastDonateDate() {
@@ -95,7 +95,7 @@ public class Setting {
 	public void setLastDonateDate(DateTime lastDonateDate) {
 		this.lastDonateDate = lastDonateDate.toString(DateTimeFormat.forPattern("dd-MM-yyyy"));
 	}
-	
+
 	public DateTime getLastWeaponShopCheckTime() {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm");
 		return formatter.parseDateTime(this.lastWeaponShopCheckTime);
@@ -104,7 +104,7 @@ public class Setting {
 	public void setLastWeaponShopCheckTime(DateTime lastWeaponShopCheckTime) {
 		this.lastWeaponShopCheckTime = lastWeaponShopCheckTime.toString(DateTimeFormat.forPattern("dd-MM-yyyy HH:mm"));
 	}
-	
+
 	public DateTime getLastMagicShopCheckTime() {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm");
 		return formatter.parseDateTime(this.lastMagicShopCheckTime);

@@ -35,7 +35,7 @@ public enum OwnPlayerSaveEnum {
 	EquipmentDataStart(48),
 	WeaponShopDataStart(288),
 	MagicShopDataStart(361),
-	
+
 	// Taverne
 	ALUinSeconds(456),
 	ActionUntil(47),

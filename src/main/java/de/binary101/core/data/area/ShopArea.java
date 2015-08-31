@@ -48,8 +48,9 @@ public class ShopArea extends BaseArea {
 				Item emptyBackpackItem = account.getOwnCharacter().getBackpack().getEmptyItem();
 
 				if (emptyBackpackItem != null
-						&& ((isWeaponShop && DateTime.now().isAfter(account.getSetting().getLastWeaponShopCheckTime().plusHours(1))) 
-								|| (!isWeaponShop && DateTime.now().isAfter(account.getSetting().getLastMagicShopCheckTime().plusHours(1))))) {
+						&& ((isWeaponShop && DateTime.now().isAfter(
+								account.getSetting().getLastWeaponShopCheckTime().plusHours(1))) || (!isWeaponShop && DateTime
+								.now().isAfter(account.getSetting().getLastMagicShopCheckTime().plusHours(1))))) {
 
 					Item betterShopItem = getBetterShopItem(currentShop.getShopItems(), account.getOwnCharacter()
 							.getSilver(), account.getOwnCharacter().getMushrooms(), false);

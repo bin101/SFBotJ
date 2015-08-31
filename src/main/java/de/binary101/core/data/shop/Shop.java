@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
-import de.binary101.core.constants.enums.OwnPlayerSaveEnum;
 import de.binary101.core.data.item.Item;
 
 public class Shop {

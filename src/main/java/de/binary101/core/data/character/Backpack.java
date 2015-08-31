@@ -34,10 +34,10 @@ public class Backpack {
 
 		return leastValueableItem;
 	}
-	
+
 	public Item getEmptyItem() {
 		Optional<Item> emptySlot = items.stream().filter(item -> item.getType() == ItemTypeEnum.None).findFirst();
-		
+
 		return emptySlot.isPresent() ? emptySlot.get() : null;
 	}
 

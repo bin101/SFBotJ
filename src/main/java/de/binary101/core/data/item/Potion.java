@@ -59,8 +59,9 @@ public class Potion extends Item {
 				break;
 			case 16:
 				potionType = PotionEnum.Eternal_Life;
+				break;
 			default:
-				logger.error("Unbekannter Potion Typ");
+				logger.error("Unbekannter Potion Typ: " + rawValue);
 				break;
 		}
 

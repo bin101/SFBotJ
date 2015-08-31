@@ -214,7 +214,8 @@ public class CharacterScreenArea extends BaseArea {
 				Boolean backpackItemIsBetter = false;
 
 				if (equippedItem.isPresent()) {
-					backpackItemIsBetter = Helper.isFirstItemBetterThanSecondItem(backpackItem, equippedItem.get(), account);
+					backpackItemIsBetter = Helper.isFirstItemBetterThanSecondItem(backpackItem, equippedItem.get(),
+							account);
 				} else {
 					backpackItemIsBetter = true;
 				}

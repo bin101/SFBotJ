@@ -84,10 +84,10 @@ public class Guild {
 				new GuildUpgrade(GuildUpgradeTypeEnum.Instructor, instructorLevel, GuildUpgradePrices
 						.getPrice(instructorLevel + 1)));
 
-		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(
-				ownGuildSave[OwnGuildSaveEnum.NextFightTime.getId()].intValue());
-		this.nextDefenseTime = TimeManager.UTCunixTimestampToLocalDateTime(
-				ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue());
+		this.nextAttackTime = TimeManager.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextFightTime
+				.getId()].intValue());
+		this.nextDefenseTime = TimeManager
+				.UTCunixTimestampToLocalDateTime(ownGuildSave[OwnGuildSaveEnum.NextDefenseTime.getId()].intValue());
 		this.nextRaidType = GuildRaidTypeEnum.fromInt(ownGuildSave[OwnGuildSaveEnum.NextRaidID.getId()].intValue());
 
 		if (ownGuildMembers != null && ownGuildMembers.length != 0) {

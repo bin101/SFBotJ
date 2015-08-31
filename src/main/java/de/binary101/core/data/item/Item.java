@@ -10,7 +10,6 @@ import de.binary101.core.constants.enums.AttributeEnum;
 import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.EnchantmentTypeEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;
-import de.binary101.core.constants.enums.OwnPlayerSaveEnum;
 
 public class Item {
 

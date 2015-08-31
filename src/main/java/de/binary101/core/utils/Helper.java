@@ -107,48 +107,40 @@ public class Helper {
 
 		return result;
 	}
-	
+
 	public static Boolean isShopItemBetter(Item shopItem, Account account) {
 		Boolean result = false;
-		
-		Optional<Item> equippedItem = account.getOwnCharacter().getEquipment().getItems().stream()
-				.filter(item -> item.getType().name().equals(shopItem.getType().name()))
-				.findFirst();
 
+		Optional<Item> equippedItem = account.getOwnCharacter().getEquipment().getItems().stream()
+				.filter(item -> item.getType().name().equals(shopItem.getType().name())).findFirst();
 
 		if (equippedItem.isPresent()) {
-			result = Helper.isFirstItemBetterThanSecondItem(shopItem, equippedItem.get(),
-					account);
+			result = Helper.isFirstItemBetterThanSecondItem(shopItem, equippedItem.get(), account);
 		} else {
 			result = true;
 		}
-		
+
 		return result;
 	}
 
 	public static Boolean isFirstItemBetterThanSecondItem(Item firstItem, Item secondItem, Account account) {
 
-		int backpackItemStrength = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
-				.getStrength();
-		int backpackItemDexterity = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
-				.getDexterity();
+		int backpackItemStrength = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem.getStrength();
+		int backpackItemDexterity = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem.getDexterity();
 		int backpackItemIntelligence = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
 				.getIntelligence();
-		int backpackItemStamina = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
-				.getStamina();
+		int backpackItemStamina = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem.getStamina();
 		int backpackItemLuck = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem.getLuck();
 		int backpackItemArmor = firstItem.getArmor();
 		int backpackItemAverageWeaponDmg = (firstItem instanceof Weapon) ? (((Weapon) firstItem).getMinDmg() + ((Weapon) firstItem)
 				.getMaxDmg()) / 2 : 0;
 
-		int equippedItemStrength = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
-				.getStrength();
+		int equippedItemStrength = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem.getStrength();
 		int equippedItemDexterity = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
 				.getDexterity();
 		int equippedItemIntelligence = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
 				.getIntelligence();
-		int equippedItemStamina = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
-				.getStamina();
+		int equippedItemStamina = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem.getStamina();
 		int equippedItemLuck = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem.getLuck();
 		int equippedItemArmor = secondItem.getArmor();
 		int equippedItemAverageWeaponDmg = (secondItem instanceof Weapon) ? (((Weapon) secondItem).getMinDmg() + ((Weapon) secondItem)
