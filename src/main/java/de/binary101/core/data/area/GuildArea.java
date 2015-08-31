@@ -89,7 +89,7 @@ public class GuildArea extends BaseArea {
 						* account.getSetting().getDonatePercentage();
 				// Nur Goldwerte spenden
 				silverAmountToDonate = silverAmountToDonate - silverAmountToDonate % 100;
-				// auf eine glate summe abrunden statt 5487 Gold lieber 5000
+				// auf eine glatte Summe abrunden statt 5487 Gold lieber 5000
 				// gold spenden
 				silverAmountToDonate = (long) (silverAmountToDonate - silverAmountToDonate
 						% Math.pow(10, silverAmountToDonate.toString().length() - 1));

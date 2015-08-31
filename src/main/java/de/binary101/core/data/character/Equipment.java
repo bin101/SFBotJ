@@ -15,7 +15,7 @@ public class Equipment {
 
 	public synchronized void updateEquipment(Long[] equipmentData) {
 		for (int i = 0; i < items.size(); i++) {
-			items.set(i, Item.createItem(equipmentData, i * 12, i));
+			items.set(i, Item.createItem(equipmentData, i * 12));
 		}
 	}
 }

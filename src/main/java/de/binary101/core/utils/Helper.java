@@ -1,5 +1,7 @@
 package de.binary101.core.utils;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -105,33 +107,51 @@ public class Helper {
 
 		return result;
 	}
+	
+	public static Boolean isShopItemBetter(Item shopItem, Account account) {
+		Boolean result = false;
+		
+		Optional<Item> equippedItem = account.getOwnCharacter().getEquipment().getItems().stream()
+				.filter(item -> item.getType().name().equals(shopItem.getType().name()))
+				.findFirst();
 
-	public static Boolean isBackpackItemBetter(Item backpackItem, Item equippedItem, Account account) {
 
-		int backpackItemStrength = backpackItem.getEpicValue() > 0 ? backpackItem.getEpicValue() : backpackItem
+		if (equippedItem.isPresent()) {
+			result = Helper.isFirstItemBetterThanSecondItem(shopItem, equippedItem.get(),
+					account);
+		} else {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	public static Boolean isFirstItemBetterThanSecondItem(Item firstItem, Item secondItem, Account account) {
+
+		int backpackItemStrength = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
 				.getStrength();
-		int backpackItemDexterity = backpackItem.getEpicValue() > 0 ? backpackItem.getEpicValue() : backpackItem
+		int backpackItemDexterity = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
 				.getDexterity();
-		int backpackItemIntelligence = backpackItem.getEpicValue() > 0 ? backpackItem.getEpicValue() : backpackItem
+		int backpackItemIntelligence = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
 				.getIntelligence();
-		int backpackItemStamina = backpackItem.getEpicValue() > 0 ? backpackItem.getEpicValue() : backpackItem
+		int backpackItemStamina = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem
 				.getStamina();
-		int backpackItemLuck = backpackItem.getEpicValue() > 0 ? backpackItem.getEpicValue() : backpackItem.getLuck();
-		int backpackItemArmor = backpackItem.getArmor();
-		int backpackItemAverageWeaponDmg = (backpackItem instanceof Weapon) ? (((Weapon) backpackItem).getMinDmg() + ((Weapon) backpackItem)
+		int backpackItemLuck = firstItem.getEpicValue() > 0 ? firstItem.getEpicValue() : firstItem.getLuck();
+		int backpackItemArmor = firstItem.getArmor();
+		int backpackItemAverageWeaponDmg = (firstItem instanceof Weapon) ? (((Weapon) firstItem).getMinDmg() + ((Weapon) firstItem)
 				.getMaxDmg()) / 2 : 0;
 
-		int equippedItemStrength = equippedItem.getEpicValue() > 0 ? equippedItem.getEpicValue() : equippedItem
+		int equippedItemStrength = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
 				.getStrength();
-		int equippedItemDexterity = equippedItem.getEpicValue() > 0 ? equippedItem.getEpicValue() : equippedItem
+		int equippedItemDexterity = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
 				.getDexterity();
-		int equippedItemIntelligence = equippedItem.getEpicValue() > 0 ? equippedItem.getEpicValue() : equippedItem
+		int equippedItemIntelligence = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
 				.getIntelligence();
-		int equippedItemStamina = equippedItem.getEpicValue() > 0 ? equippedItem.getEpicValue() : equippedItem
+		int equippedItemStamina = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem
 				.getStamina();
-		int equippedItemLuck = equippedItem.getEpicValue() > 0 ? equippedItem.getEpicValue() : equippedItem.getLuck();
-		int equippedItemArmor = equippedItem.getArmor();
-		int equippedItemAverageWeaponDmg = (equippedItem instanceof Weapon) ? (((Weapon) equippedItem).getMinDmg() + ((Weapon) equippedItem)
+		int equippedItemLuck = secondItem.getEpicValue() > 0 ? secondItem.getEpicValue() : secondItem.getLuck();
+		int equippedItemArmor = secondItem.getArmor();
+		int equippedItemAverageWeaponDmg = (secondItem instanceof Weapon) ? (((Weapon) secondItem).getMinDmg() + ((Weapon) secondItem)
 				.getMaxDmg()) / 2 : 0;
 
 		int mainMultiplier = 10;

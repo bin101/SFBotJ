@@ -10,6 +10,7 @@ import de.binary101.core.constants.enums.AttributeEnum;
 import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.EnchantmentTypeEnum;
 import de.binary101.core.constants.enums.ItemTypeEnum;
+import de.binary101.core.constants.enums.OwnPlayerSaveEnum;
 
 public class Item {
 
@@ -21,13 +22,13 @@ public class Item {
 	@Getter private ClassEnum itemClass;
 	@Getter private Boolean isEpic;
 	@Getter private int epicValue;
-	@Getter private double silverPrice;
+	@Getter private long silverPrice;
 	@Getter private int mushroomPrice;
 	@Getter private Boolean stinks;
 	@Getter private EnchantmentTypeEnum enchantment;
-	@Getter private int backpackIndex;
+	@Getter private int slotIndex;
 
-	public Item(Long[] itemData, int backpackIndex) {
+	public Item(Long[] itemData, int slotIndex) {
 
 		int type = itemData[0].intValue();
 		int picNumber = itemData[1].intValue();
@@ -35,9 +36,7 @@ public class Item {
 		int helper1 = (int) (type / Math.pow(2.0, 24.0));
 		int helper2 = (int) (picNumber / Math.pow(2.0, 16.0));
 
-		if (backpackIndex > -1) {
-			this.backpackIndex = backpackIndex;
-		}
+		this.slotIndex = slotIndex;
 
 		if (type > 99) {
 			type = (int) (type - helper1 * Math.pow(2.0, 24.0));
@@ -80,8 +79,10 @@ public class Item {
 		}
 	}
 
-	public static Item createItem(Long[] longArray, int itemOffset, int backpackIndex) {
+	public static Item createItem(Long[] longArray, int itemOffset) {
 		Item resultingItem = null;
+
+		int slotIndex = (itemOffset / 12) + 1;
 
 		Long[] itemData = new Long[12];
 		System.arraycopy(longArray, itemOffset, itemData, 0, 12);
@@ -92,19 +93,19 @@ public class Item {
 
 		switch (type) {
 			case Shield:
-				resultingItem = new Shield(itemData, backpackIndex);
+				resultingItem = new Shield(itemData, slotIndex);
 				break;
 			case Weapon:
-				resultingItem = new Weapon(itemData, backpackIndex);
+				resultingItem = new Weapon(itemData, slotIndex);
 				break;
 			case Potion:
-				resultingItem = new Potion(itemData, backpackIndex);
+				resultingItem = new Potion(itemData, slotIndex);
 				break;
 			case MirrorOrKey:
-				resultingItem = new MirrorpieceOrKey(itemData, backpackIndex);
+				resultingItem = new MirrorpieceOrKey(itemData, slotIndex);
 				break;
 			default:
-				resultingItem = new Item(itemData, backpackIndex);
+				resultingItem = new Item(itemData, slotIndex);
 				break;
 		}
 

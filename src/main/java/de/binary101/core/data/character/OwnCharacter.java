@@ -12,6 +12,7 @@ import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.MountTypeEnum;
 import de.binary101.core.constants.enums.OwnPlayerSaveEnum;
 import de.binary101.core.data.account.Account;
+import de.binary101.core.data.shop.Shop;
 import de.binary101.core.utils.Helper;
 import de.binary101.core.utils.TimeManager;
 
@@ -34,6 +35,10 @@ public class OwnCharacter extends Character {
 	@Getter @Setter private Backpack backpack;
 	// TODO @Getter @Setter private PotionsSlots potions;
 	@Getter @Setter private Equipment equipment;
+
+	@Getter @Setter private Shop weaponShop;
+	@Getter @Setter private Shop magicShop;
+
 	@Getter @Setter private String description;
 	@Getter @Setter private String guildName;
 	@Getter @Setter private int portalLifeBonus;
@@ -50,6 +55,8 @@ public class OwnCharacter extends Character {
 
 		this.backpack = new Backpack();
 		this.equipment = new Equipment();
+		this.weaponShop = new Shop();
+		this.magicShop = new Shop();
 	}
 
 	public synchronized void updateOwnCharacter(Account account, Long[] ownplayersave) {
@@ -130,6 +137,16 @@ public class OwnCharacter extends Character {
 		Long[] equipmentData = new Long[12 * 10];
 		System.arraycopy(ownplayersave, OwnPlayerSaveEnum.EquipmentDataStart.getId(), equipmentData, 0, 12 * 10);
 		this.equipment.updateEquipment(equipmentData);
+
+		// Update WeaponShop
+		Long[] weaponShopData = new Long[12 * 6];
+		System.arraycopy(ownplayersave, OwnPlayerSaveEnum.WeaponShopDataStart.getId(), weaponShopData, 0, 12 * 6);
+		this.weaponShop.updateShop(weaponShopData);
+
+		// Update WeaponShop
+		Long[] magicShopData = new Long[12 * 6];
+		System.arraycopy(ownplayersave, OwnPlayerSaveEnum.MagicShopDataStart.getId(), magicShopData, 0, 12 * 6);
+		this.magicShop.updateShop(magicShopData);
 	}
 
 }

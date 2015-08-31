@@ -25,7 +25,7 @@ public class PlayerFightResponse extends Response {
 			this.mushroomGet = fightResult[4].intValue();
 			this.honorGet = fightResult[5].intValue();
 
-			this.itemGet = Item.createItem(fightResult, 9, -1);
+			this.itemGet = Item.createItem(fightResult, 9);
 
 			if (this.itemGet.getType() != ItemTypeEnum.None) {
 				account.setGotNewItem(true);

@@ -33,6 +33,9 @@ public enum OwnPlayerSaveEnum {
 	ActionEndTime(47),
 	BackpackDataStart(168),
 	EquipmentDataStart(48),
+	WeaponShopDataStart(288),
+	MagicShopDataStart(361),
+	
 	// Taverne
 	ALUinSeconds(456),
 	ActionUntil(47),
