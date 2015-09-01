@@ -12,6 +12,7 @@ import de.binary101.core.constants.enums.ClassEnum;
 import de.binary101.core.constants.enums.MountTypeEnum;
 import de.binary101.core.constants.enums.OwnPlayerSaveEnum;
 import de.binary101.core.data.account.Account;
+import de.binary101.core.data.guild.GuildMember;
 import de.binary101.core.data.shop.Shop;
 import de.binary101.core.utils.Helper;
 import de.binary101.core.utils.TimeManager;
@@ -20,7 +21,6 @@ public class OwnCharacter extends Character {
 
 	private final static Logger logger = LogManager.getLogger(OwnCharacter.class);
 
-	@Getter @Setter private String name;
 	@Getter @Setter private int level;
 	@Getter @Setter private long silver;
 	@Getter @Setter private int mushrooms;
@@ -41,6 +41,16 @@ public class OwnCharacter extends Character {
 
 	@Getter @Setter private String description;
 	@Getter @Setter private String guildName;
+	private GuildMember myGuildCharacter;
+	
+	public synchronized GuildMember getMyGuildCharacter() {
+		return this.myGuildCharacter;
+	}
+	
+	public synchronized void setMyGuildCharacter(GuildMember member) {
+		this.myGuildCharacter = member;
+	}
+	
 	@Getter @Setter private int portalLifeBonus;
 	@Getter @Setter private int portalDamageBonus;
 	@Getter @Setter private int minDamageBase;

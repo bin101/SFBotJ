@@ -70,8 +70,7 @@ public class CharacterScreenArea extends BaseArea {
 
 			if (account.getSetting().getPerformItemEquip() && account.getGotNewItem()) {
 				Helper.threadSleepRandomBetween(600, 1200);
-
-				logger.info("Gucke, ob Items ausgeruestet werden koennen");
+				
 				tryToEquipItems();
 
 				account.setGotNewItem(false);
@@ -202,6 +201,8 @@ public class CharacterScreenArea extends BaseArea {
 	public void tryToEquipItems() {
 		Boolean hasSthEquipped = false;
 		String equipRespString = null;
+		
+		logger.info("Gucke, ob Items ausgeruestet werden koennen");
 
 		for (Item backpackItem : account.getOwnCharacter().getBackpack().getItems().stream()
 				.filter(item -> item.getType() != ItemTypeEnum.None).collect(Collectors.toList())) {

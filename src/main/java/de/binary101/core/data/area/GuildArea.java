@@ -34,8 +34,7 @@ public class GuildArea extends BaseArea {
 		}
 
 		if (account.getHasGuild()) {
-			GuildMember me = account.getGuild().getMembers().stream()
-					.filter(member -> member.getName().equals(account.getSetting().getUsername())).findFirst().get();
+			GuildMember me = account.getOwnCharacter().getMyGuildCharacter();
 
 			DateTime joinedGuildDate = account.getOwnCharacter().getJoinedGuildDate();
 
