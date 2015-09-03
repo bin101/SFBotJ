@@ -42,15 +42,15 @@ public class OwnCharacter extends Character {
 	@Getter @Setter private String description;
 	@Getter @Setter private String guildName;
 	private GuildMember myGuildCharacter;
-	
+
 	public synchronized GuildMember getMyGuildCharacter() {
 		return this.myGuildCharacter;
 	}
-	
+
 	public synchronized void setMyGuildCharacter(GuildMember member) {
 		this.myGuildCharacter = member;
 	}
-	
+
 	@Getter @Setter private int portalLifeBonus;
 	@Getter @Setter private int portalDamageBonus;
 	@Getter @Setter private int minDamageBase;

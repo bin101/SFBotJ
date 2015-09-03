@@ -1,6 +1,7 @@
 package de.binary101.core.data.area;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -95,42 +96,53 @@ public class ShopArea extends BaseArea {
 
 		Item itemToSell = account.getOwnCharacter().getBackpack().getLeastValueableItem();
 
-		logger.info("Verkaufe folgendes Item: " + itemToSell.toString());
+		if (itemToSell != null) {
+			logger.info("Verkaufe folgendes Item: " + itemToSell.toString());
 
-		String sellResponseString = sendRequest(new SellRequest(itemToSell));
-		this.sellResponse = new Response(sellResponseString, account);
+			String sellResponseString = sendRequest(new SellRequest(itemToSell));
+			this.sellResponse = new Response(sellResponseString, account);
 
-		Helper.threadSleepRandomBetween(600, 1200);
+			Helper.threadSleepRandomBetween(600, 1200);
 
-		if (!this.sellResponse.getHasError()) {
-			logger.info("Verkauf war erfolgreich");
+			if (!this.sellResponse.getHasError()) {
+				logger.info("Verkauf war erfolgreich");
+			}
+		} else {
+			logger.info("Habe kein Item zum Verkaufen gefunden");
 		}
 	}
 
 	private Item getBetterShopItem(List<Item> shopItems, long currentSilver, int currentMushrooms, Boolean useMushrooms) {
-		Item result = null;
+		Optional<Item> result = null;
 
-		// welche Items kann ich mir leisten
-		List<Item> availableItems = shopItems
-				.stream()
-				.filter(item -> item.getSilverPrice() <= currentSilver && item.getMushroomPrice() <= currentMushrooms
-						&& item.getType() != ItemTypeEnum.Potion).collect(Collectors.toList());
+		result = shopItems.stream()
+				.filter(item -> item.getType() == ItemTypeEnum.Scrapbook && item.getSilverPrice() <= currentSilver)
+				.findFirst();
 
-		// darf ich Pilze nutzen
-		if (!useMushrooms) {
-			availableItems = availableItems.stream().filter(item -> item.getMushroomPrice() == 0)
+		if (!result.isPresent()) {
+			// welche Items kann ich mir leisten
+			List<Item> availableItems = shopItems
+					.stream()
+					.filter(item -> item.getSilverPrice() <= currentSilver
+							&& item.getMushroomPrice() <= currentMushrooms && item.getType() != ItemTypeEnum.Potion)
 					.collect(Collectors.toList());
+
+			// darf ich Pilze nutzen
+			if (!useMushrooms) {
+				availableItems = availableItems.stream().filter(item -> item.getMushroomPrice() == 0)
+						.collect(Collectors.toList());
+			}
+
+			// welche Items sind besser
+			availableItems = availableItems.stream().filter(item -> Helper.isShopItemBetter(item, account))
+					.collect(Collectors.toList());
+
+			if (availableItems.size() > 0) {
+				result = availableItems.stream().max(
+						(item1, item2) -> Long.compare(item1.getSilverPrice(), item2.getSilverPrice()));
+			}
 		}
 
-		// welche Items sind besser
-		availableItems = availableItems.stream().filter(item -> Helper.isShopItemBetter(item, account))
-				.collect(Collectors.toList());
-
-		if (availableItems.size() > 0) {
-			result = availableItems.stream()
-					.max((item1, item2) -> Long.compare(item1.getSilverPrice(), item2.getSilverPrice())).get();
-		}
-
-		return result;
+		return result.isPresent() ? result.get() : null;
 	}
 }

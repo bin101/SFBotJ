@@ -121,7 +121,7 @@ public class Guild {
 				member.setPlayerGuildIndex(i);
 
 				members.add(member);
-				
+
 				if (member.getName().equals(account.getSetting().getUsername())) {
 					account.getOwnCharacter().setMyGuildCharacter(member);
 				}

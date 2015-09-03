@@ -26,13 +26,13 @@ public class Backpack {
 	}
 
 	public Item getLeastValueableItem() {
-		Item leastValueableItem = null;
+		Optional<Item> leastValueableItem = null;
 
 		leastValueableItem = items.stream()
 				.filter(item -> item.getType().getId() >= 1 && item.getType().getId() <= 10 && !item.getIsEpic())
-				.min((i1, i2) -> Double.compare(i1.getSilverPrice(), i2.getSilverPrice())).get();
+				.min((i1, i2) -> Double.compare(i1.getSilverPrice(), i2.getSilverPrice()));
 
-		return leastValueableItem;
+		return leastValueableItem.isPresent() ? leastValueableItem.get() : null;
 	}
 
 	public Item getEmptyItem() {

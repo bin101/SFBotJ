@@ -14,7 +14,7 @@ public enum ItemTypeEnum {
 	Talisman(10),
 	MirrorOrKey(11),
 	Potion(12),
-	DontKnow(13),
+	Scrapbook(13),
 	Enchantment(14),
 
 	// Werden nur intern benutzt, nicht serverseitig

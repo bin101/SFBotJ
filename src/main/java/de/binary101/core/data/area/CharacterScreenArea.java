@@ -70,7 +70,7 @@ public class CharacterScreenArea extends BaseArea {
 
 			if (account.getSetting().getPerformItemEquip() && account.getGotNewItem()) {
 				Helper.threadSleepRandomBetween(600, 1200);
-				
+
 				tryToEquipItems();
 
 				account.setGotNewItem(false);
@@ -201,7 +201,7 @@ public class CharacterScreenArea extends BaseArea {
 	public void tryToEquipItems() {
 		Boolean hasSthEquipped = false;
 		String equipRespString = null;
-		
+
 		logger.info("Gucke, ob Items ausgeruestet werden koennen");
 
 		for (Item backpackItem : account.getOwnCharacter().getBackpack().getItems().stream()
@@ -231,7 +231,8 @@ public class CharacterScreenArea extends BaseArea {
 
 			} else if (backpackItem.getType() == ItemTypeEnum.MirrorPiece
 					|| backpackItem.getType() == ItemTypeEnum.Toiletkey
-					|| backpackItem.getType() == ItemTypeEnum.DungeonKey) {
+					|| backpackItem.getType() == ItemTypeEnum.DungeonKey
+					|| backpackItem.getType() == ItemTypeEnum.Scrapbook) {
 				logger.info(String.format("Benutze folgendes Item: %s", backpackItem.toString()));
 
 				hasSthEquipped = true;
