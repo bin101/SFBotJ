@@ -53,9 +53,9 @@ public class Response {
 			account.setWagesPerHour(Long.parseLong(parsedData.get(ResponseEnum.WAGESPERHOUR.toString()).get(0)));
 		}
 
-		if (parsedData.containsKey("Error")) {
+		if (parsedData.containsKey("error")) {
 			this.hasError = true;
-			this.errorCode = ResponseEnum.fromString(parsedData.get("Error").get(0));
+			this.errorCode = ResponseEnum.fromString(parsedData.get("error").get(0));
 		}
 
 		if (this.hasError) {
@@ -135,7 +135,7 @@ public class Response {
 		for (String dataString : data.split("&")) {
 
 			if (dataString.contains(":")) {
-				String mapKey = dataString.split(":")[0].trim();
+				String mapKey = dataString.split(":")[0].trim().toLowerCase();
 				String mapValue = (dataString.split(":").length == 1 ? "" : dataString.split(":")[1].trim());
 
 				if (mapKey.contains(".")) {
