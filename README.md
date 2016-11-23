@@ -2,4 +2,4 @@
 
 Console based Shakes and Fidget Bot written in Java.
 
-Development dropped.
+THIS PROJECT IS DISCONTINUED
